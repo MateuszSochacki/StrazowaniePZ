@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="sql11167212@sql11.freemysqlhosting.net">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="sql11167212">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <table id="4" parent="2" name="Movie"/>
+    <column id="5" parent="4" name="idnew_table">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="6" parent="4" name="PRIMARY">
+      <ColNames>idnew_table</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
