@@ -23,7 +23,7 @@ public class CinemaApplication extends Application{
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(CinemaApplication.class, args); //test
-
+		// KURWA NIKOS ZYJEMY CHLOPIE
 		launch(args);
 	}
 
