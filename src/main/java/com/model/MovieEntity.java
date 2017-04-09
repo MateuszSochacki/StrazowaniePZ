@@ -4,10 +4,11 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by msoch_000 on 06-04-2017.
+ * Created by msoch_000 on 09-04-2017.
  */
 @Entity
 @Table(name = "MOVIE", schema = "sql11167212")
+
 public class MovieEntity {
     private int idMovie;
     private String title;

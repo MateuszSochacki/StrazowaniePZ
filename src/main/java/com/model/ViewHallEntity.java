@@ -6,10 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Created by msoch_000 on 06-04-2017.
+ * Created by msoch_000 on 09-04-2017.
  */
 @Entity
-@Table(name = "view_hall", schema = "sql11167212", catalog = "")
+@Table(name = "view_hall", schema = "sql11167212")
+
 public class ViewHallEntity {
     private int idSeat;
     private Integer row;

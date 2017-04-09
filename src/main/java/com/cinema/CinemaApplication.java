@@ -5,12 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
 public class CinemaApplication extends Application{
+
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -22,6 +27,8 @@ public class CinemaApplication extends Application{
 	} //halo hjgjhg
 
 	public static void main(String[] args) throws Exception {
+
+
 		SpringApplication.run(CinemaApplication.class, args); //test
 		// KURWA NIKOS ZYJEMY CHLOPIE
 		launch(args);

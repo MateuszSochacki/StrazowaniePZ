@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by msoch_000 on 06-04-2017.
+ * Created by msoch_000 on 09-04-2017.
  */
 public class SeanceEntityPK implements Serializable {
     private int idSeance;
