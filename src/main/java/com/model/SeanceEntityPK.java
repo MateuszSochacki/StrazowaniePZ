@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 public class SeanceEntityPK implements Serializable {
     private int idSeance;
@@ -13,7 +13,7 @@ public class SeanceEntityPK implements Serializable {
     private int cinemaHallIdCinemaHall;
     private int priceIdPrice;
 
-    @Column(name = "id_seance")
+    @Column(name = "ID_SEANCE")
     @Id
     public int getIdSeance() {
         return idSeance;
@@ -23,7 +23,7 @@ public class SeanceEntityPK implements Serializable {
         this.idSeance = idSeance;
     }
 
-    @Column(name = "MOVIE_id_movie")
+    @Column(name = "MOVIE_ID_MOVIE")
     @Id
     public int getMovieIdMovie() {
         return movieIdMovie;
@@ -33,7 +33,7 @@ public class SeanceEntityPK implements Serializable {
         this.movieIdMovie = movieIdMovie;
     }
 
-    @Column(name = "CINEMA_HALL_id_cinema_hall")
+    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
     @Id
     public int getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
@@ -43,7 +43,7 @@ public class SeanceEntityPK implements Serializable {
         this.cinemaHallIdCinemaHall = cinemaHallIdCinemaHall;
     }
 
-    @Column(name = "PRICE_id_price")
+    @Column(name = "PRICE_ID_PRICE")
     @Id
     public int getPriceIdPrice() {
         return priceIdPrice;

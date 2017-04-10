@@ -3,17 +3,17 @@ package com.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "CINEMA_HALL", schema = "sql11167212")
+@Table(name = "CINEMA_HALL", schema = "PUBLIC", catalog = "DOCUMENTS")
 public class CinemaHallEntity {
     private int idCinemaHall;
     private Integer maxSeats;
     private Integer seatsTaken;
 
     @Id
-    @Column(name = "id_cinema_hall")
+    @Column(name = "ID_CINEMA_HALL")
     public int getIdCinemaHall() {
         return idCinemaHall;
     }
@@ -23,7 +23,7 @@ public class CinemaHallEntity {
     }
 
     @Basic
-    @Column(name = "max_seats")
+    @Column(name = "MAX_SEATS")
     public Integer getMaxSeats() {
         return maxSeats;
     }
@@ -33,7 +33,7 @@ public class CinemaHallEntity {
     }
 
     @Basic
-    @Column(name = "seats_taken")
+    @Column(name = "SEATS_TAKEN")
     public Integer getSeatsTaken() {
         return seatsTaken;
     }

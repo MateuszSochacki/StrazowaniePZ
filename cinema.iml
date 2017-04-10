@@ -3,9 +3,12 @@
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
       <configuration>
-        <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/context.xml</file>
+        <fileset id="fileset" name="Application Context" removed="false">
+          <dependency>spring_boot_com.cinema.CinemaApplication</dependency>
+          <file>file://$MODULE_DIR$/src/main/java/com/config/ApplicationConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/com/cinema/CinemaApplication.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/cinema/Config.java</file>
+          <file>file://$MODULE_DIR$/context.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -15,6 +18,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="Entities" value="6dc134a1-dddc-471a-8471-05848fa707d7" />
+          <factory-entry name="entityManagerFactory" value="a2ac722e-2f84-4e2d-b6ce-52dfae2509b0" />
         </datasource-mapping>
       </configuration>
     </facet>
@@ -71,7 +75,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.springframework.boot:spring-boot-devtools:1.5.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:1.5.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.5.2.RELEASE" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: mysql:mysql-connector-java:5.1.41" level="project" />
+    <orderEntry type="library" name="Maven: com.h2database:h2:1.4.194" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.0.12.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />

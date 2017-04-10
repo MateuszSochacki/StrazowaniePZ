@@ -4,11 +4,10 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "MOVIE", schema = "sql11167212")
-
+@Table(name = "MOVIE", schema = "PUBLIC", catalog = "DOCUMENTS")
 public class MovieEntity {
     private int idMovie;
     private String title;
@@ -16,9 +15,10 @@ public class MovieEntity {
     private String director;
     private Date releaseDate;
     private String description;
+    private int ageRatingIdAgeRating;
 
     @Id
-    @Column(name = "id_movie")
+    @Column(name = "ID_MOVIE")
     public int getIdMovie() {
         return idMovie;
     }
@@ -28,7 +28,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = "TITLE")
     public String getTitle() {
         return title;
     }
@@ -38,7 +38,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "duration")
+    @Column(name = "DURATION")
     public Integer getDuration() {
         return duration;
     }
@@ -48,7 +48,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "director")
+    @Column(name = "DIRECTOR")
     public String getDirector() {
         return director;
     }
@@ -58,7 +58,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "release_date")
+    @Column(name = "RELEASE_DATE")
     public Date getReleaseDate() {
         return releaseDate;
     }
@@ -68,13 +68,23 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "AGE_RATING_ID_AGE_RATING")
+    public int getAgeRatingIdAgeRating() {
+        return ageRatingIdAgeRating;
+    }
+
+    public void setAgeRatingIdAgeRating(int ageRatingIdAgeRating) {
+        this.ageRatingIdAgeRating = ageRatingIdAgeRating;
     }
 
     @Override
@@ -85,6 +95,7 @@ public class MovieEntity {
         MovieEntity that = (MovieEntity) o;
 
         if (idMovie != that.idMovie) return false;
+        if (ageRatingIdAgeRating != that.ageRatingIdAgeRating) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
         if (director != null ? !director.equals(that.director) : that.director != null) return false;
@@ -102,6 +113,7 @@ public class MovieEntity {
         result = 31 * result + (director != null ? director.hashCode() : 0);
         result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + ageRatingIdAgeRating;
         return result;
     }
 }

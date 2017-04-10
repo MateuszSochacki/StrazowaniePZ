@@ -4,24 +4,24 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "SEANCE", schema = "sql11167212")
+@Table(name = "SEANCE", schema = "PUBLIC", catalog = "DOCUMENTS")
 @IdClass(SeanceEntityPK.class)
 public class SeanceEntity {
     private int idSeance;
     private Timestamp date;
+    private Byte threeDimension;
     private Byte lector;
     private Byte subtitles;
     private Byte dubbing;
     private int movieIdMovie;
     private int cinemaHallIdCinemaHall;
     private int priceIdPrice;
-    private Byte threeDimension;
 
     @Id
-    @Column(name = "id_seance")
+    @Column(name = "ID_SEANCE")
     public int getIdSeance() {
         return idSeance;
     }
@@ -41,7 +41,17 @@ public class SeanceEntity {
     }
 
     @Basic
-    @Column(name = "lector")
+    @Column(name = "THREE_DIMENSION")
+    public Byte getThreeDimension() {
+        return threeDimension;
+    }
+
+    public void setThreeDimension(Byte threeDimension) {
+        this.threeDimension = threeDimension;
+    }
+
+    @Basic
+    @Column(name = "LECTOR")
     public Byte getLector() {
         return lector;
     }
@@ -51,7 +61,7 @@ public class SeanceEntity {
     }
 
     @Basic
-    @Column(name = "subtitles")
+    @Column(name = "SUBTITLES")
     public Byte getSubtitles() {
         return subtitles;
     }
@@ -61,7 +71,7 @@ public class SeanceEntity {
     }
 
     @Basic
-    @Column(name = "dubbing")
+    @Column(name = "DUBBING")
     public Byte getDubbing() {
         return dubbing;
     }
@@ -71,7 +81,7 @@ public class SeanceEntity {
     }
 
     @Id
-    @Column(name = "MOVIE_id_movie")
+    @Column(name = "MOVIE_ID_MOVIE")
     public int getMovieIdMovie() {
         return movieIdMovie;
     }
@@ -81,7 +91,7 @@ public class SeanceEntity {
     }
 
     @Id
-    @Column(name = "CINEMA_HALL_id_cinema_hall")
+    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
     public int getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
     }
@@ -91,23 +101,13 @@ public class SeanceEntity {
     }
 
     @Id
-    @Column(name = "PRICE_id_price")
+    @Column(name = "PRICE_ID_PRICE")
     public int getPriceIdPrice() {
         return priceIdPrice;
     }
 
     public void setPriceIdPrice(int priceIdPrice) {
         this.priceIdPrice = priceIdPrice;
-    }
-
-    @Basic
-    @Column(name = "three_dimension")
-    public Byte getThreeDimension() {
-        return threeDimension;
-    }
-
-    public void setThreeDimension(Byte threeDimension) {
-        this.threeDimension = threeDimension;
     }
 
     @Override
@@ -122,11 +122,11 @@ public class SeanceEntity {
         if (cinemaHallIdCinemaHall != that.cinemaHallIdCinemaHall) return false;
         if (priceIdPrice != that.priceIdPrice) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (threeDimension != null ? !threeDimension.equals(that.threeDimension) : that.threeDimension != null)
+            return false;
         if (lector != null ? !lector.equals(that.lector) : that.lector != null) return false;
         if (subtitles != null ? !subtitles.equals(that.subtitles) : that.subtitles != null) return false;
         if (dubbing != null ? !dubbing.equals(that.dubbing) : that.dubbing != null) return false;
-        if (threeDimension != null ? !threeDimension.equals(that.threeDimension) : that.threeDimension != null)
-            return false;
 
         return true;
     }
@@ -135,13 +135,13 @@ public class SeanceEntity {
     public int hashCode() {
         int result = idSeance;
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (threeDimension != null ? threeDimension.hashCode() : 0);
         result = 31 * result + (lector != null ? lector.hashCode() : 0);
         result = 31 * result + (subtitles != null ? subtitles.hashCode() : 0);
         result = 31 * result + (dubbing != null ? dubbing.hashCode() : 0);
         result = 31 * result + movieIdMovie;
         result = 31 * result + cinemaHallIdCinemaHall;
         result = 31 * result + priceIdPrice;
-        result = 31 * result + (threeDimension != null ? threeDimension.hashCode() : 0);
         return result;
     }
 }

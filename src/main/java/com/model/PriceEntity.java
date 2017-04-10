@@ -3,17 +3,17 @@ package com.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "PRICE", schema = "sql11167212")
+@Table(name = "PRICE", schema = "PUBLIC", catalog = "DOCUMENTS")
 public class PriceEntity {
     private int idPrice;
     private String name;
     private Double value;
 
     @Id
-    @Column(name = "id_price")
+    @Column(name = "ID_PRICE")
     public int getIdPrice() {
         return idPrice;
     }
@@ -23,7 +23,7 @@ public class PriceEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }

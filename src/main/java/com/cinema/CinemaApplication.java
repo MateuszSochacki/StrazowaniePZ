@@ -11,11 +11,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication
-public class CinemaApplication extends Application{
 
-	@Autowired
-	private SessionFactory sessionFactory;
+@SpringBootApplication
+public class CinemaApplication extends Application {
+
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -24,14 +23,28 @@ public class CinemaApplication extends Application{
 		primaryStage.setScene(new Scene(root, 300, 275));
 		primaryStage.show();
 
-	} //halo hjgjhg
+
+	}
 
 	public static void main(String[] args) throws Exception {
 
-
 		SpringApplication.run(CinemaApplication.class, args); //test
-		// KURWA NIKOS ZYJEMY CHLOPIE
+
+   	    // KURWA NIKOS ZYJEMY CHLOPIE
+
 		launch(args);
 	}
 
+
+
+
 }
+
+
+
+
+
+
+
+
+

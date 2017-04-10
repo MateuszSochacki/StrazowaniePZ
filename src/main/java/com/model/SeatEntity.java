@@ -3,10 +3,10 @@ package com.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "SEAT", schema = "sql11167212")
+@Table(name = "SEAT", schema = "PUBLIC", catalog = "DOCUMENTS")
 @IdClass(SeatEntityPK.class)
 public class SeatEntity {
     private int idSeat;
@@ -15,7 +15,7 @@ public class SeatEntity {
     private int cinemaHallIdCinemaHall;
 
     @Id
-    @Column(name = "id_seat")
+    @Column(name = "ID_SEAT")
     public int getIdSeat() {
         return idSeat;
     }
@@ -35,7 +35,7 @@ public class SeatEntity {
     }
 
     @Basic
-    @Column(name = "number")
+    @Column(name = "NUMBER")
     public Integer getNumber() {
         return number;
     }
@@ -45,7 +45,7 @@ public class SeatEntity {
     }
 
     @Id
-    @Column(name = "CINEMA_HALL_id_cinema_hall")
+    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
     public int getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
     }

@@ -3,16 +3,16 @@ package com.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "CATEGORY", schema = "sql11167212")
+@Table(name = "CATEGORY", schema = "PUBLIC", catalog = "DOCUMENTS")
 public class CategoryEntity {
     private int idCategory;
     private String name;
 
     @Id
-    @Column(name = "id_category")
+    @Column(name = "ID_CATEGORY")
     public int getIdCategory() {
         return idCategory;
     }
@@ -22,7 +22,7 @@ public class CategoryEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }

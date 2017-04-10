@@ -6,11 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "view_hall", schema = "sql11167212")
-
+@Table(name = "VIEW_HALL", schema = "PUBLIC", catalog = "DOCUMENTS")
 public class ViewHallEntity {
     private int idSeat;
     private Integer row;
@@ -21,7 +20,7 @@ public class ViewHallEntity {
     private Integer seatsTaken;
 
     @Basic
-    @Column(name = "id_seat")
+    @Column(name = "ID_SEAT")
     public int getIdSeat() {
         return idSeat;
     }
@@ -41,7 +40,7 @@ public class ViewHallEntity {
     }
 
     @Basic
-    @Column(name = "number")
+    @Column(name = "NUMBER")
     public Integer getNumber() {
         return number;
     }
@@ -51,7 +50,7 @@ public class ViewHallEntity {
     }
 
     @Basic
-    @Column(name = "CINEMA_HALL_id_cinema_hall")
+    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
     public int getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
     }
@@ -61,7 +60,7 @@ public class ViewHallEntity {
     }
 
     @Basic
-    @Column(name = "id_cinema_hall")
+    @Column(name = "ID_CINEMA_HALL")
     public int getIdCinemaHall() {
         return idCinemaHall;
     }
@@ -71,7 +70,7 @@ public class ViewHallEntity {
     }
 
     @Basic
-    @Column(name = "max_seats")
+    @Column(name = "MAX_SEATS")
     public Integer getMaxSeats() {
         return maxSeats;
     }
@@ -81,7 +80,7 @@ public class ViewHallEntity {
     }
 
     @Basic
-    @Column(name = "seats_taken")
+    @Column(name = "SEATS_TAKEN")
     public Integer getSeatsTaken() {
         return seatsTaken;
     }

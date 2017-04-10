@@ -5,13 +5,13 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 public class MovieHasCategoryEntityPK implements Serializable {
     private int movieIdMovie;
     private int categoryIdCategory;
 
-    @Column(name = "MOVIE_id_movie")
+    @Column(name = "MOVIE_ID_MOVIE")
     @Id
     public int getMovieIdMovie() {
         return movieIdMovie;
@@ -21,7 +21,7 @@ public class MovieHasCategoryEntityPK implements Serializable {
         this.movieIdMovie = movieIdMovie;
     }
 
-    @Column(name = "CATEGORY_id_category")
+    @Column(name = "CATEGORY_ID_CATEGORY")
     @Id
     public int getCategoryIdCategory() {
         return categoryIdCategory;

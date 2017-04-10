@@ -3,17 +3,17 @@ package com.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 09-04-2017.
+ * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "MOVIE_has_CATEGORY", schema = "sql11167212")
+@Table(name = "MOVIE_HAS_CATEGORY", schema = "PUBLIC", catalog = "DOCUMENTS")
 @IdClass(MovieHasCategoryEntityPK.class)
 public class MovieHasCategoryEntity {
     private int movieIdMovie;
     private int categoryIdCategory;
 
     @Id
-    @Column(name = "MOVIE_id_movie")
+    @Column(name = "MOVIE_ID_MOVIE")
     public int getMovieIdMovie() {
         return movieIdMovie;
     }
@@ -23,7 +23,7 @@ public class MovieHasCategoryEntity {
     }
 
     @Id
-    @Column(name = "CATEGORY_id_category")
+    @Column(name = "CATEGORY_ID_CATEGORY")
     public int getCategoryIdCategory() {
         return categoryIdCategory;
     }

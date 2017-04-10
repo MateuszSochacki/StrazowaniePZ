@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="com.control.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.control.Controller">
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints />
@@ -18,7 +17,7 @@
     </rowConstraints>
     <children>
         <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" />
+        <Button mnemonicParsing="false"  text="Button" GridPane.columnIndex="1" />
         <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="1" />
     </children>
 </GridPane>
