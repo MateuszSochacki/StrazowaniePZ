@@ -1,4 +1,4 @@
-package com.cinema.dao;
+package com.cinema;
 
 import controller.Controller;
 import javafx.application.Application;
