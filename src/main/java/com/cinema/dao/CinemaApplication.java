@@ -1,22 +1,15 @@
-package com.cinema;
+package com.cinema.dao;
 
-import com.model.CategoryEntity;
+import controller.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import com.config.*;
-import org.springframework.orm.jpa.EntityManagerHolder;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 
 @SpringBootApplication
@@ -36,23 +29,13 @@ public class CinemaApplication extends Application {
 	public static void main(String[] args) throws Exception {
 
 		SpringApplication.run(CinemaApplication.class, args); //test
-		////halo
 
-		ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
 
-
-		/*EntityManagerFactory managerFactory = context.getBean(EntityManagerFactory.class);
-
-		EntityManager manager = managerFactory.createEntityManager();
-		Session session = manager.unwrap(Session.class);
-		CategoryEntity categoryEntity = new CategoryEntity();
-		categoryEntity.setName("FANTAZI");
-		session.saveOrUpdate(categoryEntity);*/
+		Controller controller = context.getBean(Controller.class);
+		controller.test();
 
 		((AnnotationConfigApplicationContext)context).close();
-		// KURWA NIKOS ZYJEMY CHLOPIE
-
-
 		launch(args);
 	}
 

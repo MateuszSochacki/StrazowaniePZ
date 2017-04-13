@@ -1,17 +1,22 @@
-package com.model;
+package model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "CATEGORY", schema = "PUBLIC", catalog = "DOCUMENTS")
+@Table(name = "CATEGORY")
 public class CategoryEntity {
     private int idCategory;
     private String name;
 
+    public CategoryEntity() {}
+
     @Id
+    @GeneratedValue
+    @NotNull
     @Column(name = "ID_CATEGORY")
     public int getIdCategory() {
         return idCategory;

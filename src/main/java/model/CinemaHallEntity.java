@@ -1,4 +1,4 @@
-package com.model;
+package model;
 
 import javax.persistence.*;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "CINEMA_HALL", schema = "PUBLIC", catalog = "DOCUMENTS")
+@Table(name = "CINEMA_HALL")
 public class CinemaHallEntity {
     private int idCinemaHall;
     private Integer maxSeats;

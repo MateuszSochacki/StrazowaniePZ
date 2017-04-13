@@ -1,4 +1,4 @@
-package com.model;
+package model;
 
 import javax.persistence.*;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "SEAT", schema = "PUBLIC", catalog = "DOCUMENTS")
+@Table(name = "SEAT")
 @IdClass(SeatEntityPK.class)
 public class SeatEntity {
     private int idSeat;

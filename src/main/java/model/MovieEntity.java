@@ -1,4 +1,4 @@
-package com.model;
+package model;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -7,7 +7,7 @@ import java.sql.Date;
  * Created by msoch_000 on 10-04-2017.
  */
 @Entity
-@Table(name = "MOVIE", schema = "PUBLIC", catalog = "DOCUMENTS")
+@Table(name = "MOVIE")
 public class MovieEntity {
     private int idMovie;
     private String title;
