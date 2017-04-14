@@ -1,4 +1,4 @@
-package model;
+package com.cinema.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "CATEGORY")
-public class CategoryEntity {
+public class    CategoryEntity {
     private int idCategory;
     private String name;
 
@@ -55,4 +55,5 @@ public class CategoryEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
+
 }

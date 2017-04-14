@@ -1,4 +1,4 @@
-package model;
+package com.cinema.model;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
