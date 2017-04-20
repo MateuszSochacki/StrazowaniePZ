@@ -1,19 +1,18 @@
-package model;
+package com.cinema.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
- * Created by msoch_000 on 10-04-2017.
+ * Created by msoch_000 on 14-04-2017.
  */
-@Entity
-@Table(name = "MOVIE_HAS_CATEGORY")
-@IdClass(MovieHasCategoryEntityPK.class)
-public class MovieHasCategoryEntity {
+public class MovieHasCategoryEntityPK implements Serializable {
     private int movieIdMovie;
     private int categoryIdCategory;
 
-    @Id
     @Column(name = "MOVIE_ID_MOVIE")
+    @Id
     public int getMovieIdMovie() {
         return movieIdMovie;
     }
@@ -22,8 +21,8 @@ public class MovieHasCategoryEntity {
         this.movieIdMovie = movieIdMovie;
     }
 
-    @Id
     @Column(name = "CATEGORY_ID_CATEGORY")
+    @Id
     public int getCategoryIdCategory() {
         return categoryIdCategory;
     }
@@ -37,7 +36,7 @@ public class MovieHasCategoryEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MovieHasCategoryEntity that = (MovieHasCategoryEntity) o;
+        MovieHasCategoryEntityPK that = (MovieHasCategoryEntityPK) o;
 
         if (movieIdMovie != that.movieIdMovie) return false;
         if (categoryIdCategory != that.categoryIdCategory) return false;

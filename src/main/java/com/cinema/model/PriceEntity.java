@@ -1,17 +1,20 @@
-package model;
+package com.cinema.model;
 
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 10-04-2017.
+ * Created by msoch_000 on 14-04-2017.
  */
 @Entity
 @Table(name = "PRICE")
 public class PriceEntity {
+
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int idPrice;
     private String name;
     private Double value;
 
+    public PriceEntity() {}
     @Id
     @Column(name = "ID_PRICE")
     public int getIdPrice() {

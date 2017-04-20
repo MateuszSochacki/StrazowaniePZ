@@ -1,11 +1,11 @@
-package model;
+package com.cinema.model;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by msoch_000 on 10-04-2017.
+ * Created by msoch_000 on 14-04-2017.
  */
 public class SeatEntityPK implements Serializable {
     private int idSeat;

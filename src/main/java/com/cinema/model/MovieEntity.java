@@ -1,10 +1,10 @@
-package model;
+package com.cinema.model;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by msoch_000 on 10-04-2017.
+ * Created by msoch_000 on 14-04-2017.
  */
 @Entity
 @Table(name = "MOVIE")
