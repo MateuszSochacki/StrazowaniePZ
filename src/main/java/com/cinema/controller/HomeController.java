@@ -79,6 +79,7 @@ public class HomeController implements BootInitializable {
     public void onClickCategory(ActionEvent actionEvent) {
         setCenterLayout(listCategoryController.initView());
         listCategoryController.initConstruct();
+
     }
 
     public void onClickClose(ActionEvent actionEvent){

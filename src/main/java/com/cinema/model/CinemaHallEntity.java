@@ -13,6 +13,7 @@ public class CinemaHallEntity {
     private Integer seatsTaken;
 
     @Id
+    @GeneratedValue
     @Column(name = "ID_CINEMA_HALL")
     public Integer getIdCinemaHall() {
         return idCinemaHall;

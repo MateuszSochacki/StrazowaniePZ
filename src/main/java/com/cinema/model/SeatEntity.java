@@ -15,6 +15,7 @@ public class SeatEntity {
     private Integer row;
 
     @Id
+    @GeneratedValue
     @Column(name = "ID_SEAT")
     public Integer getIdSeat() {
         return idSeat;

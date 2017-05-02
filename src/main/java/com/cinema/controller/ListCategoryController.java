@@ -3,6 +3,7 @@ package com.cinema.controller;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.CategoryEntity;
 import com.cinema.services.CategoryRepository;
+import com.cinema.services.MovieRepository;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -114,5 +115,6 @@ public class ListCategoryController implements BootInitializable {
 
     public void doAdd(ActionEvent actionEvent) {
         homeController.setCenterLayout(formCategoryController.initView());
+        formCategoryController.add();
     }
 }

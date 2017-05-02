@@ -1,6 +1,8 @@
 package com.cinema.controller;
 
 import com.cinema.config.BootInitializable;
+import com.cinema.model.CategoryEntity;
+import com.cinema.services.CategoryRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,6 +16,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static java.lang.Math.toIntExact;
+
 /**
  * Created by Dominik on 14.04.2017.
  */
@@ -21,6 +25,9 @@ import java.util.ResourceBundle;
 public class FormCategoryController implements BootInitializable {
 
     private ApplicationContext springContext;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private HomeController homeController;
@@ -62,5 +69,13 @@ public class FormCategoryController implements BootInitializable {
 
     public void doCancel(ActionEvent event){
         homeController.onClickCategory(event);
+    }
+
+    public void add() {
+
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setName("to jest dramat");
+        //categoryEntity.setIdCategory(toIntExact(categoryRepository.count() + 1));
+        categoryRepository.save(categoryEntity);
     }
 }

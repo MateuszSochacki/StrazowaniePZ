@@ -18,6 +18,7 @@ public class MovieEntity {
     private Integer ageRatingIdAgeRating;
 
     @Id
+    @GeneratedValue
     @Column(name = "ID_MOVIE")
     public Integer getIdMovie() {
         return idMovie;

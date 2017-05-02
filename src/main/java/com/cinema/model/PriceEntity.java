@@ -13,6 +13,7 @@ public class PriceEntity {
     private Double value;
 
     @Id
+    @GeneratedValue
     @Column(name = "ID_PRICE")
     public Integer getIdPrice() {
         return idPrice;

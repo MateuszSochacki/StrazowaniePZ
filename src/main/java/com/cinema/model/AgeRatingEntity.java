@@ -12,6 +12,7 @@ public class AgeRatingEntity {
     private Integer requiredAge;
 
     @Id
+    @GeneratedValue
     @Column(name = "ID_AGE_RATING")
     public Integer getIdAgeRating() {
         return idAgeRating;

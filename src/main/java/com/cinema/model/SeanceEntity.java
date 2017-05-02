@@ -21,6 +21,7 @@ public class SeanceEntity {
     private Timestamp date;
 
     @Id
+    @GeneratedValue
     @Column(name = "ID_SEANCE")
     public Integer getIdSeance() {
         return idSeance;
