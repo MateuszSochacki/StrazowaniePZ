@@ -1,5 +1,6 @@
 package com.cinema.services;
 
+import com.cinema.model.CategoryEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.cinema.controller;
 
 import com.cinema.config.BootInitializable;
+import com.cinema.model.CategoryEntity;
 import com.cinema.services.CategoryRepository;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 /**
