@@ -5,51 +5,51 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by msoch_000 on 14-04-2017.
+ * Created by msoch_000 on 02-05-2017.
  */
 public class SeanceEntityPK implements Serializable {
-    private int idSeance;
-    private int movieIdMovie;
-    private int cinemaHallIdCinemaHall;
-    private int priceIdPrice;
+    private Integer idSeance;
+    private Integer movieIdMovie;
+    private Integer cinemaHallIdCinemaHall;
+    private Integer priceIdPrice;
 
     @Column(name = "ID_SEANCE")
     @Id
-    public int getIdSeance() {
+    public Integer getIdSeance() {
         return idSeance;
     }
 
-    public void setIdSeance(int idSeance) {
+    public void setIdSeance(Integer idSeance) {
         this.idSeance = idSeance;
     }
 
     @Column(name = "MOVIE_ID_MOVIE")
     @Id
-    public int getMovieIdMovie() {
+    public Integer getMovieIdMovie() {
         return movieIdMovie;
     }
 
-    public void setMovieIdMovie(int movieIdMovie) {
+    public void setMovieIdMovie(Integer movieIdMovie) {
         this.movieIdMovie = movieIdMovie;
     }
 
     @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
     @Id
-    public int getCinemaHallIdCinemaHall() {
+    public Integer getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
     }
 
-    public void setCinemaHallIdCinemaHall(int cinemaHallIdCinemaHall) {
+    public void setCinemaHallIdCinemaHall(Integer cinemaHallIdCinemaHall) {
         this.cinemaHallIdCinemaHall = cinemaHallIdCinemaHall;
     }
 
     @Column(name = "PRICE_ID_PRICE")
     @Id
-    public int getPriceIdPrice() {
+    public Integer getPriceIdPrice() {
         return priceIdPrice;
     }
 
-    public void setPriceIdPrice(int priceIdPrice) {
+    public void setPriceIdPrice(Integer priceIdPrice) {
         this.priceIdPrice = priceIdPrice;
     }
 
@@ -60,20 +60,21 @@ public class SeanceEntityPK implements Serializable {
 
         SeanceEntityPK that = (SeanceEntityPK) o;
 
-        if (idSeance != that.idSeance) return false;
-        if (movieIdMovie != that.movieIdMovie) return false;
-        if (cinemaHallIdCinemaHall != that.cinemaHallIdCinemaHall) return false;
-        if (priceIdPrice != that.priceIdPrice) return false;
+        if (idSeance != null ? !idSeance.equals(that.idSeance) : that.idSeance != null) return false;
+        if (movieIdMovie != null ? !movieIdMovie.equals(that.movieIdMovie) : that.movieIdMovie != null) return false;
+        if (cinemaHallIdCinemaHall != null ? !cinemaHallIdCinemaHall.equals(that.cinemaHallIdCinemaHall) : that.cinemaHallIdCinemaHall != null)
+            return false;
+        if (priceIdPrice != null ? !priceIdPrice.equals(that.priceIdPrice) : that.priceIdPrice != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idSeance;
-        result = 31 * result + movieIdMovie;
-        result = 31 * result + cinemaHallIdCinemaHall;
-        result = 31 * result + priceIdPrice;
+        int result = idSeance != null ? idSeance.hashCode() : 0;
+        result = 31 * result + (movieIdMovie != null ? movieIdMovie.hashCode() : 0);
+        result = 31 * result + (cinemaHallIdCinemaHall != null ? cinemaHallIdCinemaHall.hashCode() : 0);
+        result = 31 * result + (priceIdPrice != null ? priceIdPrice.hashCode() : 0);
         return result;
     }
 }

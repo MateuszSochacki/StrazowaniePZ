@@ -3,22 +3,22 @@ package com.cinema.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 14-04-2017.
+ * Created by msoch_000 on 02-05-2017.
  */
 @Entity
-@Table(name = "CINEMA_HALL")
+@Table(name = "CINEMA_HALL", schema = "PUBLIC", catalog = "DATABASE")
 public class CinemaHallEntity {
-    private int idCinemaHall;
+    private Integer idCinemaHall;
     private Integer maxSeats;
     private Integer seatsTaken;
 
     @Id
     @Column(name = "ID_CINEMA_HALL")
-    public int getIdCinemaHall() {
+    public Integer getIdCinemaHall() {
         return idCinemaHall;
     }
 
-    public void setIdCinemaHall(int idCinemaHall) {
+    public void setIdCinemaHall(Integer idCinemaHall) {
         this.idCinemaHall = idCinemaHall;
     }
 
@@ -49,7 +49,7 @@ public class CinemaHallEntity {
 
         CinemaHallEntity that = (CinemaHallEntity) o;
 
-        if (idCinemaHall != that.idCinemaHall) return false;
+        if (idCinemaHall != null ? !idCinemaHall.equals(that.idCinemaHall) : that.idCinemaHall != null) return false;
         if (maxSeats != null ? !maxSeats.equals(that.maxSeats) : that.maxSeats != null) return false;
         if (seatsTaken != null ? !seatsTaken.equals(that.seatsTaken) : that.seatsTaken != null) return false;
 
@@ -58,7 +58,7 @@ public class CinemaHallEntity {
 
     @Override
     public int hashCode() {
-        int result = idCinemaHall;
+        int result = idCinemaHall != null ? idCinemaHall.hashCode() : 0;
         result = 31 * result + (maxSeats != null ? maxSeats.hashCode() : 0);
         result = 31 * result + (seatsTaken != null ? seatsTaken.hashCode() : 0);
         return result;

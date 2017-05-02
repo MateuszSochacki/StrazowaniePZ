@@ -5,29 +5,29 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by msoch_000 on 14-04-2017.
+ * Created by msoch_000 on 02-05-2017.
  */
 public class SeatEntityPK implements Serializable {
-    private int idSeat;
-    private int cinemaHallIdCinemaHall;
+    private Integer idSeat;
+    private Integer cinemaHallIdCinemaHall;
 
     @Column(name = "ID_SEAT")
     @Id
-    public int getIdSeat() {
+    public Integer getIdSeat() {
         return idSeat;
     }
 
-    public void setIdSeat(int idSeat) {
+    public void setIdSeat(Integer idSeat) {
         this.idSeat = idSeat;
     }
 
     @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
     @Id
-    public int getCinemaHallIdCinemaHall() {
+    public Integer getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
     }
 
-    public void setCinemaHallIdCinemaHall(int cinemaHallIdCinemaHall) {
+    public void setCinemaHallIdCinemaHall(Integer cinemaHallIdCinemaHall) {
         this.cinemaHallIdCinemaHall = cinemaHallIdCinemaHall;
     }
 
@@ -38,16 +38,17 @@ public class SeatEntityPK implements Serializable {
 
         SeatEntityPK that = (SeatEntityPK) o;
 
-        if (idSeat != that.idSeat) return false;
-        if (cinemaHallIdCinemaHall != that.cinemaHallIdCinemaHall) return false;
+        if (idSeat != null ? !idSeat.equals(that.idSeat) : that.idSeat != null) return false;
+        if (cinemaHallIdCinemaHall != null ? !cinemaHallIdCinemaHall.equals(that.cinemaHallIdCinemaHall) : that.cinemaHallIdCinemaHall != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idSeat;
-        result = 31 * result + cinemaHallIdCinemaHall;
+        int result = idSeat != null ? idSeat.hashCode() : 0;
+        result = 31 * result + (cinemaHallIdCinemaHall != null ? cinemaHallIdCinemaHall.hashCode() : 0);
         return result;
     }
 }

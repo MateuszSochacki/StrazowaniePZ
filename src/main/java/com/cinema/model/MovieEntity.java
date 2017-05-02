@@ -4,26 +4,26 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by msoch_000 on 14-04-2017.
+ * Created by msoch_000 on 02-05-2017.
  */
 @Entity
-@Table(name = "MOVIE")
+@Table(name = "MOVIE", schema = "PUBLIC", catalog = "DATABASE")
 public class MovieEntity {
-    private int idMovie;
+    private Integer idMovie;
     private String title;
     private Integer duration;
     private String director;
     private Date releaseDate;
     private String description;
-    private int ageRatingIdAgeRating;
+    private Integer ageRatingIdAgeRating;
 
     @Id
     @Column(name = "ID_MOVIE")
-    public int getIdMovie() {
+    public Integer getIdMovie() {
         return idMovie;
     }
 
-    public void setIdMovie(int idMovie) {
+    public void setIdMovie(Integer idMovie) {
         this.idMovie = idMovie;
     }
 
@@ -79,11 +79,11 @@ public class MovieEntity {
 
     @Basic
     @Column(name = "AGE_RATING_ID_AGE_RATING")
-    public int getAgeRatingIdAgeRating() {
+    public Integer getAgeRatingIdAgeRating() {
         return ageRatingIdAgeRating;
     }
 
-    public void setAgeRatingIdAgeRating(int ageRatingIdAgeRating) {
+    public void setAgeRatingIdAgeRating(Integer ageRatingIdAgeRating) {
         this.ageRatingIdAgeRating = ageRatingIdAgeRating;
     }
 
@@ -94,26 +94,27 @@ public class MovieEntity {
 
         MovieEntity that = (MovieEntity) o;
 
-        if (idMovie != that.idMovie) return false;
-        if (ageRatingIdAgeRating != that.ageRatingIdAgeRating) return false;
+        if (idMovie != null ? !idMovie.equals(that.idMovie) : that.idMovie != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
         if (director != null ? !director.equals(that.director) : that.director != null) return false;
         if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (ageRatingIdAgeRating != null ? !ageRatingIdAgeRating.equals(that.ageRatingIdAgeRating) : that.ageRatingIdAgeRating != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idMovie;
+        int result = idMovie != null ? idMovie.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
         result = 31 * result + (director != null ? director.hashCode() : 0);
         result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + ageRatingIdAgeRating;
+        result = 31 * result + (ageRatingIdAgeRating != null ? ageRatingIdAgeRating.hashCode() : 0);
         return result;
     }
 }

@@ -5,29 +5,29 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by msoch_000 on 14-04-2017.
+ * Created by msoch_000 on 02-05-2017.
  */
 public class MovieHasCategoryEntityPK implements Serializable {
-    private int movieIdMovie;
-    private int categoryIdCategory;
+    private Integer movieIdMovie;
+    private Integer categoryIdCategory;
 
     @Column(name = "MOVIE_ID_MOVIE")
     @Id
-    public int getMovieIdMovie() {
+    public Integer getMovieIdMovie() {
         return movieIdMovie;
     }
 
-    public void setMovieIdMovie(int movieIdMovie) {
+    public void setMovieIdMovie(Integer movieIdMovie) {
         this.movieIdMovie = movieIdMovie;
     }
 
     @Column(name = "CATEGORY_ID_CATEGORY")
     @Id
-    public int getCategoryIdCategory() {
+    public Integer getCategoryIdCategory() {
         return categoryIdCategory;
     }
 
-    public void setCategoryIdCategory(int categoryIdCategory) {
+    public void setCategoryIdCategory(Integer categoryIdCategory) {
         this.categoryIdCategory = categoryIdCategory;
     }
 
@@ -38,16 +38,17 @@ public class MovieHasCategoryEntityPK implements Serializable {
 
         MovieHasCategoryEntityPK that = (MovieHasCategoryEntityPK) o;
 
-        if (movieIdMovie != that.movieIdMovie) return false;
-        if (categoryIdCategory != that.categoryIdCategory) return false;
+        if (movieIdMovie != null ? !movieIdMovie.equals(that.movieIdMovie) : that.movieIdMovie != null) return false;
+        if (categoryIdCategory != null ? !categoryIdCategory.equals(that.categoryIdCategory) : that.categoryIdCategory != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = movieIdMovie;
-        result = 31 * result + categoryIdCategory;
+        int result = movieIdMovie != null ? movieIdMovie.hashCode() : 0;
+        result = 31 * result + (categoryIdCategory != null ? categoryIdCategory.hashCode() : 0);
         return result;
     }
 }

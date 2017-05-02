@@ -3,21 +3,21 @@ package com.cinema.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 14-04-2017.
+ * Created by msoch_000 on 02-05-2017.
  */
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "CATEGORY", schema = "PUBLIC", catalog = "DATABASE")
 public class CategoryEntity {
-    private int idCategory;
+    private Integer idCategory;
     private String name;
 
     @Id
     @Column(name = "ID_CATEGORY")
-    public int getIdCategory() {
+    public Integer getIdCategory() {
         return idCategory;
     }
 
-    public void setIdCategory(int idCategory) {
+    public void setIdCategory(Integer idCategory) {
         this.idCategory = idCategory;
     }
 
@@ -38,7 +38,7 @@ public class CategoryEntity {
 
         CategoryEntity that = (CategoryEntity) o;
 
-        if (idCategory != that.idCategory) return false;
+        if (idCategory != null ? !idCategory.equals(that.idCategory) : that.idCategory != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
@@ -46,7 +46,7 @@ public class CategoryEntity {
 
     @Override
     public int hashCode() {
-        int result = idCategory;
+        int result = idCategory != null ? idCategory.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

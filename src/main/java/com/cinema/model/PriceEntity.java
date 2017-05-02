@@ -3,25 +3,22 @@ package com.cinema.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 14-04-2017.
+ * Created by msoch_000 on 02-05-2017.
  */
 @Entity
-@Table(name = "PRICE")
+@Table(name = "PRICE", schema = "PUBLIC", catalog = "DATABASE")
 public class PriceEntity {
-
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private int idPrice;
+    private Integer idPrice;
     private String name;
     private Double value;
 
-    public PriceEntity() {}
     @Id
     @Column(name = "ID_PRICE")
-    public int getIdPrice() {
+    public Integer getIdPrice() {
         return idPrice;
     }
 
-    public void setIdPrice(int idPrice) {
+    public void setIdPrice(Integer idPrice) {
         this.idPrice = idPrice;
     }
 
@@ -36,7 +33,7 @@ public class PriceEntity {
     }
 
     @Basic
-    @Column(name = "value")
+    @Column(name = "VALUE")
     public Double getValue() {
         return value;
     }
@@ -52,7 +49,7 @@ public class PriceEntity {
 
         PriceEntity that = (PriceEntity) o;
 
-        if (idPrice != that.idPrice) return false;
+        if (idPrice != null ? !idPrice.equals(that.idPrice) : that.idPrice != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (value != null ? !value.equals(that.value) : that.value != null) return false;
 
@@ -61,7 +58,7 @@ public class PriceEntity {
 
     @Override
     public int hashCode() {
-        int result = idPrice;
+        int result = idPrice != null ? idPrice.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;

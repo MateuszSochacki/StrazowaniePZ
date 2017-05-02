@@ -3,21 +3,21 @@ package com.cinema.model;
 import javax.persistence.*;
 
 /**
- * Created by msoch_000 on 14-04-2017.
+ * Created by msoch_000 on 02-05-2017.
  */
 @Entity
-@Table(name = "AGE_RATING")
+@Table(name = "AGE_RATING", schema = "PUBLIC", catalog = "DATABASE")
 public class AgeRatingEntity {
-    private int idAgeRating;
+    private Integer idAgeRating;
     private Integer requiredAge;
 
     @Id
     @Column(name = "ID_AGE_RATING")
-    public int getIdAgeRating() {
+    public Integer getIdAgeRating() {
         return idAgeRating;
     }
 
-    public void setIdAgeRating(int idAgeRating) {
+    public void setIdAgeRating(Integer idAgeRating) {
         this.idAgeRating = idAgeRating;
     }
 
@@ -38,7 +38,7 @@ public class AgeRatingEntity {
 
         AgeRatingEntity that = (AgeRatingEntity) o;
 
-        if (idAgeRating != that.idAgeRating) return false;
+        if (idAgeRating != null ? !idAgeRating.equals(that.idAgeRating) : that.idAgeRating != null) return false;
         if (requiredAge != null ? !requiredAge.equals(that.requiredAge) : that.requiredAge != null) return false;
 
         return true;
@@ -46,7 +46,7 @@ public class AgeRatingEntity {
 
     @Override
     public int hashCode() {
-        int result = idAgeRating;
+        int result = idAgeRating != null ? idAgeRating.hashCode() : 0;
         result = 31 * result + (requiredAge != null ? requiredAge.hashCode() : 0);
         return result;
     }
