@@ -5,10 +5,7 @@
       <configuration>
         <fileset id="fileset" name="Application Context" removed="false">
           <dependency>spring_boot_com.cinema.CinemaApplication</dependency>
-          <file>file://$MODULE_DIR$/src/main/java/com/config/ApplicationConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/com/cinema/CinemaApplication.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/com/cinema/Config.java</file>
-          <file>file://$MODULE_DIR$/context.xml</file>
         </fileset>
       </configuration>
     </facet>

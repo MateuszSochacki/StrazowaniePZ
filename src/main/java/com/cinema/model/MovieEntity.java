@@ -2,24 +2,34 @@ package com.cinema.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by msoch_000 on 02-05-2017.
  */
 @Entity
-@Table(name = "MOVIE", schema = "PUBLIC", catalog = "DATABASE")
 public class MovieEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_movie")
     private Integer idMovie;
+
     private String title;
     private Integer duration;
     private String director;
     private Date releaseDate;
     private String description;
-    private Integer ageRatingIdAgeRating;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "ID_MOVIE")
+
+
+    //fetch musi być ustawione na eager, dzięki czemu pobiera też inne encje które wykorzystuje, w tym przypadku CategoryEntity
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "movie_category", joinColumns = {@JoinColumn(name = "id_movie")}, inverseJoinColumns = {@JoinColumn(columnDefinition = "id_category")})
+    private List<CategoryEntity> categoryEntities;
+
+    //TODO: analogicznie do ageRating
+
     public Integer getIdMovie() {
         return idMovie;
     }
@@ -28,8 +38,6 @@ public class MovieEntity {
         this.idMovie = idMovie;
     }
 
-    @Basic
-    @Column(name = "TITLE")
     public String getTitle() {
         return title;
     }
@@ -38,8 +46,6 @@ public class MovieEntity {
         this.title = title;
     }
 
-    @Basic
-    @Column(name = "DURATION")
     public Integer getDuration() {
         return duration;
     }
@@ -48,8 +54,6 @@ public class MovieEntity {
         this.duration = duration;
     }
 
-    @Basic
-    @Column(name = "DIRECTOR")
     public String getDirector() {
         return director;
     }
@@ -58,8 +62,6 @@ public class MovieEntity {
         this.director = director;
     }
 
-    @Basic
-    @Column(name = "RELEASE_DATE")
     public Date getReleaseDate() {
         return releaseDate;
     }
@@ -68,8 +70,6 @@ public class MovieEntity {
         this.releaseDate = releaseDate;
     }
 
-    @Basic
-    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }
@@ -78,44 +78,13 @@ public class MovieEntity {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "AGE_RATING_ID_AGE_RATING")
-    public Integer getAgeRatingIdAgeRating() {
-        return ageRatingIdAgeRating;
+    public List<CategoryEntity> getCategoryEntities() {
+        return categoryEntities;
     }
 
-    public void setAgeRatingIdAgeRating(Integer ageRatingIdAgeRating) {
-        this.ageRatingIdAgeRating = ageRatingIdAgeRating;
+    public void setAgeRatingEntity(List<CategoryEntity> categoryEntities) {
+        this.categoryEntities = categoryEntities;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        MovieEntity that = (MovieEntity) o;
-
-        if (idMovie != null ? !idMovie.equals(that.idMovie) : that.idMovie != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
-        if (director != null ? !director.equals(that.director) : that.director != null) return false;
-        if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (ageRatingIdAgeRating != null ? !ageRatingIdAgeRating.equals(that.ageRatingIdAgeRating) : that.ageRatingIdAgeRating != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idMovie != null ? idMovie.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (duration != null ? duration.hashCode() : 0);
-        result = 31 * result + (director != null ? director.hashCode() : 0);
-        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (ageRatingIdAgeRating != null ? ageRatingIdAgeRating.hashCode() : 0);
-        return result;
-    }
 }

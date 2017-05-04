@@ -7,22 +7,20 @@ import java.sql.Timestamp;
  * Created by msoch_000 on 02-05-2017.
  */
 @Entity
-@Table(name = "SEANCE", schema = "PUBLIC", catalog = "DATABASE")
-@IdClass(SeanceEntityPK.class)
 public class SeanceEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idSeance;
+
     private Byte threeDim;
     private Byte lector;
     private Byte subtitles;
     private Byte dubbing;
-    private Integer movieIdMovie;
-    private Integer cinemaHallIdCinemaHall;
-    private Integer priceIdPrice;
-    private Timestamp date;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "ID_SEANCE")
+    @OneToOne
+    private MovieEntity movie;
+
     public Integer getIdSeance() {
         return idSeance;
     }
@@ -31,8 +29,6 @@ public class SeanceEntity {
         this.idSeance = idSeance;
     }
 
-    @Basic
-    @Column(name = "THREE_DIM")
     public Byte getThreeDim() {
         return threeDim;
     }
@@ -41,8 +37,6 @@ public class SeanceEntity {
         this.threeDim = threeDim;
     }
 
-    @Basic
-    @Column(name = "LECTOR")
     public Byte getLector() {
         return lector;
     }
@@ -51,8 +45,6 @@ public class SeanceEntity {
         this.lector = lector;
     }
 
-    @Basic
-    @Column(name = "SUBTITLES")
     public Byte getSubtitles() {
         return subtitles;
     }
@@ -61,8 +53,6 @@ public class SeanceEntity {
         this.subtitles = subtitles;
     }
 
-    @Basic
-    @Column(name = "DUBBING")
     public Byte getDubbing() {
         return dubbing;
     }
@@ -71,28 +61,22 @@ public class SeanceEntity {
         this.dubbing = dubbing;
     }
 
-    @Id
-    @Column(name = "MOVIE_ID_MOVIE")
-    public Integer getMovieIdMovie() {
-        return movieIdMovie;
+    public MovieEntity getMovie() {
+        return movie;
     }
 
-    public void setMovieIdMovie(Integer movieIdMovie) {
-        this.movieIdMovie = movieIdMovie;
+    public void setMovie(MovieEntity movie) {
+        this.movie = movie;
     }
 
-    @Id
-    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
-    public Integer getCinemaHallIdCinemaHall() {
-        return cinemaHallIdCinemaHall;
+    public CinemaHallEntity getCinemaHall() {
+        return cinemaHall;
     }
 
-    public void setCinemaHallIdCinemaHall(Integer cinemaHallIdCinemaHall) {
-        this.cinemaHallIdCinemaHall = cinemaHallIdCinemaHall;
+    public void setCinemaHall(CinemaHallEntity cinemaHall) {
+        this.cinemaHall = cinemaHall;
     }
 
-    @Id
-    @Column(name = "PRICE_ID_PRICE")
     public Integer getPriceIdPrice() {
         return priceIdPrice;
     }
@@ -101,8 +85,6 @@ public class SeanceEntity {
         this.priceIdPrice = priceIdPrice;
     }
 
-    @Basic
-    @Column(name = "DATE")
     public Timestamp getDate() {
         return date;
     }
@@ -111,38 +93,12 @@ public class SeanceEntity {
         this.date = date;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @OneToOne
+    private CinemaHallEntity cinemaHall;
 
-        SeanceEntity that = (SeanceEntity) o;
+    private Integer priceIdPrice;
 
-        if (idSeance != null ? !idSeance.equals(that.idSeance) : that.idSeance != null) return false;
-        if (threeDim != null ? !threeDim.equals(that.threeDim) : that.threeDim != null) return false;
-        if (lector != null ? !lector.equals(that.lector) : that.lector != null) return false;
-        if (subtitles != null ? !subtitles.equals(that.subtitles) : that.subtitles != null) return false;
-        if (dubbing != null ? !dubbing.equals(that.dubbing) : that.dubbing != null) return false;
-        if (movieIdMovie != null ? !movieIdMovie.equals(that.movieIdMovie) : that.movieIdMovie != null) return false;
-        if (cinemaHallIdCinemaHall != null ? !cinemaHallIdCinemaHall.equals(that.cinemaHallIdCinemaHall) : that.cinemaHallIdCinemaHall != null)
-            return false;
-        if (priceIdPrice != null ? !priceIdPrice.equals(that.priceIdPrice) : that.priceIdPrice != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+    private Timestamp date;
 
-        return true;
-    }
 
-    @Override
-    public int hashCode() {
-        int result = idSeance != null ? idSeance.hashCode() : 0;
-        result = 31 * result + (threeDim != null ? threeDim.hashCode() : 0);
-        result = 31 * result + (lector != null ? lector.hashCode() : 0);
-        result = 31 * result + (subtitles != null ? subtitles.hashCode() : 0);
-        result = 31 * result + (dubbing != null ? dubbing.hashCode() : 0);
-        result = 31 * result + (movieIdMovie != null ? movieIdMovie.hashCode() : 0);
-        result = 31 * result + (cinemaHallIdCinemaHall != null ? cinemaHallIdCinemaHall.hashCode() : 0);
-        result = 31 * result + (priceIdPrice != null ? priceIdPrice.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
-    }
 }

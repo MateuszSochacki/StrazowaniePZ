@@ -1,20 +1,15 @@
 package com.cinema.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by msoch_000 on 02-05-2017.
  */
 @Entity
-@Table(name = "CINEMA_HALL", schema = "PUBLIC", catalog = "DATABASE")
 public class CinemaHallEntity {
-    private Integer idCinemaHall;
-    private Integer maxSeats;
-    private Integer seatsTaken;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "ID_CINEMA_HALL")
     public Integer getIdCinemaHall() {
         return idCinemaHall;
     }
@@ -23,8 +18,14 @@ public class CinemaHallEntity {
         this.idCinemaHall = idCinemaHall;
     }
 
-    @Basic
-    @Column(name = "MAX_SEATS")
+    public int getCinemaHallType() {
+        return cinemaHallType;
+    }
+
+    public void setCinemaHallType(int cinemaHallType) {
+        this.cinemaHallType = cinemaHallType;
+    }
+
     public Integer getMaxSeats() {
         return maxSeats;
     }
@@ -33,8 +34,6 @@ public class CinemaHallEntity {
         this.maxSeats = maxSeats;
     }
 
-    @Basic
-    @Column(name = "SEATS_TAKEN")
     public Integer getSeatsTaken() {
         return seatsTaken;
     }
@@ -43,25 +42,13 @@ public class CinemaHallEntity {
         this.seatsTaken = seatsTaken;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer idCinemaHall;
 
-        CinemaHallEntity that = (CinemaHallEntity) o;
+    private int cinemaHallType;
+    private Integer maxSeats;
+    private Integer seatsTaken;
 
-        if (idCinemaHall != null ? !idCinemaHall.equals(that.idCinemaHall) : that.idCinemaHall != null) return false;
-        if (maxSeats != null ? !maxSeats.equals(that.maxSeats) : that.maxSeats != null) return false;
-        if (seatsTaken != null ? !seatsTaken.equals(that.seatsTaken) : that.seatsTaken != null) return false;
 
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idCinemaHall != null ? idCinemaHall.hashCode() : 0;
-        result = 31 * result + (maxSeats != null ? maxSeats.hashCode() : 0);
-        result = 31 * result + (seatsTaken != null ? seatsTaken.hashCode() : 0);
-        return result;
-    }
 }

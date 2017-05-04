@@ -1,9 +1,11 @@
 package com.cinema.controller;
 
 import com.cinema.config.BootInitializable;
-import com.cinema.model.CategoryEntity;
+import com.cinema.model.*;
 import com.cinema.services.CategoryRepository;
 import com.cinema.services.MovieRepository;
+import com.cinema.services.SeanceRepository;
+import com.cinema.services.SeatRepository;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,8 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Dominik on 14.04.2017.
@@ -57,6 +58,17 @@ public class ListCategoryController implements BootInitializable {
 
     private ApplicationContext springContext;
 
+    @Autowired
+    private SeatRepository seatRepository;
+
+    @Autowired
+    private SeanceRepository seanceRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
+
+
     public void setFields(CategoryEntity entity) {
         txtId.setText(Integer.toString(entity.getIdCategory()));
         txtName.setText(entity.getName());
@@ -86,6 +98,18 @@ public class ListCategoryController implements BootInitializable {
     public void initConstruct() {
         tableView.getItems().clear();
         tableView.getItems().addAll(categoryRepository.findAll());
+
+        //TODO: DELETE
+        //wykorzystanie w praktyce
+        List<MovieEntity> movies = movieRepository.findAll();
+
+        for(MovieEntity movie: movies){
+            System.out.println("Film " + movie.getTitle()+ " ma kategorie: ");
+            for(CategoryEntity category: movie.getCategoryEntities()){
+                System.out.print(category.getName()+", ");
+            }
+        }
+
     }
 
     @Override
