@@ -62,7 +62,7 @@
                               <Pane prefHeight="496.0" prefWidth="476.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <TextArea editable="false" layoutX="14.0" layoutY="191.0" maxHeight="400.0" prefHeight="400.0" />
-                                    <Label id="title" layoutX="238.0" layoutY="22.0" prefHeight="43.0" prefWidth="178.0" stylesheets="@../../../../../css/style.css" text="tytuł">
+                                    <Label id="title" layoutX="238.0" layoutY="22.0" prefHeight="43.0" prefWidth="178.0" stylesheets="@../../css/style.css" text="tytuł">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -70,7 +70,7 @@
                                     <Label layoutX="238.0" layoutY="80.0" text="genre" />
                                     <Label layoutX="238.0" layoutY="113.0" text="duration" />
                                     <Label layoutX="238.0" layoutY="141.0" text="pegi" />
-                                    <Button id="go_btn" layoutX="320.0" layoutY="136.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="178.0" stylesheets="@../../../../../css/style.css" text="GO ➞" />
+                                    <Button id="go_btn" layoutX="320.0" layoutY="136.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="178.0" stylesheets="@../../css/style.css" text="GO ➞" />
                                  </children>
                               </Pane>
                               <ImageView fitHeight="184.0" fitWidth="178.0" layoutX="22.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">

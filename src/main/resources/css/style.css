@@ -1,0 +1,8 @@
+#title{
+	color: orange;
+	-fx-font-size: 40px;
+}
+#go_btn{
+	bottom: 10px;
+	left: 10px;
+}
