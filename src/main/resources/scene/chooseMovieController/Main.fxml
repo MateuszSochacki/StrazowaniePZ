@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="781.0" prefWidth="1358.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cinema.controller.ChooseMovie">
+<AnchorPane prefHeight="781.0" prefWidth="1358.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <SplitPane dividerPositions="0.531584062196307" layoutX="136.0" layoutY="131.0" prefHeight="717.0" prefWidth="1083.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -87,7 +87,7 @@
                               </Pane>
                               <ImageView fx:id="imageViewPoster" fitHeight="184.0" fitWidth="178.0" layoutX="22.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../../Downloads/test.jpg" />
+
                                  </image>
                               </ImageView>
                            </children>

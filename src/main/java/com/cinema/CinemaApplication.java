@@ -1,5 +1,6 @@
 package com.cinema;
 
+import com.cinema.controller.ChooseMovieController;
 import com.cinema.controller.HomeController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -36,7 +37,7 @@ public class CinemaApplication extends Application {
 			}
 		};
 		task.setOnSucceeded(e -> {
-			HomeController controller = springContext.getBean(HomeController.class);
+			ChooseMovieController controller = springContext.getBean(ChooseMovieController.class);
 			Parent parent = (Parent) controller.initView();
 			Scene scene = new Scene(parent);
 
