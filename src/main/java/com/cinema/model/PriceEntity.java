@@ -14,7 +14,7 @@ public class PriceEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_PRICE")
+    @Column(name = "ID_PRICE", nullable = false)
     public Integer getIdPrice() {
         return idPrice;
     }
@@ -24,7 +24,7 @@ public class PriceEntity {
     }
 
     @Basic
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = true, length = 45)
     public String getName() {
         return name;
     }
@@ -34,7 +34,7 @@ public class PriceEntity {
     }
 
     @Basic
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", nullable = true, precision = 0)
     public Double getValue() {
         return value;
     }

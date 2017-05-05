@@ -11,7 +11,7 @@ public class MovieHasCategoryEntityPK implements Serializable {
     private Integer movieIdMovie;
     private Integer categoryIdCategory;
 
-    @Column(name = "MOVIE_ID_MOVIE")
+    @Column(name = "MOVIE_ID_MOVIE", nullable = false)
     @Id
     public Integer getMovieIdMovie() {
         return movieIdMovie;
@@ -21,7 +21,7 @@ public class MovieHasCategoryEntityPK implements Serializable {
         this.movieIdMovie = movieIdMovie;
     }
 
-    @Column(name = "CATEGORY_ID_CATEGORY")
+    @Column(name = "CATEGORY_ID_CATEGORY", nullable = false)
     @Id
     public Integer getCategoryIdCategory() {
         return categoryIdCategory;

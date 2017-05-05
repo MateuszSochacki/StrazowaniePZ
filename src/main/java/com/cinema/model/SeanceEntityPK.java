@@ -1,6 +1,7 @@
 package com.cinema.model;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
@@ -13,7 +14,8 @@ public class SeanceEntityPK implements Serializable {
     private Integer cinemaHallIdCinemaHall;
     private Integer priceIdPrice;
 
-    @Column(name = "ID_SEANCE")
+    @GeneratedValue
+    @Column(name = "ID_SEANCE", nullable = false)
     @Id
     public Integer getIdSeance() {
         return idSeance;
@@ -23,7 +25,7 @@ public class SeanceEntityPK implements Serializable {
         this.idSeance = idSeance;
     }
 
-    @Column(name = "MOVIE_ID_MOVIE")
+    @Column(name = "MOVIE_ID_MOVIE", nullable = false)
     @Id
     public Integer getMovieIdMovie() {
         return movieIdMovie;
@@ -33,7 +35,7 @@ public class SeanceEntityPK implements Serializable {
         this.movieIdMovie = movieIdMovie;
     }
 
-    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
+    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL", nullable = false)
     @Id
     public Integer getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
@@ -43,7 +45,7 @@ public class SeanceEntityPK implements Serializable {
         this.cinemaHallIdCinemaHall = cinemaHallIdCinemaHall;
     }
 
-    @Column(name = "PRICE_ID_PRICE")
+    @Column(name = "PRICE_ID_PRICE", nullable = false)
     @Id
     public Integer getPriceIdPrice() {
         return priceIdPrice;

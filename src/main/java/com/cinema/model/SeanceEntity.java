@@ -22,7 +22,7 @@ public class SeanceEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_SEANCE")
+    @Column(name = "ID_SEANCE", nullable = false)
     public Integer getIdSeance() {
         return idSeance;
     }
@@ -32,7 +32,7 @@ public class SeanceEntity {
     }
 
     @Basic
-    @Column(name = "THREE_DIM")
+    @Column(name = "THREE_DIM", nullable = true)
     public Byte getThreeDim() {
         return threeDim;
     }
@@ -42,7 +42,7 @@ public class SeanceEntity {
     }
 
     @Basic
-    @Column(name = "LECTOR")
+    @Column(name = "LECTOR", nullable = true)
     public Byte getLector() {
         return lector;
     }
@@ -52,7 +52,7 @@ public class SeanceEntity {
     }
 
     @Basic
-    @Column(name = "SUBTITLES")
+    @Column(name = "SUBTITLES", nullable = true)
     public Byte getSubtitles() {
         return subtitles;
     }
@@ -62,7 +62,7 @@ public class SeanceEntity {
     }
 
     @Basic
-    @Column(name = "DUBBING")
+    @Column(name = "DUBBING", nullable = true)
     public Byte getDubbing() {
         return dubbing;
     }
@@ -72,7 +72,7 @@ public class SeanceEntity {
     }
 
     @Id
-    @Column(name = "MOVIE_ID_MOVIE")
+    @Column(name = "MOVIE_ID_MOVIE", nullable = false)
     public Integer getMovieIdMovie() {
         return movieIdMovie;
     }
@@ -82,7 +82,7 @@ public class SeanceEntity {
     }
 
     @Id
-    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
+    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL", nullable = false)
     public Integer getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
     }
@@ -92,7 +92,7 @@ public class SeanceEntity {
     }
 
     @Id
-    @Column(name = "PRICE_ID_PRICE")
+    @Column(name = "PRICE_ID_PRICE", nullable = false)
     public Integer getPriceIdPrice() {
         return priceIdPrice;
     }
@@ -102,7 +102,7 @@ public class SeanceEntity {
     }
 
     @Basic
-    @Column(name = "DATE")
+    @Column(name = "DATE", nullable = true)
     public Timestamp getDate() {
         return date;
     }

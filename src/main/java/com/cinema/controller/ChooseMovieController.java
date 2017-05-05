@@ -16,6 +16,10 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,8 @@ import java.util.ResourceBundle;
 @Component
 public class ChooseMovieController implements BootInitializable {
 
+    @FXML
+    private GridPane gridPaneMovie;
     @FXML
     private ComboBox<Integer> comboBoxAge;
     @FXML
@@ -79,8 +85,21 @@ public class ChooseMovieController implements BootInitializable {
                 FXCollections.observableArrayList(genreList);
         comboBoxGenre.setItems(categoryEntityObservableList);
 
-
         comboBoxDuration.getItems().addAll(">1h","1h<","2h<");
+        ImageView imgView = new ImageView();
+
+        gridPaneMovie.add(imgView,0,0);
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

@@ -13,7 +13,7 @@ public class MovieHasCategoryEntity {
     private Integer categoryIdCategory;
 
     @Id
-    @Column(name = "MOVIE_ID_MOVIE")
+    @Column(name = "MOVIE_ID_MOVIE", nullable = false)
     public Integer getMovieIdMovie() {
         return movieIdMovie;
     }
@@ -23,7 +23,7 @@ public class MovieHasCategoryEntity {
     }
 
     @Id
-    @Column(name = "CATEGORY_ID_CATEGORY")
+    @Column(name = "CATEGORY_ID_CATEGORY", nullable = false)
     public Integer getCategoryIdCategory() {
         return categoryIdCategory;
     }

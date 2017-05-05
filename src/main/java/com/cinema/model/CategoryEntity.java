@@ -15,7 +15,7 @@ public class CategoryEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_CATEGORY")
+    @Column(name = "ID_CATEGORY", nullable = false)
     public Integer getIdCategory() {
         return idCategory;
     }
@@ -25,7 +25,7 @@ public class CategoryEntity {
     }
 
     @Basic
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = true, length = 45)
     public String getName() {
         return name;
     }

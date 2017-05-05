@@ -16,7 +16,7 @@ public class SeatEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_SEAT")
+    @Column(name = "ID_SEAT", nullable = false)
     public Integer getIdSeat() {
         return idSeat;
     }
@@ -26,7 +26,7 @@ public class SeatEntity {
     }
 
     @Basic
-    @Column(name = "NUMBER")
+    @Column(name = "NUMBER", nullable = true)
     public Integer getNumber() {
         return number;
     }
@@ -36,7 +36,7 @@ public class SeatEntity {
     }
 
     @Id
-    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL")
+    @Column(name = "CINEMA_HALL_ID_CINEMA_HALL", nullable = false)
     public Integer getCinemaHallIdCinemaHall() {
         return cinemaHallIdCinemaHall;
     }
@@ -46,7 +46,7 @@ public class SeatEntity {
     }
 
     @Basic
-    @Column(name = "ROW")
+    @Column(name = "ROW", nullable = true)
     public Integer getRow() {
         return row;
     }

@@ -13,7 +13,7 @@ public class AgeRatingEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_AGE_RATING")
+    @Column(name = "ID_AGE_RATING", nullable = false)
     public Integer getIdAgeRating() {
         return idAgeRating;
     }
@@ -23,7 +23,7 @@ public class AgeRatingEntity {
     }
 
     @Basic
-    @Column(name = "REQUIRED_AGE")
+    @Column(name = "REQUIRED_AGE", nullable = true)
     public Integer getRequiredAge() {
         return requiredAge;
     }

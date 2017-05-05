@@ -14,7 +14,7 @@ public class CinemaHallEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_CINEMA_HALL")
+    @Column(name = "ID_CINEMA_HALL", nullable = false)
     public Integer getIdCinemaHall() {
         return idCinemaHall;
     }
@@ -24,7 +24,7 @@ public class CinemaHallEntity {
     }
 
     @Basic
-    @Column(name = "MAX_SEATS")
+    @Column(name = "MAX_SEATS", nullable = true)
     public Integer getMaxSeats() {
         return maxSeats;
     }
@@ -34,7 +34,7 @@ public class CinemaHallEntity {
     }
 
     @Basic
-    @Column(name = "SEATS_TAKEN")
+    @Column(name = "SEATS_TAKEN", nullable = true)
     public Integer getSeatsTaken() {
         return seatsTaken;
     }

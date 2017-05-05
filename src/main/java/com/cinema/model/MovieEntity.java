@@ -16,10 +16,11 @@ public class MovieEntity {
     private Date releaseDate;
     private String description;
     private Integer ageRatingIdAgeRating;
+    private byte[] cover;
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_MOVIE")
+    @Column(name = "ID_MOVIE", nullable = false)
     public Integer getIdMovie() {
         return idMovie;
     }
@@ -29,7 +30,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "TITLE")
+    @Column(name = "TITLE", nullable = false, length = 45)
     public String getTitle() {
         return title;
     }
@@ -39,7 +40,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "DURATION")
+    @Column(name = "DURATION", nullable = true)
     public Integer getDuration() {
         return duration;
     }
@@ -49,7 +50,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "DIRECTOR")
+    @Column(name = "DIRECTOR", nullable = true, length = 45)
     public String getDirector() {
         return director;
     }
@@ -59,7 +60,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "RELEASE_DATE")
+    @Column(name = "RELEASE_DATE", nullable = true)
     public Date getReleaseDate() {
         return releaseDate;
     }
@@ -69,7 +70,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", nullable = true)
     public String getDescription() {
         return description;
     }
@@ -79,7 +80,7 @@ public class MovieEntity {
     }
 
     @Basic
-    @Column(name = "AGE_RATING_ID_AGE_RATING")
+    @Column(name = "AGE_RATING_ID_AGE_RATING", nullable = false)
     public Integer getAgeRatingIdAgeRating() {
         return ageRatingIdAgeRating;
     }
@@ -117,5 +118,15 @@ public class MovieEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (ageRatingIdAgeRating != null ? ageRatingIdAgeRating.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "COVER", nullable = true)
+    public byte[] getCover() {
+        return cover;
+    }
+
+    public void setCover(byte[] cover) {
+        this.cover = cover;
     }
 }
