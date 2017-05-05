@@ -18,7 +18,7 @@ public class SeanceEntity {
     private Byte subtitles;
     private Byte dubbing;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private MovieEntity movie;
 
     public Integer getIdSeance() {
@@ -93,7 +93,7 @@ public class SeanceEntity {
         this.date = date;
     }
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private CinemaHallEntity cinemaHall;
 
     private Integer priceIdPrice;
