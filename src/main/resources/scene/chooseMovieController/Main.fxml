@@ -8,10 +8,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="781.0" prefWidth="1358.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
@@ -20,18 +17,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="342.0">
                <children>
-                  <ScrollPane fitToWidth="true" layoutX="-0.5" layoutY="-0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <content>
-                        <GridPane fx:id="gridPaneMovie" gridLinesVisible="true" prefHeight="200.0">
-                          <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints fillHeight="false" maxHeight="500.0" minHeight="300.0" prefHeight="400.0" valignment="TOP" />
-                          </rowConstraints>
-                        </GridPane>
-                     </content>
-                  </ScrollPane>
+                  <ScrollPane fx:id="scrollPanelMovie" fitToWidth="true" layoutX="-0.5" layoutY="-0.5" prefHeight="779.0" prefWidth="718.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children></AnchorPane>
           <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -42,8 +28,8 @@
                               <Pane layoutY="-40.0" prefHeight="168.0" prefWidth="504.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ComboBox fx:id="comboBoxDuration" layoutX="177.0" layoutY="81.0" prefWidth="150.0" />
-                                    <ComboBox fx:id="comboBoxAge" layoutX="177.0" layoutY="43.0"  prefWidth="150.0" />
-                                    <ComboBox fx:id="comboBoxGenre" layoutX="177.0" layoutY="118.0" prefWidth="150.0" />
+                                    <ComboBox fx:id="comboBoxAge" layoutX="177.0" layoutY="43.0" prefWidth="150.0" />
+                                    <ComboBox fx:id="comboBoxGenre" layoutX="177.0" layoutY="118.0" onAction="#genreChange" prefWidth="150.0" />
                                     <Label layoutX="25.0" layoutY="14.0" text="Filtry">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
