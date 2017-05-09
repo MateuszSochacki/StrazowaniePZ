@@ -1,5 +1,6 @@
 package com.cinema.controller;
 
+import com.cinema.PageController;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.*;
 import com.cinema.services.CategoryRepository;
@@ -109,6 +110,11 @@ public class ListCategoryController implements BootInitializable {
                 System.out.print(category.getName()+", ");
             }
         }
+
+    }
+
+    @Override
+    public void setPageParrent(PageController parentPage) {
 
     }
 

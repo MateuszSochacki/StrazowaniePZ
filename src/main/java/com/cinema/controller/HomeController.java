@@ -1,5 +1,6 @@
 package com.cinema.controller;
 
+import com.cinema.PageController;
 import com.cinema.config.BootInitializable;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -42,6 +43,11 @@ public class HomeController implements BootInitializable {
 
     @Override
     public void initConstruct() {
+
+    }
+
+    @Override
+    public void setPageParrent(PageController parentPage) {
 
     }
 

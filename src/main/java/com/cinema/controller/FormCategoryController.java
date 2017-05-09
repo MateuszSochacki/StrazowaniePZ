@@ -1,5 +1,6 @@
 package com.cinema.controller;
 
+import com.cinema.PageController;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.CategoryEntity;
 import com.cinema.services.CategoryRepository;
@@ -34,6 +35,11 @@ public class FormCategoryController implements BootInitializable {
 
     @Override
     public void initConstruct() {
+
+    }
+
+    @Override
+    public void setPageParrent(PageController parentPage) {
 
     }
 

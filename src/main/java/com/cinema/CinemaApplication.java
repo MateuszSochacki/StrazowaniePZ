@@ -1,17 +1,15 @@
 package com.cinema;
 
 import com.cinema.controller.ChooseSeatController;
-import com.cinema.controller.HomeController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.Parent;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
@@ -20,6 +18,9 @@ public class CinemaApplication extends Application {
 
 	private static String [] argument;
 	private ApplicationContext springContext = null;
+
+	public static String pageChooseSeat = "pageChooseSeat";
+	public static String pageChooseSeatFile = "scene/ChooseSeat.fxml";
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -37,15 +38,28 @@ public class CinemaApplication extends Application {
 			}
 		};
 		task.setOnSucceeded(e -> {
+			//TO DO fix controller!
 			ChooseSeatController controller = springContext.getBean(ChooseSeatController.class);
-			Parent parent = (Parent) controller.initView();
-			Scene scene = new Scene(parent);
 
-			primaryStage.setResizable(false);
+			ChooseSeatController contr  = springContext.getBean(ChooseSeatController.class);
+
+			PageController pageContainer = new PageController();
+
+			pageContainer.loadPageWithContorller(CinemaApplication.pageChooseSeat, CinemaApplication.pageChooseSeatFile, controller);
+
+			pageContainer.setPage(CinemaApplication.pageChooseSeat);
+
+
+			Group root = new Group();
+			root.getChildren().addAll(pageContainer);
+			Scene scene = new Scene(root, 1280, 720);
+
 			primaryStage.setScene(scene);
-
-			primaryStage.setTitle("Aplikacja Kinowa");
+			primaryStage.setResizable(false);
+			primaryStage.setTitle("Aplikacja kinowa");
 			primaryStage.show();
+
+
 		});
 		task.setOnFailed(e -> {
 			System.exit(0);
