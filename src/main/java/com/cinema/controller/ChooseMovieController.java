@@ -57,7 +57,7 @@ public class ChooseMovieController implements BootInitializable {
     @FXML
     private ComboBox<Integer> comboBoxAge;
     @FXML
-    private ComboBox<String> comboBoxDuration;
+    private ComboBox<Integer> comboBoxDuration;
     @FXML
     private ComboBox<String> comboBoxGenre;
     @FXML
@@ -69,7 +69,9 @@ public class ChooseMovieController implements BootInitializable {
     @FXML
     private TextArea textAreaDescription;
     GridPane gridPaneMovie = new GridPane();
+
     List<MovieEntity> movieList;
+
 
     @Autowired
     private MovieRepository movieRepository;
@@ -91,6 +93,8 @@ public class ChooseMovieController implements BootInitializable {
         templateRow.setPrefHeight(250);
         gridPaneMovie.getRowConstraints().add(templateRow);
         gridPaneMovie.setAlignment(Pos.CENTER);
+
+
 
         for (int i =0;i<4;i++)
         {
@@ -116,7 +120,6 @@ public class ChooseMovieController implements BootInitializable {
         int r =0;
         for (MovieEntity i:movieEntityList)
         {
-
             StackPane panel = new StackPane();
             panel.setPadding(new Insets(10,20,20,20));
             ImageView imgView = new ImageView();
@@ -170,12 +173,13 @@ public class ChooseMovieController implements BootInitializable {
                 FXCollections.observableArrayList(genreList);
         comboBoxGenre.setItems(categoryEntityObservableList);
 
-        comboBoxDuration.getItems().addAll(">1h","1h<","2h<");
+        comboBoxDuration.getItems().addAll(30,60,120,180);
     }
 
     public void filterDataGridByGenre()
     {
-        labelGenre.setText(comboBoxGenre.getValue());
+
+
         comboBoxGenre.valueProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue ov, String t, String t1) {
 //                System.out.println(ov); Object
@@ -185,13 +189,58 @@ public class ChooseMovieController implements BootInitializable {
                 List<MovieHasCategoryEntity> movieListAfterFilterById = movieHasCategoryRepository.findAll().stream().filter(movieHasCategoryEntity -> movieHasCategoryEntity.getCategoryIdCategory().equals(category.getIdCategory())).collect(Collectors.toList());
                 List<MovieEntity> movieListAfterFilter= new ArrayList<>();
                 for (MovieHasCategoryEntity i :movieListAfterFilterById) {
-                    movieListAfterFilter.addAll(movieList.stream().filter(movieEntity -> movieEntity.getIdMovie().equals(i.getMovieIdMovie())).collect(Collectors.toList()));
+                    movieListAfterFilter.addAll(movieRepository.findAll().stream().filter(movieEntity -> movieEntity.getIdMovie().equals(i.getMovieIdMovie())).collect(Collectors.toList()));
                 }
                 gridPaneMovie.getChildren().clear();
-                setDataGrid(movieListAfterFilter.size());
-                fillDataGrid(movieListAfterFilter);
+                movieList.clear();
+                movieList.addAll(movieListAfterFilter);
+                setDataGrid(movieList.size());
+                fillDataGrid(movieList);
             }
         });
+    }
+
+    public void filterDataGridByAge()
+    {
+
+        comboBoxAge.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+
+                AgeRatingEntity ageRatingEntity = ageRatingRepository.findAll().stream().filter(p -> p.getRequiredAge().equals(newValue)).findAny().get();
+                List<MovieEntity> movieListAfterFilterById = movieRepository.findAll().stream().filter(p -> p.getAgeRatingIdAgeRating().equals(ageRatingEntity.getIdAgeRating())).collect(Collectors.toList());
+                gridPaneMovie.getChildren().clear();
+                setDataGrid(movieListAfterFilterById.size());
+                fillDataGrid(movieListAfterFilterById);
+            }
+
+        });
+
+    }
+    public void filterDataGridByDuration()
+    {
+        comboBoxDuration.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override public void changed(ObservableValue ov, Integer t, Integer t1) {
+
+                List<MovieEntity> movieListAfterFilter =new ArrayList<>();
+                movieListAfterFilter=movieRepository.findAll().stream().filter(p->p.getDuration()>=t1).collect(Collectors.toList());
+                gridPaneMovie.getChildren().clear();
+                movieList.clear();
+                movieList.addAll(movieListAfterFilter);
+                setDataGrid(movieList.size());
+                fillDataGrid(movieList);
+            }
+        });
+    }
+    public void resetFilter()
+    {
+        movieList = movieRepository.findAll();
+        comboBoxAge.getSelectionModel().clearSelection();
+        comboBoxGenre.getSelectionModel().clearSelection();
+        comboBoxDuration.getSelectionModel().clearSelection();
+        gridPaneMovie.getChildren().clear();
+        setDataGrid(movieList.size());
+        fillDataGrid(movieList);
     }
 
     public void setFields() {
@@ -235,6 +284,8 @@ public class ChooseMovieController implements BootInitializable {
         fillDataGrid(movieList);
         fillComboBox();
         filterDataGridByGenre();
+        filterDataGridByAge();
+        filterDataGridByDuration();
     }
 
     @Override
