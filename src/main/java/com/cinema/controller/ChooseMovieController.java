@@ -39,6 +39,7 @@ import org.springframework.stereotype.Component;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ public class ChooseMovieController implements BootInitializable {
     private MovieHasCategoryRepository movieHasCategoryRepository;
 
     private ApplicationContext springContext;
+    public File f = new File("../resources/css/style.css");
 
 
     public void setDataGrid(int listSize)
@@ -91,6 +93,8 @@ public class ChooseMovieController implements BootInitializable {
         templateRow.setPrefHeight(250);
         gridPaneMovie.getRowConstraints().add(templateRow);
         gridPaneMovie.setAlignment(Pos.CENTER);
+        gridPaneMovie.getStylesheets().clear();
+        gridPaneMovie.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
 
         for (int i =0;i<4;i++)
         {
@@ -119,6 +123,7 @@ public class ChooseMovieController implements BootInitializable {
 
             StackPane panel = new StackPane();
             panel.setPadding(new Insets(10,20,20,20));
+            panel.getStyleClass().add("stackPane");
             ImageView imgView = new ImageView();
             imgView.setFitWidth(140);
             imgView.setFitHeight(190);
@@ -134,6 +139,7 @@ public class ChooseMovieController implements BootInitializable {
             panel.setAlignment(imgView,Pos.TOP_CENTER);
             Label label = new Label();
             label.setText(i.getTitle());
+            label.getStyleClass().add("stackPaneLabel");
             //imgView.setImage(i.getCover());
             panel.getChildren().add(imgView);
             panel.setAlignment(label,Pos.BOTTOM_CENTER);
