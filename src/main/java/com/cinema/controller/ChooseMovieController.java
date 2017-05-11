@@ -80,9 +80,6 @@ public class ChooseMovieController implements BootInitializable {
         pageController.setPage(CinemaApplication.pageChooseSeat);
     }
 
-
-
-
     GridPane gridPaneMovie = new GridPane();
 
     List<MovieEntity> movieList;
