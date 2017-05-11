@@ -1,6 +1,8 @@
 package com.cinema;
 
 import com.cinema.controller.ChooseSeatController;
+import com.cinema.controller.PageController;
+import com.cinema.controller.SummaryControler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -16,67 +18,60 @@ import org.springframework.context.ApplicationContext;
 public class CinemaApplication extends Application {
 
 
-	private static String [] argument;
-	private ApplicationContext springContext = null;
+    private static String[] argument;
+    private ApplicationContext springContext = null;
 
-	public static String pageChooseSeat = "pageChooseSeat";
-	public static String pageChooseSeatFile = "scene/ChooseSeat.fxml";
+    //Tutaj dodać wszystkie pliki FXML oraz nadać im unikalne ID
+    public static String pageChooseSeat = "pageChooseSeat";
+    public static String pageChooseSeatFile = "scene/ChooseSeat.fxml";
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		/*Parent root = FXMLLoader.load(getClass().getResource("/Home.fxml"));
-		primaryStage.setTitle("STRAŻNICYYYY");
-		primaryStage.setScene(new Scene(root, 300, 275));
-		primaryStage.show();*/
+    public static String pageSummary = "pageSummary";
+    public static String pageSummaryFile = "scene/Summary.fxml";
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Task<Object> task = new Task<Object>() {
+            @Override
+            protected Object call() throws Exception {
+                springContext = SpringApplication.run(CinemaApplication.class, argument);
+                return null;
+            }
+        };
+        task.setOnSucceeded(e -> {
+            //Inicializacja kontrolerów dla wszystkich widoków
+            ChooseSeatController chooseSeatController = springContext.getBean(ChooseSeatController.class);
+            SummaryControler summaryControler = springContext.getBean(SummaryControler.class);
 
-		Task<Object> task = new Task<Object>(){
-			@Override
-			protected Object call() throws Exception {
-				springContext = SpringApplication.run(CinemaApplication.class, argument);
-				return null;
-			}
-		};
-		task.setOnSucceeded(e -> {
-			//TO DO fix controller!
-			ChooseSeatController controller = springContext.getBean(ChooseSeatController.class);
+            PageController pageContainer = new PageController();
 
-			ChooseSeatController contr  = springContext.getBean(ChooseSeatController.class);
+            //Podpinanie do pageContainer wszystkich stron które będą kiedykolwiek wczytane.
+            pageContainer.loadPageWithContorller(CinemaApplication.pageChooseSeat, CinemaApplication.pageChooseSeatFile, chooseSeatController);
+            pageContainer.loadPageWithContorller(CinemaApplication.pageSummary, CinemaApplication.pageSummaryFile, summaryControler);
 
-			PageController pageContainer = new PageController();
+            //Ustawienie strony która ma być wyświetlona w stage'u
+            pageContainer.setPage(CinemaApplication.pageChooseSeat);
 
-			pageContainer.loadPageWithContorller(CinemaApplication.pageChooseSeat, CinemaApplication.pageChooseSeatFile, controller);
+            Group root = new Group();
+            root.getChildren().addAll(pageContainer);
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Cinewatch");
+            primaryStage.show();
+        });
+        task.setOnFailed(e -> {
+            System.exit(0);
+            Platform.exit();
+        });
+        task.run();
 
-			pageContainer.setPage(CinemaApplication.pageChooseSeat);
-
-
-			Group root = new Group();
-			root.getChildren().addAll(pageContainer);
-			Scene scene = new Scene(root, 1280, 720);
-
-			primaryStage.setScene(scene);
-			primaryStage.setResizable(false);
-			primaryStage.setTitle("Aplikacja kinowa");
-			primaryStage.show();
-
-
-		});
-		task.setOnFailed(e -> {
-			System.exit(0);
-			Platform.exit();
-		});
-		task.run();
-
-	}
+    }
 
 
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-		CinemaApplication.argument = args;
-		launch(args);
-	}
-
-
+        CinemaApplication.argument = args;
+        launch(args);
+    }
 
 
 }

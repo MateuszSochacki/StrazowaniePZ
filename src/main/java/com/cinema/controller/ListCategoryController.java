@@ -1,6 +1,5 @@
 package com.cinema.controller;
 
-import com.cinema.PageController;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.*;
 import com.cinema.services.CategoryRepository;

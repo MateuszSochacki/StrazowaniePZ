@@ -1,4 +1,4 @@
-package com.cinema;
+package com.cinema.controller;
 
 import com.cinema.config.BootInitializable;
 import com.cinema.controller.ChooseSeatController;
@@ -55,7 +55,7 @@ public class PageController extends StackPane {
         }
     }
 
-    public boolean loadPageWithContorller(String name, String res, ChooseSeatController controller){
+    public boolean loadPageWithContorller(String name, String res, BootInitializable controller){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(res));
             fxmlLoader.setController(controller);
@@ -77,14 +77,14 @@ public class PageController extends StackPane {
             if(!getChildren().isEmpty()){
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
-                        new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
+                        new KeyFrame(new Duration(500), new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
                                 getChildren().remove(0);
                                 getChildren().add(0, pages.get(name));
                                 Timeline fadeIn = new Timeline(
                                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                                        new KeyFrame((new Duration(1000)), new KeyValue(opacity, 1.0)));
+                                        new KeyFrame((new Duration(500)), new KeyValue(opacity, 1.0)));
                                 fadeIn.play();
                             }
                         },new KeyValue(opacity, 0.0)));
@@ -94,7 +94,7 @@ public class PageController extends StackPane {
                 getChildren().add(pages.get(name));
                 Timeline fadeIn = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                        new KeyFrame(new Duration(2000), new KeyValue(opacity, 1.0)));
+                        new KeyFrame(new Duration(1000), new KeyValue(opacity, 1.0)));
                 fadeIn.play();
             }
             return true;

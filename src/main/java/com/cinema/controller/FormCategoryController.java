@@ -1,6 +1,5 @@
 package com.cinema.controller;
 
-import com.cinema.PageController;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.CategoryEntity;
 import com.cinema.services.CategoryRepository;
@@ -16,8 +15,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static java.lang.Math.toIntExact;
 
 /**
  * Created by Dominik on 14.04.2017.

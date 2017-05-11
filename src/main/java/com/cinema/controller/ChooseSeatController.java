@@ -1,6 +1,6 @@
 package com.cinema.controller;
 
-import com.cinema.PageController;
+import com.cinema.CinemaApplication;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.CinemaHallEntity;
 import com.cinema.model.SeanceEntity;
@@ -47,7 +47,7 @@ public class ChooseSeatController implements BootInitializable {
     @FXML
     private GridPane gridPane;
 
-    PageController pageController;
+    private PageController pageController;
 
     private int cinemaHallArray[][];
 
@@ -88,15 +88,15 @@ public class ChooseSeatController implements BootInitializable {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0},
-                {1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0},
-                {1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0},
-                {1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
+                {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0},
+                {0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0},
+                {0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0},
+                {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
         };
 
         for (SeatEntity seat : seats) {
@@ -138,7 +138,7 @@ public class ChooseSeatController implements BootInitializable {
         for (int i = 0; i <= 15; i++) {
             int number = 1;
 
-            for (int j = 1; j <= 16; j++) {
+            for (int j = 0; j <= 16; j++) {
                 if (j == 16) {
                     if (i != 0) {
                         gridPane.add(new Label(String.valueOf(i)), j, i);
@@ -155,7 +155,7 @@ public class ChooseSeatController implements BootInitializable {
                         pane.setMaxHeight(22*scale);
                         pane.setMaxWidth(22*scale);
                         pane.getChildren().add(label);
-                        pane.setStyle("-fx-background-color: #26c0ef");
+                        pane.setStyle("-fx-background-color: #8ae6ef");
                         pane.setRow();
                         pane.setColumn();
                         gridPane.add(pane, j, i);
@@ -169,7 +169,7 @@ public class ChooseSeatController implements BootInitializable {
                         pane.setMaxHeight(22*scale);
                         pane.setMaxWidth(22*scale);
                         pane.getChildren().add(label);
-                        pane.setStyle("-fx-background-color: #c41e15");
+                        pane.setStyle("-fx-background-color: #ffd7a1");
                         gridPane.add(pane, j, i);
                         pane.setDisable(true);
                         GridPane.setHalignment(pane, HPos.CENTER);
@@ -179,7 +179,7 @@ public class ChooseSeatController implements BootInitializable {
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
                         pane.setMaxHeight(5*scale);
                         pane.setMaxWidth(40*scale);
-                        pane.setStyle("-fx-background-color: grey");
+                        pane.setStyle("-fx-background-color: #b6b6b6");
                         gridPane.add(pane, j, i);
                         pane.setDisable(true);
                         GridPane.setValignment(pane, VPos.TOP);
@@ -188,7 +188,7 @@ public class ChooseSeatController implements BootInitializable {
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
                         pane.setMaxHeight(22*scale);
                         pane.setMaxWidth(22*scale);
-                        pane.setStyle("-fx-background-color: white");
+                        pane.setStyle("-fx-background-color: #ffffff");
                         gridPane.add(pane, j, i);
                         pane.setDisable(true);
                         GridPane.setHalignment(pane, HPos.CENTER);
@@ -239,12 +239,12 @@ public class ChooseSeatController implements BootInitializable {
         TilePaneCustom pane = (TilePaneCustom) currentScene.lookup("#" + id);
 
         if (pane.isClicked) {
-            pane.setStyle("-fx-background-color: greenyellow");
+            pane.setStyle("-fx-background-color: #8ae6ef");
             pane.isClicked = false;
             reservedSeats.remove(pane);
 
         } else {
-            pane.setStyle("-fx-background-color: yellow");
+            pane.setStyle("-fx-background-color: #c7ffa6");
             pane.isClicked = true;
             reservedSeats.add(pane);
         }
@@ -334,5 +334,6 @@ public class ChooseSeatController implements BootInitializable {
 
             seatRepository.save(seat);
         }
+        pageController.setPage(CinemaApplication.pageSummary);
     }
 }

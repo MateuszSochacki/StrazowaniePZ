@@ -1,10 +1,9 @@
 package com.cinema.config;
 
-import com.cinema.PageController;
+import com.cinema.controller.PageController;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import org.apache.catalina.core.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**

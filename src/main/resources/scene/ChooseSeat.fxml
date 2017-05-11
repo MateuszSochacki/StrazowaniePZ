@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -8,17 +12,77 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <bottom>
-      <AnchorPane prefHeight="70.0" prefWidth="640.0" BorderPane.alignment="CENTER">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane style="-fx-border-color: #454545; -fx-border-width: 0 0 2 0;">
          <children>
-                <Button layoutX="324.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#btnSubmit" prefHeight="33.0" prefWidth="91.0" style="-fx-background-color: #26c0ef;" text="Dalej" />
-            <Button layoutX="226.0" layoutY="19.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="91.0" style="-fx-background-color: grey;" text="Wstecz" />
+            <ImageView fitHeight="80.0" fitWidth="720.0" opacity="0.75" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@../images/bokeh_bg_logo.jpg" />
+               </image>
+               <viewport>
+                  <Rectangle2D height="80.0" width="720.0" />
+               </viewport>
+            </ImageView>
+            <Text fill="WHITE" layoutX="14.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinemawatch">
+               <font>
+                  <Font name="Candara Bold" size="56.0" />
+               </font>
+            </Text>
+            <Text fill="#ffd7a1" layoutX="155.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Best cinema for you!">
+               <font>
+                  <Font name="Candara Bold" size="18.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
-   </bottom>
-   <center>
-      <GridPane fx:id="gridPane" prefHeight="640.0" prefWidth="640.0" style="-fx-border-width: 2; border: gray;" BorderPane.alignment="CENTER">
-      </GridPane>
-   </center>
-</BorderPane>
+      <VBox alignment="TOP_CENTER">
+         <children>
+            <Text fx:id="textInfo" boundsType="VISUAL" fill="#898989" strokeType="OUTSIDE" strokeWidth="0.0" text="-Seanse: &quot;The Hobbit&quot; -Date: 21.12.2015 -Time: 15:30 -Stage: 14B" textAlignment="CENTER" wrappingWidth="640.0">
+               <font>
+                  <Font name="Consolas" size="16.0" />
+               </font>
+            </Text>
+            <GridPane fx:id="gridPane" prefHeight="640.0" prefWidth="640.0" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </VBox>
+      <AnchorPane>
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="720.0" nodeOrientation="RIGHT_TO_LEFT" opacity="0.75" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@../images/bokeh_bg_logo.jpg" />
+               </image>
+               <viewport>
+                  <Rectangle2D height="80.0" width="720.0" />
+               </viewport>
+            </ImageView>
+            <HBox alignment="TOP_RIGHT" prefHeight="80.0" prefWidth="720.0" style="-fx-border-color: #454545; -fx-border-width: 2 0 0 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button layoutX="203.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #B6B6B6;" text="Wstecz" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="12.0" right="12.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="327.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnSubmit" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: white;" text="Dalej" textFill="#b6b6b6">
+                     <HBox.margin>
+                        <Insets left="12.0" right="12.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
