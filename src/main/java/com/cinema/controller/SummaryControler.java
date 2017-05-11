@@ -5,7 +5,8 @@ import com.cinema.config.BootInitializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -25,12 +26,20 @@ public class SummaryControler implements BootInitializable {
     private PageController pageController;
 
     @FXML
-    private Button btnAddMore;
+    private Text textInfo;
 
     @FXML
-    void openSelectSeancePage(ActionEvent event) {
-    pageController.setPage(CinemaApplication.pageChooseSeat);
+    void btnBackClicked(MouseEvent event) {
+        System.out.println("Click!");
+        pageController.setPage(CinemaApplication.pageChooseSeat);
     }
+
+    @FXML
+    void btnSubmitClicked(ActionEvent event) {
+
+    }
+
+
 
     @Override
     public void initConstruct() {

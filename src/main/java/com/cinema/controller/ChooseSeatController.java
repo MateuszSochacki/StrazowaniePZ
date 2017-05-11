@@ -12,10 +12,12 @@ import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -65,9 +67,9 @@ public class ChooseSeatController implements BootInitializable {
 
     private CinemaHallEntity cinemaHall;
 
+
     @Override
     public void initConstruct() {
-
 
         List<SeanceEntity> seance = seanceRepository.findAll();
 
@@ -152,8 +154,8 @@ public class ChooseSeatController implements BootInitializable {
 
                         TilePaneCustom pane = new TilePaneCustom();
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
-                        pane.setMaxHeight(22*scale);
-                        pane.setMaxWidth(22*scale);
+                        pane.setMaxHeight(Region.USE_COMPUTED_SIZE);
+                        pane.setMaxWidth(Region.USE_COMPUTED_SIZE);
                         pane.getChildren().add(label);
                         pane.setStyle("-fx-background-color: #8ae6ef");
                         pane.setRow();
@@ -166,8 +168,8 @@ public class ChooseSeatController implements BootInitializable {
                         number++;
                         TilePaneCustom pane = new TilePaneCustom();
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
-                        pane.setMaxHeight(22*scale);
-                        pane.setMaxWidth(22*scale);
+                        pane.setMaxHeight(Region.USE_COMPUTED_SIZE);
+                        pane.setMaxWidth(Region.USE_COMPUTED_SIZE);
                         pane.getChildren().add(label);
                         pane.setStyle("-fx-background-color: #ffd7a1");
                         gridPane.add(pane, j, i);
@@ -177,8 +179,8 @@ public class ChooseSeatController implements BootInitializable {
                     } else if (cinemaHallArray[i][j] == 9) {
                         TilePaneCustom pane = new TilePaneCustom();
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
-                        pane.setMaxHeight(5*scale);
-                        pane.setMaxWidth(40*scale);
+                        pane.setMaxHeight(8);
+                        pane.setMaxWidth(Region.USE_COMPUTED_SIZE );
                         pane.setStyle("-fx-background-color: #b6b6b6");
                         gridPane.add(pane, j, i);
                         pane.setDisable(true);
@@ -186,8 +188,8 @@ public class ChooseSeatController implements BootInitializable {
                     } else {
                         TilePaneCustom pane = new TilePaneCustom();
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
-                        pane.setMaxHeight(22*scale);
-                        pane.setMaxWidth(22*scale);
+                        pane.setMaxHeight(Region.USE_COMPUTED_SIZE);
+                        pane.setMaxWidth(Region.USE_COMPUTED_SIZE);
                         pane.setStyle("-fx-background-color: #ffffff");
                         gridPane.add(pane, j, i);
                         pane.setDisable(true);
@@ -206,18 +208,23 @@ public class ChooseSeatController implements BootInitializable {
     private void generateEmptyGrid() {
 
         gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(3); //horizontal gap in pixels => that's what you are asking for
+        gridPane.setVgap(3); //vertical gap in pixels
 
         for (int i = 0; i <= 15; i++) {
             ColumnConstraints column = new ColumnConstraints(25*scale, 25*scale, 25*scale);
+            column.setPercentWidth(6.25);
             gridPane.getColumnConstraints().add(column);
         }
         for (int i = 1; i <= 16; i++) {
 
             if (i == 1) {
                 RowConstraints row = new RowConstraints(40*scale, 40*scale, 40*scale);
+                row.setPercentHeight(6.25);
                 gridPane.getRowConstraints().add(row);
             } else {
                 RowConstraints row = new RowConstraints(25*scale, 25*scale, 25*scale);
+                row.setPercentHeight(6.25);
                 gridPane.getRowConstraints().add(row);
             }
 

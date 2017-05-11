@@ -8,6 +8,9 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,9 +54,14 @@ public class CinemaApplication extends Application {
             //Ustawienie strony która ma być wyświetlona w stage'u
             pageContainer.setPage(CinemaApplication.pageChooseSeat);
 
-            Group root = new Group();
-            root.getChildren().addAll(pageContainer);
+            BorderPane root = new BorderPane();
+            root.setCenter(pageContainer);
+            //root.getChildren().addAll(pageContainer);
             Scene scene = new Scene(root);
+            primaryStage.setMinHeight(800);
+            primaryStage.setMinWidth(620);
+            primaryStage.setMaxHeight(1080);
+            primaryStage.setMaxWidth(1920);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Cinewatch");
             primaryStage.show();
