@@ -343,4 +343,8 @@ public class ChooseSeatController implements BootInitializable {
         }
         pageController.setPage(CinemaApplication.pageSummary);
     }
+
+    public void btnBackClicked (MouseEvent event) {
+        pageController.setPage(CinemaApplication.pageChooseMovie);
+    }
 }

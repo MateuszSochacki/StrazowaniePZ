@@ -1,0 +1,31 @@
+#title{
+	-fx-text-fill: orange;
+	-fx-font-size: 40px;
+}
+#go_btn{
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-background-color: linear-gradient(#454545 0%, #757575 100%);
+}
+#go_btn:hover{
+    -fx-background-color: #3d3d3d;
+}
+.StackPane{
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+}
+.filterComboBox{
+    -fx-background-radius: 7;
+}
+.movieDescriptionTextArea{
+
+}
+.stackPane:hover{
+    -fx-background-color: linear-gradient(#454545 0%, #757575 100%);
+    -fx-background-radius: 7;
+}
+.stackPane:hover .stackPaneLabel{
+    -fx-text-fill: whitesmoke;
+    -fx-font-size: 17px;
+
+}

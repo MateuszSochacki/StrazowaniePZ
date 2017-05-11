@@ -14,6 +14,6 @@ import java.util.Set;
 public interface MovieRepository extends CrudRepository<MovieEntity, Integer> {
 
     List<MovieEntity> findAll();
-    List<MovieEntity> findByCategoryEntities (Set<CategoryEntity> categories);
-
+    List<MovieEntity> findByCategoryEntities (List<CategoryEntity> categories);
+    //List<MovieEntity> findByCategoryEntity (CategoryEntity cateegory);
 }

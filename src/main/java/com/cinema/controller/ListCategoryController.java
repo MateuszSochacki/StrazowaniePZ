@@ -51,9 +51,6 @@ public class ListCategoryController implements BootInitializable {
     private FormCategoryController formCategoryController;
 
     @Autowired
-    private HomeController homeController;
-
-    @Autowired
     private CategoryRepository categoryRepository;
 
     private ApplicationContext springContext;
@@ -143,7 +140,6 @@ public class ListCategoryController implements BootInitializable {
     }
 
     public void doAdd(ActionEvent actionEvent) {
-        homeController.setCenterLayout(formCategoryController.initView());
         formCategoryController.add();
     }
 }

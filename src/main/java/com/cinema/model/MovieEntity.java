@@ -20,7 +20,7 @@ public class MovieEntity {
     private String director;
     private Date releaseDate;
     private String description;
-
+    private byte[] cover;
 
 
     //fetch musi być ustawione na eager, dzięki czemu pobiera też inne encje które wykorzystuje, w tym przypadku CategoryEntity
@@ -29,6 +29,8 @@ public class MovieEntity {
     private List<CategoryEntity> categoryEntities;
 
     //TODO: analogicznie do ageRating
+
+
 
     public Integer getIdMovie() {
         return idMovie;
@@ -85,6 +87,17 @@ public class MovieEntity {
     public void setAgeRatingEntity(List<CategoryEntity> categoryEntities) {
         this.categoryEntities = categoryEntities;
     }
+
+    @Basic
+    @Column(name = "COVER", nullable = true)
+    public byte[] getCover() {
+        return cover;
+    }
+
+    public void setCover(byte[] cover) {
+        this.cover = cover;
+    }
+
 
 
 }

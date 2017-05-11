@@ -27,8 +27,6 @@ public class FormCategoryController implements BootInitializable {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Autowired
-    private HomeController homeController;
 
     @Override
     public void initConstruct() {
@@ -70,9 +68,6 @@ public class FormCategoryController implements BootInitializable {
         this.springContext = applicationContext;
     }
 
-    public void doCancel(ActionEvent event){
-        homeController.onClickCategory(event);
-    }
 
     public void add() {
 
