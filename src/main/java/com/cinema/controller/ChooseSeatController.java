@@ -3,6 +3,7 @@ package com.cinema.controller;
 import com.cinema.CinemaApplication;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.CinemaHallEntity;
+import com.cinema.model.MovieEntity;
 import com.cinema.model.SeanceEntity;
 import com.cinema.model.SeatEntity;
 import com.cinema.services.SeanceRepository;
@@ -21,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,8 @@ import java.util.ResourceBundle;
 @Component
 public class ChooseSeatController implements BootInitializable {
 
+    private SeanceEntity currentSeance;
+
     private ApplicationContext springContext;
 
     @FXML
@@ -48,6 +52,10 @@ public class ChooseSeatController implements BootInitializable {
 
     @FXML
     private GridPane gridPane;
+
+    @FXML
+    private Text textInfo;
+
 
     private PageController pageController;
 
@@ -75,7 +83,8 @@ public class ChooseSeatController implements BootInitializable {
 
         //dla testów pobiera pierwszy element z listy seansów, żeby odczytać obiekt typu CinemaHallEntity, który jest wymagany
         //do znalezienia siedzien.
-        cinemaHall = seance.get(0).getCinemaHall();
+        cinemaHall = currentSeance.getCinemaHall();
+            //cinemaHall = seance.get(0).getCinemaHall();
 
         List<SeatEntity> seats = seatRepository.findByCinemaHall(cinemaHall);
 
@@ -105,6 +114,8 @@ public class ChooseSeatController implements BootInitializable {
 
             cinemaHallArray[seat.getRow()][seat.getNumber()] = 2;
         }
+
+        textInfo.setText(currentSeance.getMovie().getTitle());
 
         generateEmptyGrid();
 
@@ -286,6 +297,14 @@ public class ChooseSeatController implements BootInitializable {
         this.springContext = applicationContext;
     }
 
+    public SeanceEntity getCurrentSeance() {
+        return currentSeance;
+    }
+
+    public void setCurrentSeance(SeanceEntity currentSeance) {
+        this.currentSeance = currentSeance;
+    }
+
     public class TilePaneCustom extends TilePane {
 
         private boolean isClicked = false;
@@ -345,6 +364,7 @@ public class ChooseSeatController implements BootInitializable {
     }
 
     public void btnBackClicked (MouseEvent event) {
-        pageController.setPage(CinemaApplication.pageChooseMovie);
+
+        pageController.setPage(CinemaApplication.pageChooseSeance);
     }
 }

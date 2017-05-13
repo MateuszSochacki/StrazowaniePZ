@@ -1,9 +1,6 @@
 package com.cinema;
 
-import com.cinema.controller.ChooseMovieController;
-import com.cinema.controller.ChooseSeatController;
-import com.cinema.controller.PageController;
-import com.cinema.controller.SummaryControler;
+import com.cinema.controller.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -31,6 +28,9 @@ public class CinemaApplication extends Application {
 
     public static final String pageChooseMovie = "pageChooseMovie";
     public static final String pageChooseMovieFile = "scene/ChooseMovie.fxml";
+
+    public static final String pageChooseSeance = "pageChooseSeance";
+    public static final String pageChooseSeanceFile = "scene/ChooseSeance.fxml";
     @Override
     public void start(Stage primaryStage) throws Exception {
         Task<Object> task = new Task<Object>() {
@@ -45,6 +45,7 @@ public class CinemaApplication extends Application {
             ChooseSeatController chooseSeatController = springContext.getBean(ChooseSeatController.class);
             SummaryControler summaryControler = springContext.getBean(SummaryControler.class);
             ChooseMovieController chooseMovieController = springContext.getBean(ChooseMovieController.class);
+            ChooseSeanceController chooseSeanceController = springContext.getBean(ChooseSeanceController.class);
 
             PageController pageContainer = new PageController();
 
@@ -52,9 +53,10 @@ public class CinemaApplication extends Application {
             pageContainer.loadPageWithContorller(CinemaApplication.pageChooseSeat, CinemaApplication.pageChooseSeatFile, chooseSeatController);
             pageContainer.loadPageWithContorller(CinemaApplication.pageSummary, CinemaApplication.pageSummaryFile, summaryControler);
             pageContainer.loadPageWithContorller(CinemaApplication.pageChooseMovie, CinemaApplication.pageChooseMovieFile, chooseMovieController);
+            pageContainer.loadPageWithContorller(CinemaApplication.pageChooseSeance, CinemaApplication.pageChooseSeanceFile, chooseSeanceController);
 
             //Ustawienie strony która ma być wyświetlona w stage'u
-            pageContainer.setPage(CinemaApplication.pageChooseMovie);
+            pageContainer.setPage(CinemaApplication.pageChooseSeance);
 
             BorderPane root = new BorderPane();
             root.setCenter(pageContainer);
