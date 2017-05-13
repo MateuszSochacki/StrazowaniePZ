@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -59,400 +60,404 @@
         </AnchorPane>
     </bottom>
     <center>
-        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
-            <children>
-            <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-              <tabs>
-                  <Tab text="Filmy">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <ScrollPane fitToWidth="true" layoutX="-6.0" layoutY="-6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <content>
-                                    <TilePane fx:id="mainTilePane" alignment="TOP_CENTER" hgap="24.0" vgap="24.0">
-                                       <padding>
-                                          <Insets bottom="24.0" top="24.0" />
-                                       </padding>
-                                    </TilePane>
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                <Tab text="Wszystkie seanse">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #eaeaea;">
-                           <children>
-                              <ListView layoutX="10.0" layoutY="10.0" prefHeight="541.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                  <Tab text="View holder">
-                     <content>
-                        <AnchorPane cache="true" cacheHint="SPEED" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <ScrollPane cache="true" cacheHint="SPEED" fitToWidth="true" layoutX="-6.0" layoutY="-6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <content>
-                                    <TilePane alignment="TOP_CENTER" cache="true" cacheHint="SPEED" hgap="12.0" vgap="12.0">
-                                       <children>
-                                          <HBox cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);">
+      <StackPane fx:id="stackPane" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+              <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="1024.0">
+                  <children>
+                  <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                    <tabs>
+                        <Tab text="Filmy">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane fitToWidth="true" layoutX="-6.0" layoutY="-6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <TilePane fx:id="mainTilePane" alignment="TOP_CENTER" hgap="24.0" vgap="24.0">
+                                             <padding>
+                                                <Insets bottom="24.0" top="24.0" />
+                                             </padding>
+                                          </TilePane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                      <Tab text="Wszystkie seanse">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #eaeaea;">
+                                 <children>
+                                    <ListView layoutX="10.0" layoutY="10.0" prefHeight="541.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="View holder">
+                           <content>
+                              <AnchorPane cache="true" cacheHint="SPEED" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane cache="true" cacheHint="SPEED" fitToWidth="true" layoutX="-6.0" layoutY="-6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <TilePane alignment="TOP_CENTER" cache="true" cacheHint="SPEED" hgap="12.0" vgap="12.0">
                                              <children>
-                                                <ImageView cache="true" fitHeight="300.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../../../../../../Desktop/images/min/movie_lotr1_min.jpg" />
-                                                   </image>
-                                                   <viewport>
-                                                      <Rectangle2D />
-                                                   </viewport>
-                                                </ImageView>
-                                                <VBox alignment="TOP_CENTER" spacing="4.0" style="-fx-border-color: #7591b5;">
+                                                <HBox cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);">
                                                    <children>
-                                                      <Text fill="#7591b5" stroke="#4a4646" strokeType="OUTSIDE" strokeWidth="0.0" text="Lord of the Rings the Fellowship of The ring" textAlignment="CENTER" wrappingWidth="180.0">
-                                                         <font>
-                                                            <Font name="System Bold" size="16.0" />
-                                                         </font>
-                                                         <VBox.margin>
-                                                            <Insets bottom="7.0" />
-                                                         </VBox.margin>
-                                                      </Text>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                      <ImageView cache="true" fitHeight="300.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../../../../Desktop/images/min/movie_lotr1_min.jpg" />
+                                                         </image>
+                                                         <viewport>
+                                                            <Rectangle2D />
+                                                         </viewport>
+                                                      </ImageView>
+                                                      <VBox alignment="TOP_CENTER" spacing="4.0" style="-fx-border-color: #7591b5;">
                                                          <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                            <Text fill="#7591b5" stroke="#4a4646" strokeType="OUTSIDE" strokeWidth="0.0" text="Lord of the Rings the Fellowship of The ring" textAlignment="CENTER" wrappingWidth="180.0">
                                                                <font>
-                                                                  <Font name="System Bold" size="15.0" />
+                                                                  <Font name="System Bold" size="16.0" />
                                                                </font>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="7.0" />
+                                                               </VBox.margin>
                                                             </Text>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="15.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </TextFlow>
                                                          </children>
                                                          <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                                                          </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="15.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="15.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="15.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="15.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="15.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="15.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                      </TextFlow>
+                                                      </VBox>
                                                    </children>
-                                                   <padding>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <opaqueInsets>
                                                       <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-                                                   </padding>
-                                                </VBox>
-                                             </children>
-                                             <cursor>
-                                                <Cursor fx:constant="DEFAULT" />
-                                             </cursor>
-                                             <opaqueInsets>
-                                                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-                                             </opaqueInsets>
-                                          </HBox>
-                                          <HBox cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);">
-                                             <children>
-                                                <ImageView cache="true" fitHeight="260.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../../../../../../Desktop/images/min/movie_lotr1_min.jpg" />
-                                                   </image>
-                                                   <viewport>
-                                                      <Rectangle2D />
-                                                   </viewport>
-                                                </ImageView>
-                                                <VBox alignment="TOP_CENTER" spacing="4.0" style="-fx-border-color: #7591b5;">
+                                                   </opaqueInsets>
+                                                </HBox>
+                                                <HBox cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);">
                                                    <children>
-                                                      <Text fill="#7591b5" stroke="#4a4646" strokeType="OUTSIDE" strokeWidth="0.0" text="Lord of the Rings the Fellowship of The ring" textAlignment="CENTER" wrappingWidth="180.0">
-                                                         <font>
-                                                            <Font name="System Bold" size="16.0" />
-                                                         </font>
-                                                         <VBox.margin>
-                                                            <Insets bottom="7.0" />
-                                                         </VBox.margin>
-                                                      </Text>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                      <ImageView cache="true" fitHeight="260.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../../../../Desktop/images/min/movie_lotr1_min.jpg" />
+                                                         </image>
+                                                         <viewport>
+                                                            <Rectangle2D />
+                                                         </viewport>
+                                                      </ImageView>
+                                                      <VBox alignment="TOP_CENTER" spacing="4.0" style="-fx-border-color: #7591b5;">
                                                          <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                            <Text fill="#7591b5" stroke="#4a4646" strokeType="OUTSIDE" strokeWidth="0.0" text="Lord of the Rings the Fellowship of The ring" textAlignment="CENTER" wrappingWidth="180.0">
                                                                <font>
-                                                                  <Font name="System Bold" size="14.0" />
+                                                                  <Font name="System Bold" size="16.0" />
                                                                </font>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="7.0" />
+                                                               </VBox.margin>
                                                             </Text>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
                                                          </children>
                                                          <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                            <Insets bottom="8.0" left="8.0" top="8.0" />
                                                          </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
+                                                      </VBox>
                                                    </children>
-                                                   <padding>
-                                                      <Insets bottom="8.0" left="8.0" top="8.0" />
-                                                   </padding>
-                                                </VBox>
-                                             </children>
-                                             <cursor>
-                                                <Cursor fx:constant="DEFAULT" />
-                                             </cursor>
-                                             <opaqueInsets>
-                                                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-                                             </opaqueInsets>
-                                          </HBox>
-                                          <HBox cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);">
-                                             <children>
-                                                <ImageView cache="true" fitHeight="260.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../../../../../../Desktop/images/min/movie_lotr1_min.jpg" />
-                                                   </image>
-                                                   <viewport>
-                                                      <Rectangle2D />
-                                                   </viewport>
-                                                </ImageView>
-                                                <VBox alignment="TOP_CENTER" spacing="4.0" style="-fx-border-color: #7591b5;">
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <opaqueInsets>
+                                                      <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                                                   </opaqueInsets>
+                                                </HBox>
+                                                <HBox cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);">
                                                    <children>
-                                                      <Text fill="#7591b5" stroke="#4a4646" strokeType="OUTSIDE" strokeWidth="0.0" text="Lord of the Rings the Fellowship of The ring" textAlignment="CENTER" wrappingWidth="180.0">
-                                                         <font>
-                                                            <Font name="System Bold" size="16.0" />
-                                                         </font>
-                                                         <VBox.margin>
-                                                            <Insets bottom="7.0" />
-                                                         </VBox.margin>
-                                                      </Text>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                      <ImageView cache="true" fitHeight="260.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../../../../Desktop/images/min/movie_lotr1_min.jpg" />
+                                                         </image>
+                                                         <viewport>
+                                                            <Rectangle2D />
+                                                         </viewport>
+                                                      </ImageView>
+                                                      <VBox alignment="TOP_CENTER" spacing="4.0" style="-fx-border-color: #7591b5;">
                                                          <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                            <Text fill="#7591b5" stroke="#4a4646" strokeType="OUTSIDE" strokeWidth="0.0" text="Lord of the Rings the Fellowship of The ring" textAlignment="CENTER" wrappingWidth="180.0">
                                                                <font>
-                                                                  <Font name="System Bold" size="14.0" />
+                                                                  <Font name="System Bold" size="16.0" />
                                                                </font>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="7.0" />
+                                                               </VBox.margin>
                                                             </Text>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
+                                                            <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
+                                                               <children>
+                                                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                               <padding>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </padding>
+                                                            </TextFlow>
                                                          </children>
                                                          <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                            <Insets bottom="8.0" left="8.0" top="8.0" />
                                                          </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #84b5d0;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="dzisiaj - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
-                                                      <TextFlow style="-fx-background-color: #7591b5;" textAlignment="CENTER">
-                                                         <children>
-                                                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="jutro - 16:15">
-                                                               <font>
-                                                                  <Font name="System Bold" size="14.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                         </padding>
-                                                      </TextFlow>
+                                                      </VBox>
                                                    </children>
-                                                   <padding>
-                                                      <Insets bottom="8.0" left="8.0" top="8.0" />
-                                                   </padding>
-                                                </VBox>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                   <opaqueInsets>
+                                                      <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                                                   </opaqueInsets>
+                                                </HBox>
                                              </children>
-                                             <cursor>
-                                                <Cursor fx:constant="DEFAULT" />
-                                             </cursor>
-                                             <opaqueInsets>
-                                                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-                                             </opaqueInsets>
-                                          </HBox>
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="12.0" top="12.0" />
-                                       </padding>
-                                    </TilePane>
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-              </tabs>
-            </TabPane>
-            <HBox alignment="CENTER_LEFT">
-               <children>
-                                        <Label stylesheets="@../css/style.css" text="Filtry:">
-                                            <font>
-                                                <Font name="System Bold" size="20.0" />
-                                            </font>
-                                        </Label>
-                  <Text fill="#ea4646" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <Button mnemonicParsing="false" text="Dodaj" />
-               </children>
-            </HBox>
-            </children>
-            <BorderPane.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </BorderPane.margin>
-        </VBox>
+                                             <padding>
+                                                <Insets bottom="12.0" top="12.0" />
+                                             </padding>
+                                          </TilePane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                                              <Label stylesheets="@../css/style.css" text="Filtry:">
+                                                  <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                  </font>
+                                              </Label>
+                        <Text fill="#ea4646" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Button fx:id="addFilter" mnemonicParsing="false" onAction="#addFilterClicked" text="Dodaj" />
+                     </children>
+                  </HBox>
+                  </children>
+              </VBox>
+         </children>
+      </StackPane>
     </center>
     <top>
         <AnchorPane maxHeight="80.0" style="-fx-border-color: #454545; -fx-border-width: 0 0 2 0; -fx-background-image: url('images/bokeh_bg_logo_seamless.jpg');" BorderPane.alignment="CENTER">

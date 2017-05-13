@@ -2,12 +2,18 @@ package com.cinema.controller;
 
 import com.cinema.CinemaApplication;
 import com.cinema.config.BootInitializable;
+import com.cinema.model.AgeRatingEntity;
+import com.cinema.model.CategoryEntity;
 import com.cinema.model.MovieEntity;
 import com.cinema.model.SeanceEntity;
+import com.cinema.services.AgeRatingRepository;
+import com.cinema.services.CategoryRepository;
 import com.cinema.services.MovieRepository;
 import com.cinema.services.SeanceRepository;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -16,14 +22,19 @@ import javafx.geometry.VPos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +43,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.StyledEditorKit;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -50,10 +64,16 @@ public class ChooseSeanceController implements BootInitializable {
     private ApplicationContext springContext;
 
     @Autowired
-    MovieRepository movieRepository;
+    private MovieRepository movieRepository;
 
     @Autowired
-    SeanceRepository seanceRepository;
+    private SeanceRepository seanceRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private AgeRatingRepository ageRatingRepository;
 
     private PageController pageController;
 
@@ -61,7 +81,92 @@ public class ChooseSeanceController implements BootInitializable {
     private ScrollPane mainScrollPane;
 
     @FXML
+    private StackPane stackPane;
+
+    @FXML
+    private VBox vBox;
+
+    @FXML
     private TilePane mainTilePane;
+
+    @FXML
+    private Button addFilter;
+
+    @FXML
+    void addFilterClicked(ActionEvent event) {
+
+        /*Dialog dialog = new Dialog();
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        dialog.setHeight(800);
+
+
+        GridPane categoryFilterPanel = new GridPane();
+        ColumnConstraints column = new ColumnConstraints();
+        column.setPrefWidth(250);
+        column.setMinWidth(250);
+        categoryFilterPanel.getColumnConstraints().add(column);
+        *//*categoryFilterPanel.setPrefSize(100,100);
+        categoryFilterPanel.setMaxSize(100,100);
+        categoryFilterPanel.setMinSize(100, 100);*//*
+
+        int i = 1;
+        categoryFilterPanel.add(new Label("Kategoria"), 0, 0);
+        for (CategoryEntity category : categoryRepository.findAll()) {
+
+            CheckBox checkbox = new CheckBox(category.getName());
+            checkbox.setWrapText(true);
+            categoryFilterPanel.add(checkbox, 0, i++);
+        }
+        for (AgeRatingEntity ageRating: ageRatingRepository.findAll()) {
+
+        }
+
+        dialog.getDialogPane().getChildren().addAll(categoryFilterPanel);
+        dialog.show();*/
+
+        /*GridPane categoryFilterPanel = new GridPane();
+        ColumnConstraints column = new ColumnConstraints();
+        column.setPrefWidth(250);
+        column.setMinWidth(250);
+        categoryFilterPanel.getColumnConstraints().add(column);
+        categoryFilterPanel.setMaxSize(100, 100);
+        categoryFilterPanel.setMinSize(100, 100);*/
+        BorderPane filterPanel = new BorderPane();
+        filterPanel.setMaxSize(450, 450);
+        filterPanel.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        filterPanel.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        filterPanel.setStyle("-fx-background-color: #ecedff;" +
+                "-fx-border-color: #333333");
+
+
+        Hyperlink textClose = new Hyperlink("X");
+        textClose.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                closePopupWindow(stackPane, filterPanel, vBox);
+            }
+        });
+
+        filterPanel.setTop(textClose);
+        filterPanel.setAlignment(filterPanel.getTop(), Pos.CENTER_RIGHT);
+
+
+        Button applyButton = new Button("Zatwierdź");
+        applyButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                closePopupWindow(stackPane, filterPanel, vBox);
+
+            }
+        });
+
+        filterPanel.setBottom(applyButton);
+        filterPanel.setAlignment(filterPanel.getBottom(), Pos.CENTER_RIGHT);
+        filterPanel.setPadding(new Insets(12, 12, 12, 12));
+        openPopupWindow(stackPane, filterPanel, vBox);
+
+
+    }
 
     @FXML
     void btnBackClicked(MouseEvent event) {
@@ -187,12 +292,27 @@ public class ChooseSeanceController implements BootInitializable {
         return read;
     }
 
-    private void addMouseEvent(Node node, SeanceEntity seance){
+    private void addMouseEvent(Node node, SeanceEntity seance) {
         node.setOnMouseClicked(event -> {
             ChooseSeatController chooseSeatController = springContext.getBean(ChooseSeatController.class);
             chooseSeatController.setCurrentSeance(seance);
             pageController.loadPageWithContorller(CinemaApplication.pageChooseSeat, CinemaApplication.pageChooseSeatFile, chooseSeatController);
             pageController.setPage(CinemaApplication.pageChooseSeat);
         });
+    }
+
+    private void openPopupWindow(StackPane parent, Node popup, Node targetBlur) {
+
+        targetBlur.setEffect(new GaussianBlur());
+        parent.getChildren().add(popup);
+    }
+    private void closePopupWindow(StackPane parent, Node popup, Node targetBlur) {
+        targetBlur.setEffect(null);
+        parent.getChildren().remove(popup);
+    }
+
+    private List<MovieEntity> getFilteredMovieList() {
+
+        return null;
     }
 }
