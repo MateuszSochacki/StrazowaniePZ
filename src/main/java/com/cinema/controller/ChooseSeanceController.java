@@ -10,6 +10,7 @@ import com.cinema.services.AgeRatingRepository;
 import com.cinema.services.CategoryRepository;
 import com.cinema.services.MovieRepository;
 import com.cinema.services.SeanceRepository;
+import com.cinema.util.ImageAnalizer;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -215,7 +216,10 @@ public class ChooseSeanceController implements BootInitializable {
         for (MovieEntity movie: movieEntityList) {
             List<SeanceEntity> seanceList = seanceRepository.findByMovie(movie);
             if(!seanceList.isEmpty())
-                mainTilePane.getChildren().add(createMovieCardView(movie, seanceList));
+            {
+                List <String> colorsList  = new ImageAnalizer().getColors(movie);
+                mainTilePane.getChildren().add(createMovieCardView(movie, seanceList, colorsList));
+            }
         }
 
     }
@@ -226,10 +230,7 @@ public class ChooseSeanceController implements BootInitializable {
     }
 
 
-    public HBox createMovieCardView(MovieEntity movie, List<SeanceEntity> seanceList){
-
-        String primaryColor ="#7591b5";
-        String secondaryColor ="#84b5d0";
+    public HBox createMovieCardView(MovieEntity movie, List<SeanceEntity> seanceList, List<String > colors){
 
         HBox card = new HBox();
         card.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -253,12 +254,12 @@ public class ChooseSeanceController implements BootInitializable {
         vBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         vBox.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         vBox.setPadding(new Insets (8, 0, 8, 12));
-        vBox.setStyle("-fx-border-color:"+secondaryColor+";");
+        vBox.setStyle("-fx-border-color:"+colors.get(0)+";");
 
         //add title
         Text title = new Text(movie.getTitle());
         title.setFont(Font.font ("System", FontWeight.BOLD, 16 ));
-        title.setFill(Color.valueOf(primaryColor));
+        title.setFill(Color.valueOf(colors.get(0)));
         title.setWrappingWidth(180);
         title.setTextAlignment(TextAlignment.CENTER);
 
@@ -271,14 +272,17 @@ public class ChooseSeanceController implements BootInitializable {
             textFlow.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
             textFlow.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 
-            textFlow.setStyle(":hover -fx-background-color: "+primaryColor+";");
-
             if(i%2==0)
             {
-                textFlow.getStyleClass().add("primary");
+                textFlow.setStyle("-fx-background-color: "+colors.get(0)+";");
+                textFlow.setOnMouseEntered(event1 -> {textFlow.setStyle("-fx-background-color: "+colors.get(2)+";");});
+                textFlow.setOnMouseExited(event1 -> {textFlow.setStyle("-fx-background-color: "+colors.get(0)+";");});
             }
-            else
-                textFlow.getStyleClass().add(".secondary");
+            else {
+                textFlow.setStyle(" -fx-background-color: " + colors.get(1) + ";");
+                textFlow.setOnMouseEntered(event1 -> {textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");});
+                textFlow.setOnMouseExited(event1 -> {textFlow.setStyle("-fx-background-color: " + colors.get(1) + ";");});
+            }
 
             textFlow.setTextAlignment(TextAlignment.CENTER);
             textFlow.setPadding(new Insets (4, 4, 4, 4));
