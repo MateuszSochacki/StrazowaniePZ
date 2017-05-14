@@ -29,3 +29,10 @@
     -fx-font-size: 17px;
 
 }
+
+.test:hover{
+    -fx-background-color: red;
+}
+.test{
+    -fx-background-color: blue;
+}

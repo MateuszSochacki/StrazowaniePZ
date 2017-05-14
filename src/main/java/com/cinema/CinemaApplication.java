@@ -1,12 +1,19 @@
 package com.cinema;
 
 import com.cinema.controller.*;
+import com.sun.javafx.property.adapter.PropertyDescriptor;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -40,7 +47,7 @@ public class CinemaApplication extends Application {
                 return null;
             }
         };
-        task.setOnSucceeded(e -> {
+        task.setOnSucceeded((WorkerStateEvent e) -> {
             //Inicializacja kontrolerów dla wszystkich widoków
             ChooseSeatController chooseSeatController = springContext.getBean(ChooseSeatController.class);
             SummaryControler summaryControler = springContext.getBean(SummaryControler.class);
@@ -62,6 +69,14 @@ public class CinemaApplication extends Application {
             root.setCenter(pageContainer);
             //root.getChildren().addAll(pageContainer);
             Scene scene = new Scene(root);
+            scene.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.F12 && !primaryStage.isFullScreen()) {
+                    primaryStage.setFullScreen(true);
+                }
+                else if(event.getCode() == KeyCode.F12 && primaryStage.isFullScreen()){
+                        primaryStage.setFullScreen(false);
+                }
+            });
             primaryStage.setMinHeight(800);
             primaryStage.setMinWidth(620);
             primaryStage.setMaxHeight(1080);
@@ -75,12 +90,11 @@ public class CinemaApplication extends Application {
             Platform.exit();
         });
         task.run();
-
     }
 
 
-    public static void main(String[] args) throws Exception {
 
+    public static void main(String[] args) throws Exception {
         CinemaApplication.argument = args;
         launch(args);
     }

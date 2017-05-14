@@ -73,7 +73,6 @@ public class PageController extends StackPane {
     public boolean setPage(final String name){
         if(pages.get(name) != null){
             final DoubleProperty opacity = opacityProperty();
-
             if(!getChildren().isEmpty()){
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),

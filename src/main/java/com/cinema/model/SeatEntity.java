@@ -39,16 +39,27 @@ public class SeatEntity {
         this.row = row;
     }
 
-    public CinemaHallEntity getCinemaHall() {
-        return cinemaHall;
+//    public CinemaHallEntity getCinemaHall() {
+//        return cinemaHall;
+//    }
+//
+//    public void setCinemaHall(CinemaHallEntity cinemaHallIdCinemaHall) {
+//        this.cinemaHall = cinemaHallIdCinemaHall;
+//    }
+//
+//    @OneToOne(fetch = FetchType.EAGER)
+//    private CinemaHallEntity cinemaHall;
+
+    public SeanceEntity getSeanceEntity() {
+        return seanceEntity;
     }
 
-    public void setCinemaHall(CinemaHallEntity cinemaHallIdCinemaHall) {
-        this.cinemaHall = cinemaHallIdCinemaHall;
+    public void setSeanceEntity(SeanceEntity seanceEntity) {
+        this.seanceEntity = seanceEntity;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private CinemaHallEntity cinemaHall;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private SeanceEntity seanceEntity;
 
 
 }

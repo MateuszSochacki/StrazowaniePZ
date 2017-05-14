@@ -110,8 +110,6 @@ public class ChooseMovieController implements BootInitializable {
         gridPaneMovie.getStylesheets().clear();
         gridPaneMovie.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
 
-
-
         for (int i =0;i<4;i++)
         {
             ColumnConstraints column = new ColumnConstraints();

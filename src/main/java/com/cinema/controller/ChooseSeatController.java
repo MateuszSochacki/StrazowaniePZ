@@ -63,9 +63,9 @@ public class ChooseSeatController implements BootInitializable {
 
     private Scene currentScene;
 
-    private static double scale = 1.5;
+    private static double scale = 1;
 
-    private List<TilePaneCustom> reservedSeats = new ArrayList<>();
+    private List<TilePaneCustom> reservedSeats;
 
     @Autowired
     private SeanceRepository seanceRepository;
@@ -79,6 +79,8 @@ public class ChooseSeatController implements BootInitializable {
     @Override
     public void initConstruct() {
 
+        reservedSeats = new ArrayList<>();
+
         List<SeanceEntity> seance = seanceRepository.findAll();
 
         //dla testów pobiera pierwszy element z listy seansów, żeby odczytać obiekt typu CinemaHallEntity, który jest wymagany
@@ -86,7 +88,7 @@ public class ChooseSeatController implements BootInitializable {
         cinemaHall = currentSeance.getCinemaHall();
             //cinemaHall = seance.get(0).getCinemaHall();
 
-        List<SeatEntity> seats = seatRepository.findByCinemaHall(cinemaHall);
+        List<SeatEntity> seats = seatRepository.findBySeanceEntity(currentSeance);
 
         //TODO: Read from file
 
@@ -251,7 +253,6 @@ public class ChooseSeatController implements BootInitializable {
     private void reservSeats(MouseEvent event) {
         String id = event.getPickResult().getIntersectedNode().getId();
         System.out.println(id);
-
         currentScene = gridPane.getScene();
 
         TilePaneCustom pane = (TilePaneCustom) currentScene.lookup("#" + id);
@@ -274,17 +275,18 @@ public class ChooseSeatController implements BootInitializable {
 
     @Override
     public Node initView() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/scene/ChooseSeat.fxml"));
-            loader.setController(springContext.getBean(this.getClass()));
-
-            return loader.load();
-        } catch (IOException e) {
-            System.err.println("Can't load scene");
-            e.printStackTrace();
-            return null;
-        }
+//        try {
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("/scene/ChooseSeat.fxml"));
+//            loader.setController(springContext.getBean(this.getClass()));
+//
+//            return loader.load();
+//        } catch (IOException e) {
+//            System.err.println("Can't load scene");
+//            e.printStackTrace();
+//            return null;
+//        }
+        return null;
     }
 
     @Override
@@ -349,15 +351,12 @@ public class ChooseSeatController implements BootInitializable {
      * @param event to jakiś parametr który trzeba dodać, bo nie działa bez parametru
      */
     public void btnSubmit(MouseEvent event) {
-
         System.out.println("Click!");
-
         for (TilePaneCustom tilePaneCustom : reservedSeats) {
             SeatEntity seat = new SeatEntity();
             seat.setRow(tilePaneCustom.getRow());
             seat.setNumber(tilePaneCustom.getColumn());
-            seat.setCinemaHall(cinemaHall);
-
+            seat.setSeanceEntity(currentSeance);
             seatRepository.save(seat);
         }
         pageController.setPage(CinemaApplication.pageSummary);

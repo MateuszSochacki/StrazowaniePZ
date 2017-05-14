@@ -10,6 +10,9 @@ import com.cinema.services.AgeRatingRepository;
 import com.cinema.services.CategoryRepository;
 import com.cinema.services.MovieRepository;
 import com.cinema.services.SeanceRepository;
+import javafx.animation.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,9 +36,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.MeshView;
+import javafx.scene.shape.TriangleMesh;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -131,12 +139,14 @@ public class ChooseSeanceController implements BootInitializable {
         categoryFilterPanel.getColumnConstraints().add(column);
         categoryFilterPanel.setMaxSize(100, 100);
         categoryFilterPanel.setMinSize(100, 100);*/
+
         BorderPane filterPanel = new BorderPane();
         filterPanel.setMaxSize(450, 450);
         filterPanel.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         filterPanel.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         filterPanel.setStyle("-fx-background-color: #ecedff;" +
-                "-fx-border-color: #333333");
+                "-fx-border-color: #333333;"+
+        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);");
 
 
         Hyperlink textClose = new Hyperlink("X");
@@ -260,10 +270,16 @@ public class ChooseSeanceController implements BootInitializable {
             textFlow.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
             textFlow.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
             textFlow.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+
+            textFlow.setStyle(":hover -fx-background-color: "+primaryColor+";");
+
             if(i%2==0)
-                textFlow.setStyle("-fx-background-color: "+primaryColor+";");
+            {
+                textFlow.getStyleClass().add("primary");
+            }
             else
-                textFlow.setStyle("-fx-background-color: "+secondaryColor+";");
+                textFlow.getStyleClass().add(".secondary");
+
             textFlow.setTextAlignment(TextAlignment.CENTER);
             textFlow.setPadding(new Insets (4, 4, 4, 4));
             addMouseEvent(textFlow, seanceList.get(i));
@@ -302,17 +318,61 @@ public class ChooseSeanceController implements BootInitializable {
     }
 
     private void openPopupWindow(StackPane parent, Node popup, Node targetBlur) {
+        GaussianBlur blur = new GaussianBlur(0);
+        targetBlur.setEffect(blur);
 
-        targetBlur.setEffect(new GaussianBlur());
+        DoubleProperty valueBlurRadius = new SimpleDoubleProperty(0);
+        valueBlurRadius.addListener((observable, oldV, newV)->
+        {
+            blur.setRadius(newV.doubleValue());
+        });
+        Timeline timeline = new Timeline();
+        final KeyValue kv = new KeyValue(valueBlurRadius, 30);
+        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+
+        FadeTransition ft = new FadeTransition();
+        ft.setNode(popup);
+        ft.setDuration(new Duration(500));
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
         parent.getChildren().add(popup);
+        ft.play();
     }
     private void closePopupWindow(StackPane parent, Node popup, Node targetBlur) {
-        targetBlur.setEffect(null);
-        parent.getChildren().remove(popup);
+
+        GaussianBlur blur = new GaussianBlur(30);
+        targetBlur.setEffect(blur);
+
+        DoubleProperty valueBlurRadius = new SimpleDoubleProperty(30);
+        valueBlurRadius.addListener((observable, oldV, newV)->
+        {
+            blur.setRadius(newV.doubleValue());
+        });
+        Timeline timeline = new Timeline();
+        final KeyValue kv = new KeyValue(valueBlurRadius, 0);
+        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+
+        final DoubleProperty opacity = popup.opacityProperty();
+        Timeline fade = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+                new KeyFrame(new Duration(500), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        parent.getChildren().remove(popup);
+                    }
+                },new KeyValue(opacity, 0.0)));
+        fade.play();
     }
 
     private List<MovieEntity> getFilteredMovieList() {
-
+        //TO DO
         return null;
     }
+
+
+
 }

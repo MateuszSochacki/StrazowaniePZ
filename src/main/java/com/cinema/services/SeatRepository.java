@@ -1,6 +1,7 @@
 package com.cinema.services;
 
 import com.cinema.model.CinemaHallEntity;
+import com.cinema.model.SeanceEntity;
 import com.cinema.model.SeatEntity;
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public interface SeatRepository extends CrudRepository<SeatEntity, Integer> {
 
-    List<SeatEntity> findByCinemaHall(CinemaHallEntity cinemaHallEntity);
+    //List<SeatEntity> findByCinemaHall(CinemaHallEntity cinemaHallEntity);
+    List<SeatEntity> findBySeanceEntity(SeanceEntity seanceEntity);
 
 }
