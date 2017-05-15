@@ -2,12 +2,15 @@ package com.cinema.controller;
 
 import com.cinema.CinemaApplication;
 import com.cinema.config.BootInitializable;
+import com.cinema.model.AgeRatingEntity;
+import com.cinema.model.CategoryEntity;
 import com.cinema.model.MovieEntity;
 import com.cinema.model.SeanceEntity;
 import com.cinema.services.AgeRatingRepository;
 import com.cinema.services.CategoryRepository;
 import com.cinema.services.MovieRepository;
 import com.cinema.services.SeanceRepository;
+import com.cinema.util.CustomPopupWindow;
 import com.cinema.util.ImageAnalizer;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
@@ -26,6 +29,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -38,10 +42,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -68,6 +74,9 @@ public class ChooseSeanceController implements BootInitializable {
     private PageController pageController;
 
     @FXML
+    private Text selectedFilters;
+
+    @FXML
     private ScrollPane mainScrollPane;
 
     @FXML
@@ -84,43 +93,79 @@ public class ChooseSeanceController implements BootInitializable {
 
     @FXML
     void addFilterClicked(ActionEvent event) {
+        CustomPopupWindow filters = new CustomPopupWindow(400, 300, stackPane, vBox);
+        filters.openPopupWindow();
 
-        BorderPane filterPanel = new BorderPane();
-        filterPanel.setMaxSize(450, 450);
-        filterPanel.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-        filterPanel.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-        filterPanel.setStyle("-fx-background-color: #ecedff;" +
-                "-fx-border-color: #333333;"+
-        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);");
+        VBox mainBox = new VBox();
+        mainBox.setPadding(new Insets(24, 24, 24, 24));
+
+        Text popupTitle = new Text("Wybierz filtry:");
+        popupTitle.setFont(Font.font("System", FontWeight.BOLD, 16));
+        mainBox.getChildren().add(popupTitle);
 
 
-        Hyperlink textClose = new Hyperlink("X");
-        textClose.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                closePopupWindow(stackPane, filterPanel, vBox);
-            }
-        });
+        HBox hBox = new HBox();
 
-        filterPanel.setTop(textClose);
-        filterPanel.setAlignment(filterPanel.getTop(), Pos.CENTER_RIGHT);
+        //kategorie
+        Text categoryText = new Text("Kategorie:");
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(24, 24, 24, 24));
+        vBox.setMinWidth(120);
+        vBox.setSpacing(6);
+        vBox.getChildren().add(categoryText);
+        List<CheckBox> checkBoxes = new ArrayList<>();
+        for (CategoryEntity category : categoryRepository.findAll()) {
+            CheckBox checkbox = new CheckBox(category.getName());
+            checkbox.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent checkboxClicked) {
+                    if (checkbox.isSelected())
+                        checkBoxes.add(checkbox);
+                    else
+                        checkBoxes.remove(checkbox);
+                }
+            });
 
+            vBox.getChildren().add(checkbox);
+        }
+        hBox.getChildren().add(vBox);
+
+        //min age
+        Text title = new Text("Minimalny wiek:");
+        VBox vBox2 = new VBox();
+        vBox2.setPadding(new Insets(24, 24, 24, 24));
+        vBox2.setSpacing(6);
+        vBox2.getChildren().add(title);
+
+        ToggleGroup toggleGroup = new ToggleGroup();
+        for (AgeRatingEntity age : ageRatingRepository.findAll()) {
+            RadioButton radioButton = new RadioButton(age.getRequiredAge().toString() + "+");
+            radioButton.setToggleGroup(toggleGroup);
+            vBox2.getChildren().add(radioButton);
+        }
+        hBox.getChildren().add(vBox2);
+        mainBox.getChildren().add(hBox);
+
+        filters.getMainPanel().setCenter(mainBox);
 
         Button applyButton = new Button("Zatwierdź");
         applyButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                closePopupWindow(stackPane, filterPanel, vBox);
-
+                List<String> filtersList = new ArrayList<>();
+                String filtersText = "";
+                filtersList = getSelectedFilterList(checkBoxes, toggleGroup);
+                if (!filtersList.isEmpty()) {
+                    for (String filter : filtersList) {
+                        filtersText += filter + ",";
+                    }
+                    selectedFilters.setText(filtersText.substring(0, filtersText.length() - 1));
+                }
+                filters.closePopupWindow();
             }
         });
-
-        filterPanel.setBottom(applyButton);
-        filterPanel.setAlignment(filterPanel.getBottom(), Pos.CENTER_RIGHT);
-        filterPanel.setPadding(new Insets(12, 12, 12, 12));
-        openPopupWindow(stackPane, filterPanel, vBox);
-
-
+        filters.getMainPanel().setBottom(applyButton);
+        filters.getMainPanel().setAlignment(filters.getMainPanel().getBottom(), Pos.CENTER_RIGHT);
     }
 
     @FXML
@@ -157,11 +202,10 @@ public class ChooseSeanceController implements BootInitializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<MovieEntity> movieEntityList = movieRepository.findAll();
-        for (MovieEntity movie: movieEntityList) {
+        for (MovieEntity movie : movieEntityList) {
             List<SeanceEntity> seanceList = seanceRepository.findByMovie(movie);
-            if(!seanceList.isEmpty())
-            {
-                List <String> colorsList  = new ImageAnalizer().getColors(movie);
+            if (!seanceList.isEmpty()) {
+                List<String> colorsList = new ImageAnalizer().getColors(movie);
                 mainTilePane.getChildren().add(createMovieCardView(movie, seanceList, colorsList));
             }
         }
@@ -174,7 +218,7 @@ public class ChooseSeanceController implements BootInitializable {
     }
 
 
-    public HBox createMovieCardView(MovieEntity movie, List<SeanceEntity> seanceList, List<String > colors){
+    public HBox createMovieCardView(MovieEntity movie, List<SeanceEntity> seanceList, List<String> colors) {
 
         HBox card = new HBox();
         card.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -182,7 +226,7 @@ public class ChooseSeanceController implements BootInitializable {
         card.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         card.setStyle(
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);" +
-                "-fx-background-color: white;");
+                        "-fx-background-color: white;");
 
         //add image to card
         ImageView imgView = new ImageView();
@@ -197,12 +241,12 @@ public class ChooseSeanceController implements BootInitializable {
         vBox.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         vBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         vBox.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-        vBox.setPadding(new Insets (8, 0, 8, 12));
-        vBox.setStyle("-fx-border-color:"+colors.get(0)+";");
+        vBox.setPadding(new Insets(8, 0, 8, 12));
+        vBox.setStyle("-fx-border-color:" + colors.get(0) + ";");
 
         //add title
         Text title = new Text(movie.getTitle());
-        title.setFont(Font.font ("System", FontWeight.BOLD, 16 ));
+        title.setFont(Font.font("System", FontWeight.BOLD, 16));
         title.setFill(Color.valueOf(colors.get(0)));
         title.setWrappingWidth(180);
         title.setTextAlignment(TextAlignment.CENTER);
@@ -210,30 +254,36 @@ public class ChooseSeanceController implements BootInitializable {
         vBox.getChildren().add(title);
 
         //add seance list
-        for(int i=0; i<seanceList.size() && i<6; i++){
+        for (int i = 0; i < seanceList.size() && i < 6; i++) {
             TextFlow textFlow = new TextFlow();
             textFlow.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
             textFlow.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
             textFlow.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 
-            if(i%2==0)
-            {
-                textFlow.setStyle("-fx-background-color: "+colors.get(0)+";");
-                textFlow.setOnMouseEntered(event1 -> {textFlow.setStyle("-fx-background-color: "+colors.get(2)+";");});
-                textFlow.setOnMouseExited(event1 -> {textFlow.setStyle("-fx-background-color: "+colors.get(0)+";");});
-            }
-            else {
+            if (i % 2 == 0) {
+                textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
+                textFlow.setOnMouseEntered(event1 -> {
+                    textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
+                });
+                textFlow.setOnMouseExited(event1 -> {
+                    textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
+                });
+            } else {
                 textFlow.setStyle(" -fx-background-color: " + colors.get(1) + ";");
-                textFlow.setOnMouseEntered(event1 -> {textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");});
-                textFlow.setOnMouseExited(event1 -> {textFlow.setStyle("-fx-background-color: " + colors.get(1) + ";");});
+                textFlow.setOnMouseEntered(event1 -> {
+                    textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
+                });
+                textFlow.setOnMouseExited(event1 -> {
+                    textFlow.setStyle("-fx-background-color: " + colors.get(1) + ";");
+                });
             }
 
             textFlow.setTextAlignment(TextAlignment.CENTER);
-            textFlow.setPadding(new Insets (4, 4, 4, 4));
+            textFlow.setPadding(new Insets(4, 4, 4, 4));
             addMouseEvent(textFlow, seanceList.get(i));
 
             Text text = new Text(seanceList.get(i).getDate().toString());
-            text.setFont(Font.font ("System", FontWeight.BOLD, 14 ));
+            text.setFont(Font.font("System", FontWeight.BOLD, 14));
             text.setFill(Color.valueOf(Color.WHITE.toString()));
             textFlow.getChildren().add(text);
             vBox.getChildren().add(textFlow);
@@ -245,7 +295,7 @@ public class ChooseSeanceController implements BootInitializable {
         return card;
     }
 
-    public BufferedImage getBufferedImage( byte[] byteArray){
+    public BufferedImage getBufferedImage(byte[] byteArray) {
         ByteArrayInputStream in = new ByteArrayInputStream(byteArray);
         BufferedImage read = null;
         try {
@@ -265,65 +315,25 @@ public class ChooseSeanceController implements BootInitializable {
         });
     }
 
-    public void openPopupWindow(StackPane parent, Node popup, Node targetBlur) {
-        targetBlur.setDisable(true);
-
-        GaussianBlur blur = new GaussianBlur(0);
-        targetBlur.setEffect(blur);
-
-        DoubleProperty valueBlurRadius = new SimpleDoubleProperty(0);
-        valueBlurRadius.addListener((observable, oldV, newV)->
-        {
-            blur.setRadius(newV.doubleValue());
-        });
-        Timeline timeline = new Timeline();
-        final KeyValue kv = new KeyValue(valueBlurRadius, 30);
-        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
-
-        FadeTransition ft = new FadeTransition();
-        ft.setNode(popup);
-        ft.setDuration(new Duration(500));
-        ft.setFromValue(0.0);
-        ft.setToValue(1.0);
-        parent.getChildren().add(popup);
-        ft.play();
-    }
-    public void closePopupWindow(StackPane parent, Node popup, Node targetBlur) {
-
-        GaussianBlur blur = new GaussianBlur(30);
-        targetBlur.setEffect(blur);
-
-        DoubleProperty valueBlurRadius = new SimpleDoubleProperty(30);
-        valueBlurRadius.addListener((observable, oldV, newV)->
-        {
-            blur.setRadius(newV.doubleValue());
-        });
-        Timeline timeline = new Timeline();
-        final KeyValue kv = new KeyValue(valueBlurRadius, 0);
-        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
-
-        final DoubleProperty opacity = popup.opacityProperty();
-        Timeline fade = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
-                new KeyFrame(new Duration(500), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        parent.getChildren().remove(popup);
-                        targetBlur.setDisable(false);
-                    }
-                },new KeyValue(opacity, 0.0)));
-        fade.play();
+    private List<String> getSelectedFilterList(List<CheckBox> checkboxes, ToggleGroup toggleGroup) {
+        List<String> filtersList = new ArrayList<>();
+        if (!checkboxes.isEmpty()) {
+            for (CheckBox cb : checkboxes) {
+                if (cb.isSelected())
+                    filtersList.add(cb.getText());
+            }
+        }
+        if (toggleGroup.getSelectedToggle() != null) {
+            RadioButton rb = (RadioButton) toggleGroup.getSelectedToggle();
+            filtersList.add("wiek: "+rb.getText());
+        }
+        return filtersList;
     }
 
     private List<MovieEntity> getFilteredMovieList() {
-        //TO DO
+        //TODO
         return null;
     }
-
 
 
 }

@@ -69,7 +69,7 @@ public class CinemaApplication extends Application {
             pageContainer.loadPageWithContorller(CinemaApplication.pageChooseSeance, CinemaApplication.pageChooseSeanceFile, chooseSeanceController);
             pageContainer.loadPageWithContorller(CinemaApplication.pageMovieInfo, CinemaApplication.pageMovieInfoFile, movieInfoController);
             //Ustawienie strony która ma być wyświetlona w stage'u
-            pageContainer.setPage(CinemaApplication.pageMovieInfo);
+            pageContainer.setPage(CinemaApplication.pageChooseSeance);
             movieInfoController.stage(primaryStage);
 
             BorderPane root = new BorderPane();

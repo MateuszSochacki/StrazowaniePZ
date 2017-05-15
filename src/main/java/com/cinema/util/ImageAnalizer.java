@@ -17,21 +17,6 @@ public class ImageAnalizer {
 
     public List<String> getColors(MovieEntity movie) {
 
-//        File file = new File("C:\\Users\\Andrew\\Desktop\\myImage.gif");
-//        ImageInputStream is = ImageIO.createImageInputStream(file);
-//
-
-//        controller.getBufferedImage(movie.getCover());
-//        Iterator iter = ImageIO.getImageReaders(is);
-//
-//        if (!iter.hasNext())
-//        {
-//            System.out.println("Cannot load the specified file "+ file);
-//            System.exit(1);
-//        }
-//        ImageReader imageReader = (ImageReader)iter.next();
-//        imageReader.setInput(is);
-
         ChooseSeanceController controller = new ChooseSeanceController();
         BufferedImage image = controller.getBufferedImage(movie.getCover());
 
