@@ -265,7 +265,7 @@ public class ChooseSeanceController implements BootInitializable {
         });
     }
 
-    private void openPopupWindow(StackPane parent, Node popup, Node targetBlur) {
+    public void openPopupWindow(StackPane parent, Node popup, Node targetBlur) {
         targetBlur.setDisable(true);
 
         GaussianBlur blur = new GaussianBlur(0);
@@ -290,7 +290,7 @@ public class ChooseSeanceController implements BootInitializable {
         parent.getChildren().add(popup);
         ft.play();
     }
-    private void closePopupWindow(StackPane parent, Node popup, Node targetBlur) {
+    public void closePopupWindow(StackPane parent, Node popup, Node targetBlur) {
 
         GaussianBlur blur = new GaussianBlur(30);
         targetBlur.setEffect(blur);

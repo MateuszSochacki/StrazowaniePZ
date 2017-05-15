@@ -19,12 +19,14 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.effect.PerspectiveTransform;
+import javafx.scene.effect.Reflection;
 import javafx.scene.effect.ReflectionBuilder;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -49,7 +51,7 @@ import java.util.ResourceBundle;
 @Component
 public class MovieInfoController implements BootInitializable {
 
-    private static final double WIDTH = 800, HEIGHT = 600;
+    //private static final double WIDTH = 1200, HEIGHT = 800;
 
     private PageController pageController;
 
@@ -57,6 +59,9 @@ public class MovieInfoController implements BootInitializable {
 
     @FXML
     private BorderPane mainLayout;
+
+    @FXML
+    private static StackPane mainStackPane;
 
     @FXML
     void btnBackClicked(MouseEvent event) {
@@ -112,8 +117,6 @@ public class MovieInfoController implements BootInitializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         movies = movieRepository.findAll();
-        Group root = new Group();
-        mainLayout.setCenter(root);
 
         // load images
         images = new Image[movies.size()];
@@ -122,7 +125,10 @@ public class MovieInfoController implements BootInitializable {
         // create display shelf
         DisplayShelf displayShelf = new DisplayShelf(images, movies);
         displayShelf.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        displayShelf.setStyle("-fx-background-color: whitesmoke");
+        displayShelf.setPadding(new Insets(20,20,20,20));
         mainLayout.setCenter(displayShelf);
+        System.out.print("asda");
     }
 
     @Override
@@ -139,12 +145,12 @@ public class MovieInfoController implements BootInitializable {
         @FXML
         BorderPane mainLayout;
 
-        private static final Duration DURATION = Duration.millis(500);
+        private static final Duration DURATION = Duration.millis(350);
         private static final Interpolator INTERPOLATOR = Interpolator.EASE_BOTH;
-        private static final double SPACING = 150;
-        private static final double LEFT_OFFSET = -130;
-        private static final double RIGHT_OFFSET = 130;
-        private static final double SCALE_SMALL = 0.7;
+        private static final double SPACING = 200;
+        private static final double LEFT_OFFSET = -120;
+        private static final double RIGHT_OFFSET = 120;
+        private static final double SCALE_SMALL = 0.9;
         private PerspectiveImage[] items;
 
         private Group centered = new Group();
@@ -181,9 +187,9 @@ public class MovieInfoController implements BootInitializable {
             items = new PerspectiveImage[images.length];
             for (int i=0; i<images.length; i++) {
                 MovieEntity movie = movies.get(i);
-                final PerspectiveImage item =
-                        items[i] = new PerspectiveImage(images[i], movie);
+                final PerspectiveImage item = items[i] = new PerspectiveImage(images[i], movie);
                 currentItem = item;
+
                 final double index = i;
                 item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent event) {
@@ -222,11 +228,26 @@ public class MovieInfoController implements BootInitializable {
                 //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
                     new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
                     new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
-                    new KeyValue(centerItem.scaleXProperty(), 1.9, INTERPOLATOR),
-                    new KeyValue(centerItem.scaleYProperty(), 1.9, INTERPOLATOR),
-                    new KeyValue(centerItem.angle, 270.0, INTERPOLATOR)));
-
+                    new KeyValue(centerItem.scaleXProperty(), 1.3, INTERPOLATOR),
+                    new KeyValue(centerItem.scaleYProperty(), 1.3, INTERPOLATOR),
+                    new KeyValue(centerItem.angle, 180, INTERPOLATOR)));
+                    timeline.setOnFinished(event->{
+                        centerItem.backMovie.setVisible(true);
+                        centerItem.frontMovie.setVisible(false);
+                        Timeline timeline2 = new Timeline();
+                        final ObservableList<KeyFrame> keyFrames2 = timeline2.getKeyFrames();
+                        centerItem.setAngle(0);
+                        keyFrames2.add(new KeyFrame(DURATION,
+                                //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
+                                new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
+                                new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
+                                new KeyValue(centerItem.scaleXProperty(), 1.6, INTERPOLATOR),
+                                new KeyValue(centerItem.scaleYProperty(), 1.6, INTERPOLATOR),
+                                new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
+                        timeline2.play();
+                        });
             timeline.play();
+
         }
 
         private void showLessInformation(){
@@ -236,13 +257,29 @@ public class MovieInfoController implements BootInitializable {
 
             final PerspectiveImage centerItem = items[centerIndex];
             keyFrames.add(new KeyFrame(DURATION,
-                    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
-                    new KeyValue(centerItem.scaleXProperty(), 1.0, INTERPOLATOR),
-                    new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
-                    new KeyValue(centerItem.angle, 90.0, INTERPOLATOR)));
-
-
+                    //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
+                    new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
+                    new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
+                    new KeyValue(centerItem.scaleXProperty(), 1.3, INTERPOLATOR),
+                    new KeyValue(centerItem.scaleYProperty(), 1.3, INTERPOLATOR),
+                    new KeyValue(centerItem.angle, 180, INTERPOLATOR)));
+            timeline.setOnFinished(event->{
+                centerItem.backMovie.setVisible(false);
+                centerItem.frontMovie.setVisible(true);
+                Timeline timeline2 = new Timeline();
+                final ObservableList<KeyFrame> keyFrames2 = timeline2.getKeyFrames();
+                centerItem.setAngle(0);
+                keyFrames2.add(new KeyFrame(DURATION,
+                        //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
+                        new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
+                        new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
+                        new KeyValue(centerItem.scaleXProperty(), 1.0, INTERPOLATOR),
+                        new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
+                        new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
+                timeline2.play();
+            });
             timeline.play();
+
         }
 
         private void update() {
@@ -275,7 +312,7 @@ public class MovieInfoController implements BootInitializable {
                         new KeyValue(it.translateXProperty(), newX, INTERPOLATOR),
                         new KeyValue(it.scaleXProperty(), SCALE_SMALL, INTERPOLATOR),
                         new KeyValue(it.scaleYProperty(), SCALE_SMALL, INTERPOLATOR),
-                        new KeyValue(it.angle, 45.0, INTERPOLATOR)));
+                        new KeyValue(it.angle, 60.0, INTERPOLATOR)));
             }
             // add keyframe for center item
             final PerspectiveImage centerItem = items[centerIndex];
@@ -293,7 +330,7 @@ public class MovieInfoController implements BootInitializable {
                         new KeyValue(it.translateXProperty(), newX, INTERPOLATOR),
                         new KeyValue(it.scaleXProperty(), SCALE_SMALL, INTERPOLATOR),
                         new KeyValue(it.scaleYProperty(), SCALE_SMALL, INTERPOLATOR),
-                        new KeyValue(it.angle, 135.0, INTERPOLATOR)));
+                        new KeyValue(it.angle, 120.0, INTERPOLATOR)));
             }
             // play animation
             timeline.play();
@@ -333,9 +370,9 @@ public class MovieInfoController implements BootInitializable {
 
         private int idMovie;
         private static final double REFLECTION_SIZE = 0.25;
-        private static final double WIDTH = 500;
+        private static final double WIDTH = 300;
         private static final double HEIGHT = WIDTH + (WIDTH*REFLECTION_SIZE);
-        private static final double RADIUS_H = WIDTH / 3;
+        private static final double RADIUS_H = WIDTH/ 3 ;
         private static final double BACK = WIDTH / 10;
         private PerspectiveTransform transform = new PerspectiveTransform();
 
@@ -355,7 +392,7 @@ public class MovieInfoController implements BootInitializable {
 
         /** Angle Property */
 
-        private final DoubleProperty angle = new SimpleDoubleProperty(45) {
+        private final DoubleProperty angle = new SimpleDoubleProperty(45.0) {
             @Override protected void invalidated() {
                 // when angle changes calculate new transform
                 double lx = (RADIUS_H - Math.sin(Math.toRadians(angle.get())) * RADIUS_H - 1);
@@ -379,26 +416,36 @@ public class MovieInfoController implements BootInitializable {
         public PerspectiveImage(Image image, MovieEntity movie) {
             frontMovie = new VBox();
             backMovie = new VBox();
-           setImageView(image, movie);
+            setImageView(image, movie);
         }
 
         public void setImageView(Image image, MovieEntity movie){
-            getChildren().clear();
+            //getChildren().clear();
             imageView = new ImageView(image);
-            imageView.setEffect(ReflectionBuilder.create().fraction(REFLECTION_SIZE).build());
-            Text text = new Text(movie.getTitle());
-            text.setStyle("-fx-text-fill: black; -fx-background-color: white;-fx-font-size: 12px");
 
+            Text text = new Text(movie.getTitle());
+            text.setStyle("-fx-text-fill: black;-fx-font-size: 12px");
             text.setFill(Color.BLACK);
 
-            frontMovie.setPadding(new Insets(12,12,12,12));
-            frontMovie.setStyle("-fx-background-color: white;");
-            frontMovie.getChildren().addAll(text, imageView);
-            backMovie.getChildren().addAll(text);
+            Reflection reflection = new Reflection();
+            reflection.setFraction(REFLECTION_SIZE);
+            frontMovie.setEffect(reflection);
+            //frontMovie.setPadding(new Insets(12,12,12,12));
+            frontMovie.setStyle("-fx-background-color: transparent;" +
+                   "-fx-border-color: lightslategray");
+            frontMovie.getChildren().addAll(imageView);
+            frontMovie.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+
+            backMovie.setEffect(reflection);
+            backMovie.setVisible(false);
+            backMovie.setMinSize(200, 300);
+            backMovie.getChildren().add(text);
+            backMovie.setPadding(new Insets(20,20,20,20));
+            backMovie.setStyle("-fx-background-color: white;" +
+                                "-fx-border-color: #757575");
 
             setEffect(transform);
-            getChildren().addAll(frontMovie, backMovie);
-
+            getChildren().addAll(frontMovie, backMovie );
         }
 
 
