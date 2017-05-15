@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/style.css">
     <bottom>
         <AnchorPane maxHeight="80.0" style="-fx-background-image: url('images/bokeh_bg_logo_seamless.jpg');" BorderPane.alignment="CENTER">
             <children>
@@ -445,7 +445,7 @@
                   </TabPane>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                                              <Label stylesheets="@../css/style.css" text="Filtry:">
+                                              <Label text="Filtry:">
                                                   <font>
                                                       <Font name="System Bold" size="20.0" />
                                                   </font>

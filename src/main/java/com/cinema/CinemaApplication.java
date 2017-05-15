@@ -72,7 +72,6 @@ public class CinemaApplication extends Application {
             pageContainer.setPage(CinemaApplication.pageMovieInfo);
             movieInfoController.stage(primaryStage);
 
-
             BorderPane root = new BorderPane();
             root.setCenter(pageContainer);
             //root.getChildren().addAll(pageContainer);

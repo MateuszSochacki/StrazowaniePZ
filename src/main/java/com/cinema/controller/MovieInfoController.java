@@ -1,5 +1,6 @@
 package com.cinema.controller;
 
+import com.cinema.CinemaApplication;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.MovieEntity;
 import com.cinema.services.MovieRepository;
@@ -13,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -49,10 +51,22 @@ public class MovieInfoController implements BootInitializable {
 
     private static final double WIDTH = 800, HEIGHT = 600;
 
+    private PageController pageController;
+
     private ApplicationContext springContext;
 
     @FXML
     private BorderPane mainLayout;
+
+    @FXML
+    void btnBackClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void btnSubmitClicked(MouseEvent event) {
+        pageController.setPage(CinemaApplication.pageChooseSeance);
+    }
 
     @Autowired
     private MovieRepository movieRepository;
@@ -68,7 +82,7 @@ public class MovieInfoController implements BootInitializable {
 
     @Override
     public void setPageParrent(PageController parentPage) {
-
+        pageController = parentPage;
     }
 
     private void setImages(List<MovieEntity> movies){
@@ -87,17 +101,6 @@ public class MovieInfoController implements BootInitializable {
 
     @Override
     public void stage(Stage primaryStage) {
-        Group root = new Group();
-        mainLayout.setCenter(root);
-
-        // load images
-        images = new Image[movies.size()];
-
-        setImages(movies);
-        // create display shelf
-        DisplayShelf displayShelf = new DisplayShelf(images, movies);
-        displayShelf.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-        root.getChildren().add(displayShelf);
 
     }
 
@@ -109,7 +112,17 @@ public class MovieInfoController implements BootInitializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         movies = movieRepository.findAll();
-        this.initConstruct();
+        Group root = new Group();
+        mainLayout.setCenter(root);
+
+        // load images
+        images = new Image[movies.size()];
+
+        setImages(movies);
+        // create display shelf
+        DisplayShelf displayShelf = new DisplayShelf(images, movies);
+        displayShelf.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        mainLayout.setCenter(displayShelf);
     }
 
     @Override
@@ -328,7 +341,6 @@ public class MovieInfoController implements BootInitializable {
 
         private VBox backMovie = null;
 
-
         private VBox frontMovie = null;
 
         public ImageView getImageView() {
@@ -367,14 +379,11 @@ public class MovieInfoController implements BootInitializable {
         public PerspectiveImage(Image image, MovieEntity movie) {
             frontMovie = new VBox();
             backMovie = new VBox();
-
-
            setImageView(image, movie);
         }
 
         public void setImageView(Image image, MovieEntity movie){
             getChildren().clear();
-
             imageView = new ImageView(image);
             imageView.setEffect(ReflectionBuilder.create().fraction(REFLECTION_SIZE).build());
             Text text = new Text(movie.getTitle());
@@ -382,11 +391,13 @@ public class MovieInfoController implements BootInitializable {
 
             text.setFill(Color.BLACK);
 
-
+            frontMovie.setPadding(new Insets(12,12,12,12));
+            frontMovie.setStyle("-fx-background-color: white;");
             frontMovie.getChildren().addAll(text, imageView);
+            backMovie.getChildren().addAll(text);
 
             setEffect(transform);
-            getChildren().addAll(frontMovie);
+            getChildren().addAll(frontMovie, backMovie);
 
         }
 

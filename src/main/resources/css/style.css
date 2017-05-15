@@ -30,9 +30,6 @@
 
 }
 
-.test:hover{
-    -fx-background-color: red;
-}
-.test{
-    -fx-background-color: blue;
+* :disabled{
+    -fx-opacity: 1.0;
 }

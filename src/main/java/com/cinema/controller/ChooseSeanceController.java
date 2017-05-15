@@ -2,8 +2,6 @@ package com.cinema.controller;
 
 import com.cinema.CinemaApplication;
 import com.cinema.config.BootInitializable;
-import com.cinema.model.AgeRatingEntity;
-import com.cinema.model.CategoryEntity;
 import com.cinema.model.MovieEntity;
 import com.cinema.model.SeanceEntity;
 import com.cinema.services.AgeRatingRepository;
@@ -17,50 +15,33 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.TriangleMesh;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.StyledEditorKit;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -104,43 +85,6 @@ public class ChooseSeanceController implements BootInitializable {
     @FXML
     void addFilterClicked(ActionEvent event) {
 
-        /*Dialog dialog = new Dialog();
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        dialog.setHeight(800);
-
-
-        GridPane categoryFilterPanel = new GridPane();
-        ColumnConstraints column = new ColumnConstraints();
-        column.setPrefWidth(250);
-        column.setMinWidth(250);
-        categoryFilterPanel.getColumnConstraints().add(column);
-        *//*categoryFilterPanel.setPrefSize(100,100);
-        categoryFilterPanel.setMaxSize(100,100);
-        categoryFilterPanel.setMinSize(100, 100);*//*
-
-        int i = 1;
-        categoryFilterPanel.add(new Label("Kategoria"), 0, 0);
-        for (CategoryEntity category : categoryRepository.findAll()) {
-
-            CheckBox checkbox = new CheckBox(category.getName());
-            checkbox.setWrapText(true);
-            categoryFilterPanel.add(checkbox, 0, i++);
-        }
-        for (AgeRatingEntity ageRating: ageRatingRepository.findAll()) {
-
-        }
-
-        dialog.getDialogPane().getChildren().addAll(categoryFilterPanel);
-        dialog.show();*/
-
-        /*GridPane categoryFilterPanel = new GridPane();
-        ColumnConstraints column = new ColumnConstraints();
-        column.setPrefWidth(250);
-        column.setMinWidth(250);
-        categoryFilterPanel.getColumnConstraints().add(column);
-        categoryFilterPanel.setMaxSize(100, 100);
-        categoryFilterPanel.setMinSize(100, 100);*/
-
         BorderPane filterPanel = new BorderPane();
         filterPanel.setMaxSize(450, 450);
         filterPanel.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
@@ -181,7 +125,7 @@ public class ChooseSeanceController implements BootInitializable {
 
     @FXML
     void btnBackClicked(MouseEvent event) {
-        List <SeanceEntity> seanceList = new ArrayList<>();
+        pageController.setPage(CinemaApplication.pageMovieInfo);
 
     }
 
@@ -322,6 +266,8 @@ public class ChooseSeanceController implements BootInitializable {
     }
 
     private void openPopupWindow(StackPane parent, Node popup, Node targetBlur) {
+        targetBlur.setDisable(true);
+
         GaussianBlur blur = new GaussianBlur(0);
         targetBlur.setEffect(blur);
 
@@ -367,6 +313,7 @@ public class ChooseSeanceController implements BootInitializable {
                     @Override
                     public void handle(ActionEvent event) {
                         parent.getChildren().remove(popup);
+                        targetBlur.setDisable(false);
                     }
                 },new KeyValue(opacity, 0.0)));
         fade.play();
