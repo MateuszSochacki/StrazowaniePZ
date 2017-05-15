@@ -38,6 +38,11 @@ public class CinemaApplication extends Application {
 
     public static final String pageChooseSeance = "pageChooseSeance";
     public static final String pageChooseSeanceFile = "scene/ChooseSeance.fxml";
+
+    public static final String pageMovieInfo = "pageMovieInfo";
+    public static final String pageMovieInfoFile = "Scene/MovieInfo.fxml";
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Task<Object> task = new Task<Object>() {
@@ -53,6 +58,7 @@ public class CinemaApplication extends Application {
             SummaryControler summaryControler = springContext.getBean(SummaryControler.class);
             ChooseMovieController chooseMovieController = springContext.getBean(ChooseMovieController.class);
             ChooseSeanceController chooseSeanceController = springContext.getBean(ChooseSeanceController.class);
+            MovieInfoController movieInfoController = springContext.getBean(MovieInfoController.class);
 
             PageController pageContainer = new PageController();
 
@@ -61,9 +67,11 @@ public class CinemaApplication extends Application {
             pageContainer.loadPageWithContorller(CinemaApplication.pageSummary, CinemaApplication.pageSummaryFile, summaryControler);
             pageContainer.loadPageWithContorller(CinemaApplication.pageChooseMovie, CinemaApplication.pageChooseMovieFile, chooseMovieController);
             pageContainer.loadPageWithContorller(CinemaApplication.pageChooseSeance, CinemaApplication.pageChooseSeanceFile, chooseSeanceController);
-
+            pageContainer.loadPageWithContorller(CinemaApplication.pageMovieInfo, CinemaApplication.pageMovieInfoFile, movieInfoController);
             //Ustawienie strony która ma być wyświetlona w stage'u
-            pageContainer.setPage(CinemaApplication.pageChooseSeance);
+            pageContainer.setPage(CinemaApplication.pageMovieInfo);
+            movieInfoController.stage(primaryStage);
+
 
             BorderPane root = new BorderPane();
             root.setCenter(pageContainer);
