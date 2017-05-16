@@ -126,7 +126,6 @@ public class MovieInfoController implements BootInitializable {
         DisplayShelf displayShelf = new DisplayShelf(images, movies);
         displayShelf.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         displayShelf.setStyle("-fx-background-color: whitesmoke");
-        displayShelf.setPadding(new Insets(20,20,20,20));
         mainLayout.setCenter(displayShelf);
         System.out.print("asda");
     }

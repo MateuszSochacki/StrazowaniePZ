@@ -47,14 +47,36 @@ public class ChooseSeatController implements BootInitializable {
 
     private ApplicationContext springContext;
 
+
     @FXML
-    private BorderPane homeLayout;
+    private Text textInfo;
 
     @FXML
     private GridPane gridPane;
 
     @FXML
-    private Text textInfo;
+    void btnBackClicked(MouseEvent event) {
+        pageController.setPage(CinemaApplication.pageChooseSeance);
+    }
+
+    /**
+     * Metoda wywoływana w momencie kliknięcia przycisku "Dalej"
+     *
+     * @param event to jakiś parametr który trzeba dodać, bo nie działa bez parametru
+     */
+
+    @FXML
+    void btnSubmitClicked(MouseEvent event) {
+        System.out.println("Click!");
+        for (TilePaneCustom tilePaneCustom : reservedSeats) {
+            SeatEntity seat = new SeatEntity();
+            seat.setRow(tilePaneCustom.getRow());
+            seat.setNumber(tilePaneCustom.getColumn());
+            seat.setSeanceEntity(currentSeance);
+            seatRepository.save(seat);
+        }
+        pageController.setPage(CinemaApplication.pageSummary);
+    }
 
 
     private PageController pageController;
@@ -345,25 +367,5 @@ public class ChooseSeatController implements BootInitializable {
     }
 
 
-    /**
-     * Metoda wywoływana w momencie kliknięcia przycisku "Dalej"
-     *
-     * @param event to jakiś parametr który trzeba dodać, bo nie działa bez parametru
-     */
-    public void btnSubmit(MouseEvent event) {
-        System.out.println("Click!");
-        for (TilePaneCustom tilePaneCustom : reservedSeats) {
-            SeatEntity seat = new SeatEntity();
-            seat.setRow(tilePaneCustom.getRow());
-            seat.setNumber(tilePaneCustom.getColumn());
-            seat.setSeanceEntity(currentSeance);
-            seatRepository.save(seat);
-        }
-        pageController.setPage(CinemaApplication.pageSummary);
-    }
 
-    public void btnBackClicked (MouseEvent event) {
-
-        pageController.setPage(CinemaApplication.pageChooseSeance);
-    }
 }

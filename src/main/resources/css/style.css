@@ -30,6 +30,10 @@
 
 }
 
+.mainContainer {
+    -fx-background-color: white;
+}
+
 * :disabled{
     -fx-opacity: 1.0;
 }

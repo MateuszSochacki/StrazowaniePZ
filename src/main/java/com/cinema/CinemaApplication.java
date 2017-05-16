@@ -1,23 +1,24 @@
 package com.cinema;
 
 import com.cinema.controller.*;
-import com.sun.javafx.property.adapter.PropertyDescriptor;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.io.IOException;
 
 @SpringBootApplication
 public class CinemaApplication extends Application {
@@ -74,7 +75,15 @@ public class CinemaApplication extends Application {
 
             BorderPane root = new BorderPane();
             root.setCenter(pageContainer);
-            //root.getChildren().addAll(pageContainer);
+
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/scene/header.fxml"));
+            try {
+                AnchorPane header = fxmlLoader.load();
+                root.setTop(header);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
             Scene scene = new Scene(root);
             scene.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.F12 && !primaryStage.isFullScreen()) {
