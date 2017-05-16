@@ -50,6 +50,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Created by Damrod on 12.05.2017.
@@ -339,6 +340,7 @@ public class ChooseSeanceController implements BootInitializable {
     private List<MovieEntity> getFilteredMovieList(List<String> filtersList) {
 
 
+
         List<CategoryEntity> categories = new ArrayList<>();
         for (String categoryName: filtersList) {
             CategoryEntity category = categoryRepository.findByName(categoryName);
@@ -346,8 +348,29 @@ public class ChooseSeanceController implements BootInitializable {
                 categories.add(category);
         }
 
-        List<MovieEntity> filtredCategoryMovieList = movieRepository.findByCategoryEntities(categories);
+
+        List<MovieEntity> filtredCategoryMovieList = new ArrayList<>();
+        for (MovieEntity movie: movieEntityList) {
+            int searchProgress = 0;
+            for(int i =0; i < movie.getCategoryEntities().size(); i++){
+                for(int j = 0; j<categories.size(); j++){
+                    CategoryEntity currentCategory = movie.getCategoryEntities().get(i);
+                    if(currentCategory.getName().equals(categories.get(j).getName())){
+                        searchProgress++;
+                        break;
+                    }
+                }
+            }
+            if(searchProgress == categories.size()){
+                filtredCategoryMovieList.add(movie);
+            }
+
+        }
+
+
         List<MovieEntity> filtredAgeRatingMovieList = new ArrayList<>();
+
+
         if(!filtredCategoryMovieList.isEmpty()){
             for(MovieEntity movie: filtredCategoryMovieList){
                 String s1 = filtersList.get(filtersList.size()-1).replace("+", "").replace("wiek: ", "");
