@@ -28,9 +28,16 @@ public class MovieEntity {
     @JoinTable(name = "movie_category", joinColumns = {@JoinColumn(name = "id_movie")}, inverseJoinColumns = {@JoinColumn(columnDefinition = "id_category")})
     private List<CategoryEntity> categoryEntities;
 
-    //TODO: analogicznie do ageRating
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private AgeRatingEntity ageRatingEntities;
 
+    public AgeRatingEntity getAgeRatingEntities() {
+        return ageRatingEntities;
+    }
 
+    public void setAgeRatingEntities(AgeRatingEntity ageRatingEntities) {
+        this.ageRatingEntities = ageRatingEntities;
+    }
 
     public Integer getIdMovie() {
         return idMovie;
@@ -84,9 +91,10 @@ public class MovieEntity {
         return categoryEntities;
     }
 
-    public void setAgeRatingEntity(List<CategoryEntity> categoryEntities) {
+    public void setCategoryEntity(List<CategoryEntity> categoryEntities) {
         this.categoryEntities = categoryEntities;
     }
+
 
     @Basic
     @Column(name = "COVER", nullable = true)

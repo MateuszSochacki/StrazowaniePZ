@@ -7,6 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 public class AgeRatingEntity {
+    @Column(name = "id_age_rating")
     private Integer idAgeRating;
     private Integer requiredAge;
 

@@ -71,6 +71,8 @@ public class ChooseSeanceController implements BootInitializable {
     @Autowired
     private AgeRatingRepository ageRatingRepository;
 
+    private  List<MovieEntity> movieEntityList;
+
     private PageController pageController;
 
     @FXML
@@ -131,7 +133,7 @@ public class ChooseSeanceController implements BootInitializable {
         hBox.getChildren().add(vBox);
 
         //min age
-        Text title = new Text("Minimalny wiek:");
+        Text title = new Text("Ograniczenie wiekowe:");
         VBox vBox2 = new VBox();
         vBox2.setPadding(new Insets(24, 24, 24, 24));
         vBox2.setSpacing(6);
@@ -142,6 +144,9 @@ public class ChooseSeanceController implements BootInitializable {
             RadioButton radioButton = new RadioButton(age.getRequiredAge().toString() + "+");
             radioButton.setToggleGroup(toggleGroup);
             vBox2.getChildren().add(radioButton);
+            if(radioButton.getText().equals("18+")) {
+                radioButton.setSelected(true);
+            }
         }
         hBox.getChildren().add(vBox2);
         mainBox.getChildren().add(hBox);
@@ -160,6 +165,7 @@ public class ChooseSeanceController implements BootInitializable {
                         filtersText += filter + ",";
                     }
                     selectedFilters.setText(filtersText.substring(0, filtersText.length() - 1));
+                    filterMovieCards(getFilteredMovieList(filtersList));
                 }
                 filters.closePopupWindow();
             }
@@ -201,7 +207,7 @@ public class ChooseSeanceController implements BootInitializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<MovieEntity> movieEntityList = movieRepository.findAll();
+        movieEntityList = movieRepository.findAll();
         for (MovieEntity movie : movieEntityList) {
             List<SeanceEntity> seanceList = seanceRepository.findByMovie(movie);
             if (!seanceList.isEmpty()) {
@@ -330,9 +336,43 @@ public class ChooseSeanceController implements BootInitializable {
         return filtersList;
     }
 
-    private List<MovieEntity> getFilteredMovieList() {
-        //TODO
-        return null;
+    private List<MovieEntity> getFilteredMovieList(List<String> filtersList) {
+
+
+        List<CategoryEntity> categories = new ArrayList<>();
+        for (String categoryName: filtersList) {
+            CategoryEntity category = categoryRepository.findByName(categoryName);
+            if(category != null)
+                categories.add(category);
+        }
+
+        List<MovieEntity> filtredCategoryMovieList = movieRepository.findByCategoryEntities(categories);
+        List<MovieEntity> filtredAgeRatingMovieList = new ArrayList<>();
+        if(!filtredCategoryMovieList.isEmpty()){
+            for(MovieEntity movie: filtredCategoryMovieList){
+                String s1 = filtersList.get(filtersList.size()-1).replace("+", "").replace("wiek: ", "");
+                int age = Integer.valueOf(s1);
+                int reqAge = movie.getAgeRatingEntities().getRequiredAge();
+                if(reqAge <= age){
+                    filtredAgeRatingMovieList.add(movie);
+                }
+            }
+        }
+
+        return filtredAgeRatingMovieList;
+    }
+
+    private void filterMovieCards(List<MovieEntity> filteredMovieList) {
+        mainTilePane.getChildren().clear();
+        if(!filteredMovieList.isEmpty()) {
+            for (MovieEntity movie : filteredMovieList) {
+                List<SeanceEntity> seanceList = seanceRepository.findByMovie(movie);
+                if (!seanceList.isEmpty()) {
+                    List<String> colorsList = new ImageAnalizer().getColors(movie);
+                    mainTilePane.getChildren().add(createMovieCardView(movie, seanceList, colorsList));
+                }
+            }
+        }
     }
 
 
