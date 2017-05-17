@@ -72,7 +72,7 @@ public class ChooseSeanceController implements BootInitializable {
     @Autowired
     private AgeRatingRepository ageRatingRepository;
 
-    private  List<MovieEntity> movieEntityList;
+    private List<MovieEntity> movieEntityList;
 
     private PageController pageController;
 
@@ -141,13 +141,14 @@ public class ChooseSeanceController implements BootInitializable {
         vBox2.getChildren().add(title);
 
         ToggleGroup toggleGroup = new ToggleGroup();
+        RadioButton defaultRadioButton = new RadioButton("brak");
+        defaultRadioButton.setSelected(true);
+        defaultRadioButton.setToggleGroup(toggleGroup);
+        vBox2.getChildren().add(defaultRadioButton);
         for (AgeRatingEntity age : ageRatingRepository.findAll()) {
             RadioButton radioButton = new RadioButton(age.getRequiredAge().toString() + "+");
             radioButton.setToggleGroup(toggleGroup);
             vBox2.getChildren().add(radioButton);
-            if(radioButton.getText().equals("18+")) {
-                radioButton.setSelected(true);
-            }
         }
         hBox.getChildren().add(vBox2);
         mainBox.getChildren().add(hBox);
@@ -161,13 +162,15 @@ public class ChooseSeanceController implements BootInitializable {
                 List<String> filtersList = new ArrayList<>();
                 String filtersText = "";
                 filtersList = getSelectedFilterList(checkBoxes, toggleGroup);
-                if (!filtersList.isEmpty()) {
+
                     for (String filter : filtersList) {
-                        filtersText += filter + ",";
+                        filtersText += filter;
+                        if (!filter.equals("") && !filter.equals(filtersList.get(filtersList.size() - 1)))
+                            filtersText += ", ";
                     }
-                    selectedFilters.setText(filtersText.substring(0, filtersText.length() - 1));
+                    selectedFilters.setText(filtersText);
                     filterMovieCards(getFilteredMovieList(filtersList));
-                }
+
                 filters.closePopupWindow();
             }
         });
@@ -296,9 +299,7 @@ public class ChooseSeanceController implements BootInitializable {
             vBox.getChildren().add(textFlow);
         }
         card.getChildren().add(vBox);
-
         card.setCacheHint(CacheHint.SPEED);
-
         return card;
     }
 
@@ -332,62 +333,64 @@ public class ChooseSeanceController implements BootInitializable {
         }
         if (toggleGroup.getSelectedToggle() != null) {
             RadioButton rb = (RadioButton) toggleGroup.getSelectedToggle();
-            filtersList.add("wiek: "+rb.getText());
+            if (rb.getText().equals("brak")) {
+                filtersList.add("");
+            } else {
+                filtersList.add("wiek: " + rb.getText());
+            }
         }
         return filtersList;
     }
 
     private List<MovieEntity> getFilteredMovieList(List<String> filtersList) {
+        movieEntityList = movieRepository.findAll();
+        if (!filtersList.get(0).equals("")) {
+            List<CategoryEntity> categories = new ArrayList<>();
+            for (String categoryName : filtersList) {
+                CategoryEntity category = categoryRepository.findByName(categoryName);
+                if (category != null)
+                    categories.add(category);
+            }
+            if(categories.isEmpty())
+            {
+                categories = categoryRepository.findAll();
+            }
 
-
-
-        List<CategoryEntity> categories = new ArrayList<>();
-        for (String categoryName: filtersList) {
-            CategoryEntity category = categoryRepository.findByName(categoryName);
-            if(category != null)
-                categories.add(category);
-        }
-
-
-        List<MovieEntity> filtredCategoryMovieList = new ArrayList<>();
-        for (MovieEntity movie: movieEntityList) {
-            int searchProgress = 0;
-            for(int i =0; i < movie.getCategoryEntities().size(); i++){
-                for(int j = 0; j<categories.size(); j++){
-                    CategoryEntity currentCategory = movie.getCategoryEntities().get(i);
-                    if(currentCategory.getName().equals(categories.get(j).getName())){
-                        searchProgress++;
-                        break;
+            List<MovieEntity> filtredCategoryMovieList = new ArrayList<>();
+            for (MovieEntity movie : movieEntityList) {
+                    int searchProgress = 0;
+                    for (int i = 0; i < movie.getCategoryEntities().size(); i++) {
+                        for (int j = 0; j < categories.size(); j++) {
+                            CategoryEntity currentCategory = movie.getCategoryEntities().get(i);
+                            if (currentCategory.getName().equals(categories.get(j).getName())) {
+                                searchProgress++;
+                                break;
+                            }
+                        }
                     }
+                if (searchProgress > 0) {
+                    filtredCategoryMovieList.add(movie);
                 }
             }
-            if(searchProgress == categories.size()){
-                filtredCategoryMovieList.add(movie);
+            if (!filtersList.get(filtersList.size() - 1).equals("")) {
+                List<MovieEntity> filtredAgeRatingMovieList = new ArrayList<>();
+                    for (MovieEntity movie : filtredCategoryMovieList) {
+                        int ageReqied = movie.getAgeRatingEntities().getRequiredAge();
+                        int ageSelected = Integer.valueOf(filtersList.get(filtersList.size() - 1).replace("+", "").replace("wiek: ", ""));
+                        if (ageReqied <= ageSelected) {
+                            filtredAgeRatingMovieList.add(movie);
+                        }
+                    }
+                return filtredAgeRatingMovieList;
             }
-
+            return filtredCategoryMovieList;
         }
-
-
-        List<MovieEntity> filtredAgeRatingMovieList = new ArrayList<>();
-
-
-        if(!filtredCategoryMovieList.isEmpty()){
-            for(MovieEntity movie: filtredCategoryMovieList){
-                String s1 = filtersList.get(filtersList.size()-1).replace("+", "").replace("wiek: ", "");
-                int age = Integer.valueOf(s1);
-                int reqAge = movie.getAgeRatingEntities().getRequiredAge();
-                if(reqAge <= age){
-                    filtredAgeRatingMovieList.add(movie);
-                }
-            }
-        }
-
-        return filtredAgeRatingMovieList;
+        return movieEntityList;
     }
 
     private void filterMovieCards(List<MovieEntity> filteredMovieList) {
         mainTilePane.getChildren().clear();
-        if(!filteredMovieList.isEmpty()) {
+        if (!filteredMovieList.isEmpty()) {
             for (MovieEntity movie : filteredMovieList) {
                 List<SeanceEntity> seanceList = seanceRepository.findByMovie(movie);
                 if (!seanceList.isEmpty()) {
