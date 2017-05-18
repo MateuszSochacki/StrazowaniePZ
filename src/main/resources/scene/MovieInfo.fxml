@@ -4,29 +4,35 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+<StackPane fx:id="mainStackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane fx:id="mainLayout" style="-fx-border-color: #ababab;" VBox.vgrow="ALWAYS" />
-      <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity">
+      <VBox prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: white;">
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#btnSubmitClicked" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #ea4646;" text="WYBIERZ SEANS" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-               <padding>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </padding>
-            </Button>
+            <BorderPane fx:id="mainLayout" style="-fx-border-color: #ababab;" VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#btnSubmitClicked" prefHeight="36.0" prefWidth="150.0" style="-fx-background-color: #ea4646;" text="WYBIERZ SEANS" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+         <padding>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
+         </padding>
+      </VBox>
    </children>
-   <padding>
-      <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
-   </padding>
-</VBox>
+</StackPane>

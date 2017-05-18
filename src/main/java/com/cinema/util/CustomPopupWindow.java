@@ -36,6 +36,16 @@ public class CustomPopupWindow {
     private StackPane parent;
     private Node targetBlur;
 
+    public boolean isAnimate() {
+        return animate;
+    }
+
+    public void setAnimate(boolean animate) {
+        this.animate = animate;
+    }
+
+    private boolean animate = true;
+
 
     public CustomPopupWindow(int width, int height, StackPane parent, Node targetBlur){
         this.width = width;
@@ -72,7 +82,7 @@ public class CustomPopupWindow {
         targetBlur.setEffect(blur);
 
         DoubleProperty valueBlurRadius = new SimpleDoubleProperty(0);
-        valueBlurRadius.addListener((observable, oldV, newV)->
+        valueBlurRadius.addListener((observable, oldV, newV) ->
         {
             blur.setRadius(newV.doubleValue());
         });
@@ -82,13 +92,14 @@ public class CustomPopupWindow {
         timeline.getKeyFrames().add(kf);
         timeline.play();
 
+
         FadeTransition ft = new FadeTransition();
         ft.setNode(mainPanel);
         ft.setDuration(new Duration(500));
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         parent.getChildren().add(mainPanel);
-        ft.play();
+        //ft.play();
     }
 
     public void closePopupWindow() {
@@ -107,17 +118,20 @@ public class CustomPopupWindow {
         timeline.getKeyFrames().add(kf);
         timeline.play();
 
-        final DoubleProperty opacity = mainPanel.opacityProperty();
-        Timeline fade = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
-                new KeyFrame(new Duration(500), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        parent.getChildren().remove(mainPanel);
-                        targetBlur.setDisable(false);
-                    }
-                },new KeyValue(opacity, 0.0)));
-        fade.play();
+//            final DoubleProperty opacity = mainPanel.opacityProperty();
+//            Timeline fade = new Timeline(
+//                    new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+//                    new KeyFrame(new Duration(500), new EventHandler<ActionEvent>() {
+//                        @Override
+//                        public void handle(ActionEvent event) {
+//                            parent.getChildren().remove(mainPanel);
+//                            targetBlur.setDisable(false);
+//                        }
+//                    }, new KeyValue(opacity, 0.0)));
+//            fade.play();
+
+        parent.getChildren().remove(mainPanel);
+        targetBlur.setDisable(false);
     }
 
     public BorderPane getMainPanel() {
