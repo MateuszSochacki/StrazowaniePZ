@@ -99,7 +99,7 @@ public class CustomPopupWindow {
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         parent.getChildren().add(mainPanel);
-        //ft.play();
+        ft.play();
     }
 
     public void closePopupWindow() {
@@ -118,20 +118,17 @@ public class CustomPopupWindow {
         timeline.getKeyFrames().add(kf);
         timeline.play();
 
-//            final DoubleProperty opacity = mainPanel.opacityProperty();
-//            Timeline fade = new Timeline(
-//                    new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
-//                    new KeyFrame(new Duration(500), new EventHandler<ActionEvent>() {
-//                        @Override
-//                        public void handle(ActionEvent event) {
-//                            parent.getChildren().remove(mainPanel);
-//                            targetBlur.setDisable(false);
-//                        }
-//                    }, new KeyValue(opacity, 0.0)));
-//            fade.play();
-
-        parent.getChildren().remove(mainPanel);
-        targetBlur.setDisable(false);
+            final DoubleProperty opacity = mainPanel.opacityProperty();
+            Timeline fade = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+                    new KeyFrame(new Duration(500), new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            parent.getChildren().remove(mainPanel);
+                            targetBlur.setDisable(false);
+                        }
+                    }, new KeyValue(opacity, 0.0)));
+            fade.play();
     }
 
     public BorderPane getMainPanel() {
