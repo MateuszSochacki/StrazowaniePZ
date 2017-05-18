@@ -24,10 +24,7 @@ import javafx.scene.effect.ReflectionBuilder;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -227,8 +224,8 @@ public class MovieInfoController implements BootInitializable {
                 //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
                     new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
                     new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
-                    new KeyValue(centerItem.scaleXProperty(), 1.3, INTERPOLATOR),
-                    new KeyValue(centerItem.scaleYProperty(), 1.3, INTERPOLATOR),
+                    new KeyValue(centerItem.scaleXProperty(), 1.0, INTERPOLATOR),
+                    new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
                     new KeyValue(centerItem.angle, 180, INTERPOLATOR)));
                     timeline.setOnFinished(event->{
                         centerItem.backMovie.setVisible(true);
@@ -240,8 +237,8 @@ public class MovieInfoController implements BootInitializable {
                                 //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
                                 new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
                                 new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
-                                new KeyValue(centerItem.scaleXProperty(), 1.6, INTERPOLATOR),
-                                new KeyValue(centerItem.scaleYProperty(), 1.6, INTERPOLATOR),
+                                new KeyValue(centerItem.scaleXProperty(), 1.0, INTERPOLATOR),
+                                new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
                                 new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
                         timeline2.play();
                         });
@@ -259,8 +256,8 @@ public class MovieInfoController implements BootInitializable {
                     //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
                     new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
                     new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
-                    new KeyValue(centerItem.scaleXProperty(), 1.3, INTERPOLATOR),
-                    new KeyValue(centerItem.scaleYProperty(), 1.3, INTERPOLATOR),
+                    new KeyValue(centerItem.scaleXProperty(), 1.0, INTERPOLATOR),
+                    new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
                     new KeyValue(centerItem.angle, 180, INTERPOLATOR)));
             timeline.setOnFinished(event->{
                 centerItem.backMovie.setVisible(false);
@@ -369,8 +366,8 @@ public class MovieInfoController implements BootInitializable {
 
         private int idMovie;
         private static final double REFLECTION_SIZE = 0.25;
-        private static final double WIDTH = 300;
-        private static final double HEIGHT = WIDTH + (WIDTH*REFLECTION_SIZE);
+        private static final double WIDTH = 500;
+        private static final double HEIGHT = 600;
         private static final double RADIUS_H = WIDTH/ 3 ;
         private static final double BACK = WIDTH / 10;
         private PerspectiveTransform transform = new PerspectiveTransform();
@@ -421,30 +418,40 @@ public class MovieInfoController implements BootInitializable {
         public void setImageView(Image image, MovieEntity movie){
             //getChildren().clear();
             imageView = new ImageView(image);
+            imageView.fitWidthProperty().bind(frontMovie.widthProperty());
+            imageView.fitHeightProperty().bind(frontMovie.heightProperty());
 
-            Text text = new Text(movie.getTitle());
-            text.setStyle("-fx-text-fill: black;-fx-font-size: 12px");
-            text.setFill(Color.BLACK);
+
 
             Reflection reflection = new Reflection();
             reflection.setFraction(REFLECTION_SIZE);
             frontMovie.setEffect(reflection);
             //frontMovie.setPadding(new Insets(12,12,12,12));
             frontMovie.setStyle("-fx-background-color: transparent;" +
-                   "-fx-border-color: lightslategray");
+                   "-fx-border-color: lightslategray;");
             frontMovie.getChildren().addAll(imageView);
+            frontMovie.setMinSize(WIDTH,HEIGHT);
             frontMovie.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-
+            backMovie = createBackMovie(movie,image);
             backMovie.setEffect(reflection);
-            backMovie.setVisible(false);
-            backMovie.setMinSize(200, 300);
-            backMovie.getChildren().add(text);
-            backMovie.setPadding(new Insets(20,20,20,20));
-            backMovie.setStyle("-fx-background-color: white;" +
-                                "-fx-border-color: #757575");
-
             setEffect(transform);
             getChildren().addAll(frontMovie, backMovie );
+        }
+        public VBox createBackMovie(MovieEntity movie,Image image)
+        {
+            VBox backVbox = new VBox();
+            Text text = new Text(movie.getTitle());
+            text.setStyle("-fx-text-fill: black;-fx-font-size: 16px");
+            text.setFill(Color.BLACK);
+            HBox hbox = new HBox();
+
+            backVbox.setVisible(false);
+            backVbox.setMinSize(WIDTH, HEIGHT);
+            backVbox.getChildren().add(text);
+            backVbox.setPadding(new Insets(20,20,20,20));
+            backVbox.setStyle("-fx-background-color: white;"+"-fx-border-color: #757575");
+
+            return backVbox;
         }
 
 
