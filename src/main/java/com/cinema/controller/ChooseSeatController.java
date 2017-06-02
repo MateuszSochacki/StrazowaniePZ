@@ -225,7 +225,7 @@ public class ChooseSeatController implements BootInitializable {
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
                         pane.setMaxHeight(Region.USE_COMPUTED_SIZE);
                         pane.setMaxWidth(Region.USE_COMPUTED_SIZE);
-                        pane.setStyle("-fx-background-color: #ffffff");
+                        pane.setStyle("-fx-background-color: #efefef");
                         gridPane.add(pane, j, i);
                         pane.setDisable(true);
                         GridPane.setHalignment(pane, HPos.CENTER);
@@ -247,18 +247,18 @@ public class ChooseSeatController implements BootInitializable {
         gridPane.setVgap(3); //vertical gap in pixels
 
         for (int i = 0; i <= 15; i++) {
-            ColumnConstraints column = new ColumnConstraints(25*scale, 25*scale, 25*scale);
+            ColumnConstraints column = new ColumnConstraints();
             column.setPercentWidth(6.25);
             gridPane.getColumnConstraints().add(column);
         }
         for (int i = 1; i <= 16; i++) {
 
             if (i == 1) {
-                RowConstraints row = new RowConstraints(40*scale, 40*scale, 40*scale);
+                RowConstraints row = new RowConstraints();
                 row.setPercentHeight(6.25);
                 gridPane.getRowConstraints().add(row);
             } else {
-                RowConstraints row = new RowConstraints(25*scale, 25*scale, 25*scale);
+                RowConstraints row = new RowConstraints();
                 row.setPercentHeight(6.25);
                 gridPane.getRowConstraints().add(row);
             }

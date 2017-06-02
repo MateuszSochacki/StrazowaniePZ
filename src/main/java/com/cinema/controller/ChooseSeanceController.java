@@ -186,7 +186,6 @@ public class ChooseSeanceController implements BootInitializable {
 
     @FXML
     void btnSubmitClicked(MouseEvent event) {
-
     }
 
     @Override

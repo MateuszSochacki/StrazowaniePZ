@@ -88,13 +88,12 @@ public class CinemaApplication extends Application {
             scene.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.F12 && !primaryStage.isFullScreen()) {
                     primaryStage.setFullScreen(true);
-                }
-                else if(event.getCode() == KeyCode.F12 && primaryStage.isFullScreen()){
-                        primaryStage.setFullScreen(false);
+                } else if (event.getCode() == KeyCode.F12 && primaryStage.isFullScreen()) {
+                    primaryStage.setFullScreen(false);
                 }
             });
             primaryStage.setMinHeight(800);
-            primaryStage.setMinWidth(620);
+            primaryStage.setMinWidth(800);
             primaryStage.setMaxHeight(1080);
             primaryStage.setMaxWidth(1920);
             primaryStage.setScene(scene);
@@ -107,7 +106,6 @@ public class CinemaApplication extends Application {
         });
         task.run();
     }
-
 
 
     public static void main(String[] args) throws Exception {

@@ -95,8 +95,6 @@ public class MovieInfoController implements BootInitializable {
 
     private void setImages(List<MovieEntity> movies){
         try {
-
-
         for(int i = 0 ; i < movies.size() ; i++) {
             ByteArrayInputStream is = new ByteArrayInputStream(movies.get(i).getCover());
             BufferedImage read = ImageIO.read(is);

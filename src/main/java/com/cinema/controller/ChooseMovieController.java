@@ -275,6 +275,7 @@ public class ChooseMovieController implements BootInitializable {
 
     @Override
     public void setPageParrent(PageController parentPage) {
+
         pageController = parentPage;
     }
 
