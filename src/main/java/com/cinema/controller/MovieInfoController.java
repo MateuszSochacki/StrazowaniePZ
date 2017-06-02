@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -33,6 +34,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.beans.BeansException;
@@ -43,6 +45,7 @@ import org.springframework.stereotype.Component;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +144,7 @@ public class MovieInfoController implements BootInitializable {
 
     public class DisplayShelf extends Region{
 
-
+        private WebView currentWebView;
         private  final Duration DURATION = Duration.millis(350);
         private  final Interpolator INTERPOLATOR = Interpolator.EASE_BOTH;
         private static final double SPACING = 200;
@@ -185,6 +188,7 @@ public class MovieInfoController implements BootInitializable {
             for (int i=0; i<images.length; i++) {
                 MovieEntity movie = movies.get(i);
                 final PerspectiveImage item = items[i] = new PerspectiveImage(images[i], movie);
+                item.setMovieEntity(movie);
                 currentItem = item;
 
                 final double index = i;
@@ -215,8 +219,6 @@ public class MovieInfoController implements BootInitializable {
         }
 
         private void showMoreInformation(){
-
-
             isClicked = true;
             timeline = new Timeline();
             final ObservableList<KeyFrame> keyFrames = timeline.getKeyFrames();
@@ -240,6 +242,14 @@ public class MovieInfoController implements BootInitializable {
                                 new KeyValue(centerItem.scaleXProperty(), 1.0, INTERPOLATOR),
                                 new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
                                 new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
+                        timeline2.setOnFinished(event3->{
+                            List<Node> nodeList = getAllNodes(centerItem.backMovie);
+                            WebView webView = (WebView) nodeList.get(17);
+                            currentWebView = webView;
+                            currentWebView.getEngine().load(
+                                    currentItem.getMovieEntity().getDescription()
+                            );
+                        });
                         timeline2.play();
                         });
             timeline.play();
@@ -271,10 +281,32 @@ public class MovieInfoController implements BootInitializable {
                         new KeyValue(centerItem.scaleXProperty(), 0.7, INTERPOLATOR),
                         new KeyValue(centerItem.scaleYProperty(), 0.7, INTERPOLATOR),
                         new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
+                timeline2.setOnFinished(event3->{
+                    List<Node> nodeList = getAllNodes(centerItem.backMovie);
+                    WebView webView = (WebView) nodeList.get(17);
+                    currentWebView = webView;
+                    currentWebView.getEngine().load(
+                            ""
+                    );
+                });
                 timeline2.play();
             });
             timeline.play();
 
+        }
+
+        public ArrayList<Node> getAllNodes(Parent root) {
+            ArrayList<Node> nodes = new ArrayList<Node>();
+            addAllDescendents(root, nodes);
+            return nodes;
+        }
+
+        private void addAllDescendents(Parent parent, ArrayList<Node> nodes) {
+            for (Node node : parent.getChildrenUnmodifiable()) {
+                nodes.add(node);
+                if (node instanceof Parent)
+                    addAllDescendents((Parent)node, nodes);
+            }
         }
 
         private void update() {
@@ -363,6 +395,16 @@ public class MovieInfoController implements BootInitializable {
 
     public static class PerspectiveImage extends Parent {
 
+        public MovieEntity getMovieEntity() {
+            return movieEntity;
+        }
+
+        public void setMovieEntity(MovieEntity movieEntity) {
+            this.movieEntity = movieEntity;
+        }
+
+        private MovieEntity movieEntity;
+
         private int idMovie;
         private static final double REFLECTION_SIZE = 0.25;
         private static final double WIDTH = 400;
@@ -427,108 +469,129 @@ public class MovieInfoController implements BootInitializable {
             frontMovie.getChildren().addAll(imageView);
             frontMovie.setMinSize(WIDTH,HEIGHT);
             frontMovie.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+
             backMovie = createBackMovie(movie,image);
             backMovie.setEffect(reflection);
             setEffect(transform);
             getChildren().addAll(frontMovie, backMovie );
         }
 
+
         public VBox createBackMovie(MovieEntity movie,Image image)
         {
             VBox root = new VBox();
 
+            //get colors
             ImageAnalizer imageAnalizer = new ImageAnalizer();
             List<String> colors = new ArrayList<>();
             colors = imageAnalizer.getColors(movie);
 
-            Text title = new Text(movie.getTitle());
-            title.setStyle("-fx-text-fill: "+colors.get(0)+";"+
-                    "-fx-font-size: 24px;");
 
-            TextFlow textFlow = new TextFlow();
-            textFlow.getChildren().add(title);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/scene/MovieInfoCard.fxml"));
+            MovieInfoCardController controller = new MovieInfoCardController(movie, image, colors);
 
-            HBox hbox = new HBox();
-            hbox.setPadding(new Insets(6,6,6,6));
-            hbox.setAlignment(Pos.CENTER);
+            fxmlLoader.setController(controller);
+            try {
+                root = fxmlLoader.load();
+                root.setStyle("-fx-border-width: 0 2 2 2; -fx-background-color: white; -fx-border-color: "+colors.get(1)+";");
+                root.setVisible(false);
+                WebView web = controller.getCardMovieTrailer();
+                web.setId(root.toString());
 
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(100);
-            imageView.preserveRatioProperty().setValue(true);
-            hbox.getChildren().add(imageView);
-
-            GridPane gridPane = new GridPane();
-            ColumnConstraints columm = new ColumnConstraints();
-            columm.setPercentWidth(50);
-
-            gridPane.setHgap(12);
-            gridPane.setVgap(6);
-            gridPane.setPadding(new Insets(6, 6,6,6));
-
-            RowConstraints row = new RowConstraints();
-
-            gridPane.getColumnConstraints().addAll(columm, columm);
-            gridPane.getRowConstraints().addAll(row,row,row,row,row);
-
-            List <String> movieDetailsList = new ArrayList<>();
-
-            movieDetailsList.add("Reżyser:");
-            movieDetailsList.add(movie.getDirector());
-
-            movieDetailsList.add("Czas Trwania:");
-            movieDetailsList.add(movie.getDuration().toString()+"min");
-
-            List <CategoryEntity> list = movie.getCategoryEntities();
-            String categoriesString ="";
-            for (CategoryEntity category: list) {
-                categoriesString += category.getName()+", ";
+                return root;
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
-            categoriesString.substring(0, categoriesString.length()-1);
-
-            movieDetailsList.add("Kategorie:");
-            movieDetailsList.add(categoriesString);
-
-            movieDetailsList.add("Data Premiery:");
-            movieDetailsList.add(movie.getReleaseDate().toString());
-
-            movieDetailsList.add("Ograniczenie wiekowe:");
-            movieDetailsList.add(movie.getAgeRatingEntities().getRequiredAge().toString() +"+");
-
-            int licznik =0;
-            for (int rows=0; rows<((movieDetailsList.size())/2); rows++)
-            {
-                for (int col=0; col<2; col++) {
-                    TextFlow movieDetailsListTextFlow = new TextFlow();
-                    Text movieDetailsListText = new Text(movieDetailsList.get(licznik));
-                    movieDetailsListText.setStyle("-fx-text-fill: "+colors.get(0)+";"+
-                            "-fx-font-size: 14px;");
-                    licznik++;
-                    movieDetailsListTextFlow.getChildren().add(movieDetailsListText);
-                    gridPane.add(movieDetailsListTextFlow, col, rows);
-                }
-            }
-            hbox.getChildren().add(gridPane);
-
-            Text description = new Text(movie.getDescription());
-            TextFlow descriptonTextFlow = new TextFlow();
-            description.setStyle("-fx-text-fill: "+colors.get(0)+";"+
-                    "-fx-font-size: 14px;");
-
-            descriptonTextFlow.getChildren().add(description);
-
-
-
-            root.setVisible(false);
-            root.setMinSize(400, 600);
-            root.setMaxSize(400, 600);
-
-            root.getChildren().addAll(textFlow, hbox , descriptonTextFlow);
-            root.setPadding(new Insets(8,8,8,8));
-            root.setStyle("-fx-background-color: white;"+"-fx-border-color: "+colors.get(1)+";");
-
             return root;
         }
 
+
+//
+//            Text title = new Text(movie.getTitle());
+//            title.setStyle("-fx-text-fill: "+colors.get(0)+";"+
+//                    "-fx-font-size: 24px;");
+//
+//            TextFlow textFlow = new TextFlow();
+//            textFlow.getChildren().add(title);
+//
+//            HBox hbox = new HBox();
+//            hbox.setPadding(new Insets(6,6,6,6));
+//            hbox.setAlignment(Pos.CENTER);
+//
+//            ImageView imageView = new ImageView(image);
+//            imageView.setFitWidth(100);
+//            imageView.preserveRatioProperty().setValue(true);
+//            hbox.getChildren().add(imageView);
+//
+//            GridPane gridPane = new GridPane();
+//            ColumnConstraints columm = new ColumnConstraints();
+//            columm.setPercentWidth(50);
+//
+//            gridPane.setHgap(12);
+//            gridPane.setVgap(6);
+//            gridPane.setPadding(new Insets(6, 6,6,6));
+//
+//            RowConstraints row = new RowConstraints();
+//
+//            gridPane.getColumnConstraints().addAll(columm, columm);
+//            gridPane.getRowConstraints().addAll(row,row,row,row,row);
+//
+//            List <String> movieDetailsList = new ArrayList<>();
+//
+//            movieDetailsList.add("Reżyser:");
+//            movieDetailsList.add(movie.getDirector());
+//
+//            movieDetailsList.add("Czas Trwania:");
+//            movieDetailsList.add(movie.getDuration().toString()+"min");
+//
+//            List <CategoryEntity> list = movie.getCategoryEntities();
+//            String categoriesString ="";
+//            for (CategoryEntity category: list) {
+//                categoriesString += category.getName()+", ";
+//            }
+//            categoriesString.substring(0, categoriesString.length()-1);
+//
+//            movieDetailsList.add("Kategorie:");
+//            movieDetailsList.add(categoriesString);
+//
+//            movieDetailsList.add("Data Premiery:");
+//            movieDetailsList.add(movie.getReleaseDate().toString());
+//
+//            movieDetailsList.add("Ograniczenie wiekowe:");
+//            movieDetailsList.add(movie.getAgeRatingEntities().getRequiredAge().toString() +"+");
+//
+//            int licznik =0;
+//            for (int rows=0; rows<((movieDetailsList.size())/2); rows++)
+//            {
+//                for (int col=0; col<2; col++) {
+//                    TextFlow movieDetailsListTextFlow = new TextFlow();
+//                    Text movieDetailsListText = new Text(movieDetailsList.get(licznik));
+//                    movieDetailsListText.setStyle("-fx-text-fill: "+colors.get(0)+";"+
+//                            "-fx-font-size: 14px;");
+//                    licznik++;
+//                    movieDetailsListTextFlow.getChildren().add(movieDetailsListText);
+//                    gridPane.add(movieDetailsListTextFlow, col, rows);
+//                }
+//            }
+//            hbox.getChildren().add(gridPane);
+//
+//            Text description = new Text(movie.getDescription());
+//            TextFlow descriptonTextFlow = new TextFlow();
+//            description.setStyle("-fx-text-fill: "+colors.get(0)+";"+
+//                    "-fx-font-size: 14px;");
+//
+//            descriptonTextFlow.getChildren().add(description);
+//
+//
+//
+//            root.setVisible(false);
+//            root.setMinSize(400, 600);
+//            root.setMaxSize(400, 600);
+//
+//            root.getChildren().addAll(textFlow, hbox , descriptonTextFlow);
+//            root.setPadding(new Insets(8,8,8,8));
+//            root.setStyle("-fx-background-color: white;"+"-fx-border-color: "+colors.get(1)+";");
+//
 
         public int getIdMovie() {
             return idMovie;

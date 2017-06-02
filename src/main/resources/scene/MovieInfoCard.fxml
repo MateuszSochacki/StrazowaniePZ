@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.web.WebView?>
+
+
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: black;">
+         <children>
+            <ImageView fx:id="cardMovieImage" fitHeight="600.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <image>
+                  <Image url="@../images/min/movie_lotr2_min.jpg" />
+               </image>
+               <effect>
+                  <GaussianBlur radius="18.75" />
+               </effect>
+            </ImageView>
+            <Pane opacity="0.8" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
+            <VBox alignment="TOP_CENTER" maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0">
+               <children>
+                  <TextFlow style="-fx-background-color: #a2d3da;" textAlignment="CENTER" VBox.vgrow="NEVER">
+                     <children>
+                        <Text fx:id="cardMovieTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Title of the movie" textAlignment="CENTER">
+                           <font>
+                              <Font name="Cambria" size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </TextFlow>
+                  <GridPane alignment="CENTER" VBox.vgrow="NEVER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="103.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="173.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Czas Trwania:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kategorie:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="cardMovieDirector" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" />
+                        <Text fx:id="cardMovieTime" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Text fx:id="cardMovieCategories" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Text fx:id="cardMovieDate" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Text fx:id="cardMovieAge" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reżyser:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data premiery:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wiek:" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                     </padding>
+                  </GridPane>
+                  <WebView fx:id="cardMovieTrailer" cache="true" cacheHint="SPEED" minHeight="-1.0" minWidth="-1.0" prefHeight="200.0" prefWidth="360.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </WebView>
+                  <TextFlow textAlignment="JUSTIFY">
+                     <children>
+                        <Text fx:id="cardMovieDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum etre meo nous il elo men at e somi et loremIpsum orte moret yami toka lor'e sql x'avier i foka. Lorem ipsum etre meo nous il elo men at e somi et loremIpsum orte moret yami toka lor'e sql x'avier i foka Lorem ipsum etre meo nous il elo men at e somi et loremIpsum orte moret yami toka lor'e sql x'avier i foka. Lorem ipsum etre meo nous il elo men at e somi et loremIpsum orte moret yami toka lor'e sql x'avier i foka. Lorem ipsum etre meo nous il elo men at e somi et loremIpsum orte moret yami toka lor'e sql x'avier i foka.">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                     </padding>
+                  </TextFlow>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </children>
+</VBox>
