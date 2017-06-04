@@ -11,6 +11,7 @@ import com.cinema.services.CategoryRepository;
 import com.cinema.services.MovieRepository;
 import com.cinema.services.SeanceRepository;
 import com.cinema.util.CustomPopupWindow;
+import com.cinema.util.DateConverter;
 import com.cinema.util.ImageAnalizer;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
@@ -291,7 +292,9 @@ public class ChooseSeanceController implements BootInitializable {
             textFlow.setPadding(new Insets(4, 4, 4, 4));
             addMouseEvent(textFlow, seanceList.get(i));
 
-            Text text = new Text(seanceList.get(i).getDate().toString());
+            DateConverter conv = new DateConverter();
+
+            Text text = new Text(conv.convertDataToString(seanceList.get(i).getDate()));
             text.setFont(Font.font("System", FontWeight.BOLD, 14));
             text.setFill(Color.valueOf(Color.WHITE.toString()));
             textFlow.getChildren().add(text);

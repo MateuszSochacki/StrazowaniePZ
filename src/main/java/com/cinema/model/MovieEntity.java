@@ -21,6 +21,7 @@ public class MovieEntity {
     private Date releaseDate;
     private String description;
     private byte[] cover;
+    private String trailer;
 
 
     //fetch musi być ustawione na eager, dzięki czemu pobiera też inne encje które wykorzystuje, w tym przypadku CategoryEntity
@@ -106,6 +107,11 @@ public class MovieEntity {
         this.cover = cover;
     }
 
+    public String getTrailer() {
+        return trailer;
+    }
 
-
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
+    }
 }
