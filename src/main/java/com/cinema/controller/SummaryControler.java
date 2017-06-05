@@ -39,8 +39,6 @@ public class SummaryControler implements BootInitializable {
 
     }
 
-
-
     @Override
     public void initConstruct() {
 
