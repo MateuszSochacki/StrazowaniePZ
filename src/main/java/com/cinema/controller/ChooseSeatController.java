@@ -3,11 +3,15 @@ package com.cinema.controller;
 import com.cinema.CinemaApplication;
 import com.cinema.config.BootInitializable;
 import com.cinema.model.CinemaHallEntity;
-import com.cinema.model.MovieEntity;
 import com.cinema.model.SeanceEntity;
 import com.cinema.model.SeatEntity;
+import com.cinema.model.Ticket;
 import com.cinema.services.SeanceRepository;
 import com.cinema.services.SeatRepository;
+import com.cinema.util.MapReader;
+import com.cinema.view.TicketView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.fxml.FXML;
@@ -18,7 +22,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -31,14 +35,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Dominik on 05.05.2017.
- *
- *
  */
 @Component
 public class ChooseSeatController implements BootInitializable {
@@ -47,12 +47,19 @@ public class ChooseSeatController implements BootInitializable {
 
     private ApplicationContext springContext;
 
+    private List<TicketView> ticketsView;
+
+    @FXML
+    private VBox summaryLayout;
 
     @FXML
     private Text textInfo;
 
     @FXML
     private GridPane gridPane;
+
+    @FXML
+    private Text price;
 
     @FXML
     void btnBackClicked(MouseEvent event) {
@@ -68,12 +75,19 @@ public class ChooseSeatController implements BootInitializable {
     @FXML
     void btnSubmitClicked(MouseEvent event) {
         System.out.println("Click!");
+        List<SeatEntity> currentEntities = seatRepository.findAll();
         for (TilePaneCustom tilePaneCustom : reservedSeats) {
-            SeatEntity seat = new SeatEntity();
-            seat.setRow(tilePaneCustom.getRow());
-            seat.setNumber(tilePaneCustom.getColumn());
-            seat.setSeanceEntity(currentSeance);
-            seatRepository.save(seat);
+            for (SeatEntity entity : currentEntities) {
+                SeatEntity seat = new SeatEntity();
+                seat.setRow(tilePaneCustom.getRow());
+                seat.setNumber(tilePaneCustom.getColumn());
+                seat.setSeanceEntity(currentSeance);
+                if (seat.getRow() == entity.getRow() && seat.getNumber() == entity.getNumber() && seat.getSeanceEntity() == seat.getSeanceEntity()) {
+                    //TODO: create popup to inform about taken places
+                    return;
+                }
+                seatRepository.save(seat);
+            }
         }
         pageController.setPage(CinemaApplication.pageSummary);
     }
@@ -97,10 +111,14 @@ public class ChooseSeatController implements BootInitializable {
 
     private CinemaHallEntity cinemaHall;
 
+//
+//    @Autowired
+//    MapReader mapReader;
 
     @Override
     public void initConstruct() {
-
+        price.setText("0");
+        ticketsView = new ArrayList<>();
         reservedSeats = new ArrayList<>();
 
         List<SeanceEntity> seance = seanceRepository.findAll();
@@ -108,11 +126,12 @@ public class ChooseSeatController implements BootInitializable {
         //dla testów pobiera pierwszy element z listy seansów, żeby odczytać obiekt typu CinemaHallEntity, który jest wymagany
         //do znalezienia siedzien.
         cinemaHall = currentSeance.getCinemaHall();
-            //cinemaHall = seance.get(0).getCinemaHall();
+        //cinemaHall = seance.get(0).getCinemaHall();
 
         List<SeatEntity> seats = seatRepository.findBySeanceEntity(currentSeance);
 
         //TODO: Read from file
+
 
         //stworzenie "mapy" kina
         cinemaHallArray = new int[][]{
@@ -215,7 +234,7 @@ public class ChooseSeatController implements BootInitializable {
                         TilePaneCustom pane = new TilePaneCustom();
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
                         pane.setMaxHeight(8);
-                        pane.setMaxWidth(Region.USE_COMPUTED_SIZE );
+                        pane.setMaxWidth(Region.USE_COMPUTED_SIZE);
                         pane.setStyle("-fx-background-color: #b6b6b6");
                         gridPane.add(pane, j, i);
                         pane.setDisable(true);
@@ -283,9 +302,11 @@ public class ChooseSeatController implements BootInitializable {
             pane.setStyle("-fx-background-color: #8ae6ef");
             pane.isClicked = false;
             reservedSeats.remove(pane);
+            removeTicket(pane);
 
         } else {
             pane.setStyle("-fx-background-color: #c7ffa6");
+            addTicket(pane);
             pane.isClicked = true;
             reservedSeats.add(pane);
         }
@@ -293,6 +314,107 @@ public class ChooseSeatController implements BootInitializable {
 
     @Override
     public void stage(Stage primaryStage) {
+    }
+
+    private void addTicket(TilePaneCustom pane) {
+        //  summaryLayout.getChildren().clear();
+        Ticket ticket = setTicket(pane);
+
+
+        TicketView view = new TicketView();
+        view.setTicket(ticket);
+        ticketsView.add(view);
+
+        generateTicketsView(view);
+        summaryLayout.getChildren().add(view.getLayout());
+        changeSum();
+    }
+
+    private Ticket setTicket(TilePaneCustom pane) {
+        Ticket ticket = new Ticket();
+        Label nr = (Label) pane.getChildren().get(0);
+        ticket.setRow(pane.getRow());
+        ticket.setColumn(Integer.valueOf(nr.getText()));
+        ticket.setName("Bilet: rząd " + pane.getRow() + " miejsce " + nr.getText());
+
+        ticket.setType(Ticket.Abatement.Normal);
+        return ticket;
+    }
+
+    private void removeTicket(TilePaneCustom pane) {
+        int index = 0;
+
+        for (Iterator<TicketView> viewIterator = ticketsView.iterator(); viewIterator.hasNext(); ) {
+            TicketView view = viewIterator.next();
+            Label nr = (Label) pane.getChildren().get(0);
+            int value = Integer.valueOf(nr.getText());
+            if (pane.getRow() == view.getTicket().getRow() && value == view.getTicket().getColumn()) {
+                summaryLayout.getChildren().remove(view.getLayout());
+                viewIterator.remove();
+            }
+            index++;
+        }
+        changeSum();
+    }
+
+
+    private void generateTicketsView(TicketView view) {
+
+        FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getClass().getResource("/scene/Ticket.fxml"));
+        try {
+            view.setLayout(fxmlLoader1.load());
+            view.getLayout().setMargin(view.getLayout(), new Insets(0, 0, 10, 0));
+            setTicketView(view, view.getTicket());
+        } catch (IOException s) {
+            s.printStackTrace();
+        }
+
+    }
+
+
+    private void setTicketView(TicketView layout, Ticket ticket) {
+        Text title = new Text(ticket.getName());
+        Text price = new Text(Float.toString(ticket.getValue()));
+        title.prefHeight(Region.USE_COMPUTED_SIZE);
+        title.prefWidth(Region.USE_COMPUTED_SIZE);
+
+        layout.getLayout().getChildren().addAll(title);
+        ComboBox<Ticket.Abatement> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(Ticket.Abatement.Normal, Ticket.Abatement.Student, Ticket.Abatement.Kids);
+        comboBox.getSelectionModel().selectFirst();
+        comboBox.setPrefSize(Double.MAX_VALUE, Region.USE_COMPUTED_SIZE);
+
+        comboBox.getSelectionModel()
+                .selectedItemProperty()
+                .addListener(new ChangeListener<Ticket.Abatement>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Ticket.Abatement> observable, Ticket.Abatement oldValue, Ticket.Abatement newValue) {
+                        if (newValue != null) {
+                            float newPrice = setPrice(newValue, ticket);
+                            price.setText(Float.toString(newPrice));
+                            changeSum();
+                        }
+                    }
+                });
+
+        layout.getLayout().getChildren().addAll(comboBox, price);
+    }
+
+
+    private void changeSum() {
+        float newSum = 0;
+
+        for (TicketView view : ticketsView) {
+            newSum += view.getTicket().getValue();
+        }
+
+
+        this.price.setText(Float.toString(newSum));
+    }
+
+    private float setPrice(Ticket.Abatement abatement, Ticket ticket) {
+        ticket.setType(abatement);
+        return ticket.getValue();
     }
 
     @Override
@@ -313,7 +435,7 @@ public class ChooseSeatController implements BootInitializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       this.initConstruct();
+        this.initConstruct();
     }
 
     @Override
@@ -365,7 +487,6 @@ public class ChooseSeatController implements BootInitializable {
         }
 
     }
-
 
 
 }

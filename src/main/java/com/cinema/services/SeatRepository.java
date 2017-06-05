@@ -13,6 +13,7 @@ import java.util.List;
 public interface SeatRepository extends CrudRepository<SeatEntity, Integer> {
 
     //List<SeatEntity> findByCinemaHall(CinemaHallEntity cinemaHallEntity);
+    List<SeatEntity> findAll();
     List<SeatEntity> findBySeanceEntity(SeanceEntity seanceEntity);
 
 }
