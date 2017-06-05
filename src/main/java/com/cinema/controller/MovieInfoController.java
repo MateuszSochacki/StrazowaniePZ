@@ -247,7 +247,7 @@ public class MovieInfoController implements BootInitializable {
                             WebView webView = (WebView) nodeList.get(17);
                             currentWebView = webView;
                             currentWebView.getEngine().load(
-                                    currentItem.getMovieEntity().getDescription()
+                                    currentItem.getMovieEntity().getTrailer()
                             );
                         });
                         timeline2.play();

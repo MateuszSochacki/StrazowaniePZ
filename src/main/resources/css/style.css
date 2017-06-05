@@ -2,12 +2,12 @@
 	-fx-text-fill: orange;
 	-fx-font-size: 40px;
 }
-#go_btn{
+#go_btn, .filterButton{
     -fx-text-fill: white;
     -fx-background-radius: 10;
     -fx-background-color: linear-gradient(#454545 0%, #757575 100%);
 }
-#go_btn:hover{
+#go_btn:hover, .filterButton:hover{
     -fx-background-color: #3d3d3d;
 }
 .StackPane{

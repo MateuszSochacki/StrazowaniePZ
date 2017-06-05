@@ -46,6 +46,8 @@ public class CinemaApplication extends Application {
     public static final String pageMovieInfoFile = "Scene/MovieInfo.fxml";
 
 
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Task<Object> task = new Task<Object>() {
