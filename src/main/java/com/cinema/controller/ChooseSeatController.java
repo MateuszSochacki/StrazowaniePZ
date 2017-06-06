@@ -75,17 +75,23 @@ public class ChooseSeatController implements BootInitializable {
     @FXML
     void btnSubmitClicked(MouseEvent event) {
         System.out.println("Click!");
+        List<SeatEntity> seatToSave = new ArrayList<>();
         List<SeatEntity> currentEntities = seatRepository.findAll();
+
         for (TilePaneCustom tilePaneCustom : reservedSeats) {
+            boolean taken = false;
+            SeatEntity seat = new SeatEntity();
             for (SeatEntity entity : currentEntities) {
-                SeatEntity seat = new SeatEntity();
                 seat.setRow(tilePaneCustom.getRow());
                 seat.setNumber(tilePaneCustom.getColumn());
                 seat.setSeanceEntity(currentSeance);
                 if (seat.getRow() == entity.getRow() && seat.getNumber() == entity.getNumber() && seat.getSeanceEntity() == seat.getSeanceEntity()) {
                     //TODO: create popup to inform about taken places
+                    taken = true;
                     return;
                 }
+            }
+            if(!taken){
                 seatRepository.save(seat);
             }
         }
@@ -113,7 +119,7 @@ public class ChooseSeatController implements BootInitializable {
 
 
     @Autowired
-    MapReader mapReader;
+    private MapReader mapReader;
 
     @Override
     public void initConstruct() {
@@ -361,14 +367,18 @@ public class ChooseSeatController implements BootInitializable {
         changeSum();
     }
 
+    private TicketController ticketController;
 
     private void generateTicketsView(TicketView view) {
-
+        TicketController ticketController = new TicketController();
         FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getClass().getResource("/scene/Ticket.fxml"));
+        fxmlLoader1.setController(ticketController);
         try {
             view.setLayout(fxmlLoader1.load());
+
+
             view.getLayout().setMargin(view.getLayout(), new Insets(0, 0, 10, 0));
-            setTicketView(view, view.getTicket());
+            setTicketView(view, view.getTicket(), ticketController);
         } catch (IOException s) {
             s.printStackTrace();
         }
@@ -376,17 +386,18 @@ public class ChooseSeatController implements BootInitializable {
     }
 
 
-    private void setTicketView(TicketView layout, Ticket ticket) {
+    private void setTicketView(TicketView layout, Ticket ticket, TicketController ticketController) {
         Text title = new Text(ticket.getName());
         Text price = new Text(Float.toString(ticket.getValue()));
+        HBox hbox = new HBox();
+
         title.prefHeight(Region.USE_COMPUTED_SIZE);
         title.prefWidth(Region.USE_COMPUTED_SIZE);
-
-        layout.getLayout().getChildren().addAll(title);
+        //layout.getLayout().setPadding(new Insets(4, 4, 4, 4));
         ComboBox<Ticket.Abatement> comboBox = new ComboBox<>();
         comboBox.getItems().addAll(Ticket.Abatement.Normal, Ticket.Abatement.Student, Ticket.Abatement.Kids);
         comboBox.getSelectionModel().selectFirst();
-        comboBox.setPrefSize(Double.MAX_VALUE, Region.USE_COMPUTED_SIZE);
+        comboBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 
         comboBox.getSelectionModel()
                 .selectedItemProperty()
@@ -400,8 +411,9 @@ public class ChooseSeatController implements BootInitializable {
                         }
                     }
                 });
-
-        layout.getLayout().getChildren().addAll(comboBox, price);
+        ticketController.setViews(title, new Text(""), price, comboBox);
+        //hbox.getChildren().addAll(title, comboBox);
+        //layout.getLayout().getChildren().addAll(hbox, price);
     }
 
 

@@ -11,9 +11,6 @@ import java.io.FileReader;
 @Component
 public class MapReaderImpl  implements MapReader{
 
-
-
-
     @Override
     public int[][] mapReader(int idHall) {
         int [][] mapArray = new int[16][16];

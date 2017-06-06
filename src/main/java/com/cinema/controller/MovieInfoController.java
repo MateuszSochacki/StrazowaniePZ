@@ -60,7 +60,7 @@ public class MovieInfoController implements BootInitializable {
     //private static final double WIDTH = 1200, HEIGHT = 800;
 
     private PageController pageController;
-
+    private static boolean viewMode = false;
     private ApplicationContext springContext;
 
     @FXML
@@ -195,15 +195,22 @@ public class MovieInfoController implements BootInitializable {
                 item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent event) {
                         if(item == currentItem){
-                            //todo: Animation. Rotate and show information about film
-                            if(!isClicked){
+                            if(!isClicked && !MovieInfoController.viewMode){
                                 showMoreInformation();
+                                viewMode = true;
                             } else {
                                 showLessInformation();
                                 isClicked = false;
+                                viewMode = false;
                             }
                             System.out.println("Klik w ten sam!");
                         } else {
+                            if(viewMode){
+                                showLessInformation();
+                                viewMode = false;
+                                isClicked = false;
+                                return;
+                            }
                             shiftToCenter(item);
                             currentItem = item;
                         }
