@@ -49,6 +49,18 @@ public class ChooseSeatController implements BootInitializable {
 
     private List<TicketView> ticketsView;
 
+    private PageController pageController;
+
+    private int cinemaHallArray[][];
+
+    private Scene currentScene;
+
+    private static double scale = 1;
+
+    private float sumPrice = 0;
+
+    private List<TilePaneCustom> reservedSeats;
+
     @FXML
     private VBox summaryLayout;
 
@@ -103,15 +115,7 @@ public class ChooseSeatController implements BootInitializable {
     }
 
 
-    private PageController pageController;
 
-    private int cinemaHallArray[][];
-
-    private Scene currentScene;
-
-    private static double scale = 1;
-
-    private List<TilePaneCustom> reservedSeats;
 
     @Autowired
     private SeanceRepository seanceRepository;
@@ -127,23 +131,15 @@ public class ChooseSeatController implements BootInitializable {
 
     @Override
     public void initConstruct() {
-        price.setText("0");
+        sumPrice = 0;
+        price.setText("Suma: " + sumPrice);
+
         ticketsView = new ArrayList<>();
         reservedSeats = new ArrayList<>();
 
-        List<SeanceEntity> seance = seanceRepository.findAll();
-
-        //dla testów pobiera pierwszy element z listy seansów, żeby odczytać obiekt typu CinemaHallEntity, który jest wymagany
-        //do znalezienia siedzien.
         cinemaHall = currentSeance.getCinemaHall();
-        //cinemaHall = seance.get(0).getCinemaHall();
 
         List<SeatEntity> seats = seatRepository.findBySeanceEntity(currentSeance);
-
-        //TODO: Read from file
-
-
-
         cinemaHallArray = mapReader.mapReader(cinemaHall.getCinemaHallType());
 
 
@@ -172,7 +168,7 @@ public class ChooseSeatController implements BootInitializable {
             cinemaHallArray[seat.getRow()][seat.getNumber()] = 2;
         }
 
-        textInfo.setText(currentSeance.getMovie().getTitle());
+        textInfo.setText(currentSeance.getMovie().getTitle() + " Scena " + currentSeance.getCinemaHall().getCinemaHallType());
 
         generateEmptyGrid();
 
@@ -392,7 +388,7 @@ public class ChooseSeatController implements BootInitializable {
 
     private void setTicketView(TicketView layout, Ticket ticket, TicketController ticketController) {
         Text title = new Text(ticket.getName());
-        Text price = new Text(Float.toString(ticket.getValue()));
+        Text price = new Text(Float.toString(ticket.getValue()) + " zł");
         HBox hbox = new HBox();
 
         title.prefHeight(Region.USE_COMPUTED_SIZE);
@@ -410,7 +406,7 @@ public class ChooseSeatController implements BootInitializable {
                     public void changed(ObservableValue<? extends Ticket.Abatement> observable, Ticket.Abatement oldValue, Ticket.Abatement newValue) {
                         if (newValue != null) {
                             float newPrice = setPrice(newValue, ticket);
-                            price.setText(Float.toString(newPrice));
+                            price.setText(Float.toString(newPrice) + " zł");
                             changeSum();
                         }
                     }
@@ -422,14 +418,12 @@ public class ChooseSeatController implements BootInitializable {
 
 
     private void changeSum() {
-        float newSum = 0;
+        sumPrice = 0;
 
         for (TicketView view : ticketsView) {
-            newSum += view.getTicket().getValue();
+            sumPrice += view.getTicket().getValue();
         }
-
-
-        this.price.setText(Float.toString(newSum));
+        this.price.setText("Suma: " + sumPrice + " zł");
     }
 
     private float setPrice(Ticket.Abatement abatement, Ticket ticket) {
