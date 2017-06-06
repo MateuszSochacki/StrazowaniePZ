@@ -52,15 +52,23 @@ public class Ticket {
 
         switch (type) {
             case Student:
-                return value/2;
+                return value / 2;
             case Kids:
-                float newValue = value/(1.7f);
+                float newValue = value / (1.7f);
                 newValue = Math.round(newValue);
                 return newValue;
             case Pensioners:
-                return Math.round(value/(1.9f));
+                return Math.round(value / (1.9f));
             default:
                 return value;
+        }
+    }
+
+    public boolean equalsByType(Ticket ticket){
+        if(this.getType() == ticket.getType()){
+            return true;
+        } else {
+            return false;
         }
     }
 

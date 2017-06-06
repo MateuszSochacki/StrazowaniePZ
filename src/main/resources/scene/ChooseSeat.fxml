@@ -13,7 +13,7 @@
 <?import javafx.scene.text.TextFlow?>
 
 
-<StackPane fx:id="mainStackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="mainStackPane" stylesheets="/css/style.css" styleClass="mainContainer" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="mainVbox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #ffffff;">
          <children>

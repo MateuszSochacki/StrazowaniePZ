@@ -23,11 +23,16 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +42,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Dominik on 05.05.2017.
@@ -110,23 +116,92 @@ public class ChooseSeatController implements BootInitializable {
                     return;
                 }
             }
-            if(!taken){
-                //seatToSave.add(seat);
-                CustomPopupWindow popupWindow = new CustomPopupWindow(600, 600, mainStackPane, mainVbox);
-                popupWindow.openPopupWindow();
+            if (!taken) {
+                seatToSave.add(seat);
             }
         }
 
-        for (SeatEntity seatEntity : seatToSave){
-            seatRepository.save(seatEntity);
-        }
+        CustomPopupWindow popupWindow = new CustomPopupWindow(400, 400, mainStackPane, mainVbox);
+        popupWindow.openPopupWindow();
+        setPopUp(seatToSave, popupWindow);
 
 
-        pageController.setPage(CinemaApplication.pageSummary);
+        //pageController.setPage(CinemaApplication.pageSummary);
     }
 
+    private void setPopUp(List<SeatEntity> seats, CustomPopupWindow popupWindow) {
+        HBox hbox = new HBox();
+        hbox.alignmentProperty().setValue(Pos.CENTER_RIGHT);
+        Text text = new Text("Suma wynosi: " + sumPrice);
+        text.setFont(Font.font("System", 14));
+        text.setTextAlignment(TextAlignment.LEFT);
+        Button button = new Button("ZAPLAC");
+        button.setTextFill(Paint.valueOf("#ffff"));
+        button.setFont(Font.font("System", FontWeight.BOLD, 14));
+        button.setStyle("-fx-background-color:  #ea4646");
+        button.setPadding(new Insets(8, 8, 8, 8));
+        button.setPrefSize(150, 36);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                for (SeatEntity seat : seats){
+                    seatRepository.save(seat);
+                }
+                pageController.setPage(CinemaApplication.pageChooseSeance);
+            }
+        });
+        hbox.getChildren().add(text);
+        hbox.getChildren().add(button);
 
 
+        GridPane grid = new GridPane();
+
+        for (int i = 0; i < 2; i++) {
+            ColumnConstraints column = new ColumnConstraints();
+            grid.getColumnConstraints().add(column);
+        }
+
+        List<TicketView> tickets = new ArrayList<>();
+        for (TicketView current : ticketsView) {
+            tickets.add(current);
+        }
+
+        for (int i = 0; i < tickets.size(); i++) {
+            for (int j = 0; j < tickets.size(); j++) {
+                if ((i != j) && tickets.get(i).getTicket().equalsByType(tickets.get(j).getTicket())) {
+                    tickets.remove(j);
+                    j=0;
+                }
+            }
+        }
+
+        for (int i = 0; i <= tickets.size(); i++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            grid.getRowConstraints().add(rowConstraints);
+        }
+
+        int row = 0;
+        int column = 0;
+        for (TicketView ticketView : tickets) {
+            Text discount = new Text("Bilety ze zniżką " + ticketView.getTicket().getType() + ": ");
+            text.setFont(Font.font("System", 14));
+            grid.add(discount, column, row);
+            column++;
+            int count = 0;
+            for (int i = 0; i < ticketsView.size(); i++) {
+                if (ticketsView.get(i).getTicket().getType() == ticketView.getTicket().getType()) {
+                    count++;
+                }
+            }
+            Text counter = new Text(String.valueOf(count));
+            grid.add(counter, column, row);
+            row++;
+            column = 0;
+
+        }
+        popupWindow.getMainPanel().setCenter(grid);
+        popupWindow.getMainPanel().setBottom(hbox);
+    }
 
     @Autowired
     private SeanceRepository seanceRepository;
