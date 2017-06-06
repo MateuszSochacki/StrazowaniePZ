@@ -8,6 +8,7 @@ import com.cinema.model.SeatEntity;
 import com.cinema.model.Ticket;
 import com.cinema.services.SeanceRepository;
 import com.cinema.services.SeatRepository;
+import com.cinema.util.CustomPopupWindow;
 import com.cinema.util.MapReader;
 import com.cinema.view.TicketView;
 import javafx.beans.value.ChangeListener;
@@ -74,6 +75,12 @@ public class ChooseSeatController implements BootInitializable {
     private Text price;
 
     @FXML
+    private StackPane mainStackPane;
+
+    @FXML
+    private VBox mainVbox;
+
+    @FXML
     void btnBackClicked(MouseEvent event) {
         pageController.setPage(CinemaApplication.pageChooseSeance);
     }
@@ -104,13 +111,17 @@ public class ChooseSeatController implements BootInitializable {
                 }
             }
             if(!taken){
-                seatToSave.add(seat);
+                //seatToSave.add(seat);
+                CustomPopupWindow popupWindow = new CustomPopupWindow(600, 600, mainStackPane, mainVbox);
+                popupWindow.openPopupWindow();
             }
         }
 
         for (SeatEntity seatEntity : seatToSave){
             seatRepository.save(seatEntity);
         }
+
+
         pageController.setPage(CinemaApplication.pageSummary);
     }
 
