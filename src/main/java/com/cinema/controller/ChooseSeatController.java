@@ -81,19 +81,23 @@ public class ChooseSeatController implements BootInitializable {
         for (TilePaneCustom tilePaneCustom : reservedSeats) {
             boolean taken = false;
             SeatEntity seat = new SeatEntity();
+            seat.setRow(tilePaneCustom.getRow());
+            seat.setNumber(tilePaneCustom.getColumn());
+            seat.setSeanceEntity(currentSeance);
             for (SeatEntity entity : currentEntities) {
-                seat.setRow(tilePaneCustom.getRow());
-                seat.setNumber(tilePaneCustom.getColumn());
-                seat.setSeanceEntity(currentSeance);
-                if (seat.getRow() == entity.getRow() && seat.getNumber() == entity.getNumber() && seat.getSeanceEntity() == seat.getSeanceEntity()) {
+                if (seat.getRow() == entity.getRow() && seat.getNumber() == entity.getNumber() && seat.getSeanceEntity().getIdSeance() == entity.getSeanceEntity().getIdSeance()) {
                     //TODO: create popup to inform about taken places
                     taken = true;
                     return;
                 }
             }
             if(!taken){
-                seatRepository.save(seat);
+                seatToSave.add(seat);
             }
+        }
+
+        for (SeatEntity seatEntity : seatToSave){
+            seatRepository.save(seatEntity);
         }
         pageController.setPage(CinemaApplication.pageSummary);
     }
