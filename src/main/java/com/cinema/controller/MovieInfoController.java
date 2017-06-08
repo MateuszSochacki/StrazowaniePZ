@@ -78,7 +78,11 @@ public class MovieInfoController implements BootInitializable {
 
     @FXML
     void btnSubmitClicked(MouseEvent event) {
-        displayShelf.showLessInformation();
+        if(displayShelf.isClicked){
+            viewMode = false;
+            displayShelf.isClicked = false;
+            displayShelf.showLessInformation();
+        }
         pageController.setPage(CinemaApplication.pageChooseSeance);
     }
 
