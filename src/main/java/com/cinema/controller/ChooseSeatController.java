@@ -22,6 +22,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -149,6 +150,7 @@ public class ChooseSeatController implements BootInitializable {
         button.setTextFill(Paint.valueOf("#ffff"));
         button.setFont(Font.font("System", FontWeight.BOLD, 18));
         button.setStyle("-fx-background-color:  #ea4646");
+        button.setCursor(Cursor.HAND);
         button.setPadding(new Insets(8, 8, 8, 8));
         button.setPrefSize(150, 36);
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -320,6 +322,7 @@ public class ChooseSeatController implements BootInitializable {
                         number++;
 
                         TilePaneCustom pane = new TilePaneCustom();
+                        pane.setCursor(Cursor.HAND);
                         pane.setId(String.valueOf(i) + "," + String.valueOf(j));
                         pane.setMaxHeight(Region.USE_COMPUTED_SIZE);
                         pane.setMaxWidth(Region.USE_COMPUTED_SIZE);
@@ -377,6 +380,7 @@ public class ChooseSeatController implements BootInitializable {
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(3); //horizontal gap in pixels => that's what you are asking for
         gridPane.setVgap(3); //vertical gap in pixels
+
 
         for (int i = 0; i <= 15; i++) {
             ColumnConstraints column = new ColumnConstraints();

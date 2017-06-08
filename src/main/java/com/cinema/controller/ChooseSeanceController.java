@@ -23,8 +23,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.CacheHint;
-import javafx.scene.Node;
+import javafx.scene.*;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -169,6 +169,7 @@ public class ChooseSeanceController implements BootInitializable {
         Button applyButton = new Button("Zatwierdź");
         applyButton.setTextFill(javafx.scene.paint.Paint.valueOf("#ffff"));
         applyButton.setFont(Font.font("System", FontWeight.BOLD, 14));
+        applyButton.setCursor(Cursor.HAND);
         applyButton.setStyle("-fx-background-color:  #ea4646");
         applyButton.setPadding(new Insets(8, 8, 8, 8));
         applyButton.setPrefSize(150, 36);
@@ -315,6 +316,7 @@ public class ChooseSeanceController implements BootInitializable {
                 textFlow.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
                 textFlow.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
                 textFlow.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+                textFlow.setCursor(Cursor.HAND);
 
                 if (i % 2 == 0) {
                     textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
