@@ -100,6 +100,7 @@ public class ChooseSeatController implements BootInitializable {
 
     @FXML
     void btnSubmitClicked(MouseEvent event) {
+        if(!reservedSeats.isEmpty()){
         System.out.println("Click!");
         List<SeatEntity> seatToSave = new ArrayList<>();
         List<SeatEntity> currentEntities = seatRepository.findAll();
@@ -126,7 +127,7 @@ public class ChooseSeatController implements BootInitializable {
         popupWindow.setDoFadeTransition(false);
         popupWindow.openPopupWindow();
         setPopUp(seatToSave, popupWindow);
-
+        }
 
         //pageController.setPage(CinemaApplication.pageSummary);
     }

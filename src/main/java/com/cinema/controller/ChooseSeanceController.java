@@ -107,6 +107,7 @@ public class ChooseSeanceController implements BootInitializable {
     @FXML
     void addFilterClicked(ActionEvent event) {
         CustomPopupWindow filters = new CustomPopupWindow(400, 300, stackPane, vBox);
+        filters.setDoFadeTransition(false);
         filters.openPopupWindow();
 
         VBox mainBox = new VBox();
