@@ -14,7 +14,7 @@ import java.util.List;
 public interface SeanceRepository extends CrudRepository<SeanceEntity, Integer> {
 
     List<SeanceEntity> findAll();
-    List<SeanceEntity> findByMovie(MovieEntity movieEntity);
+    List<SeanceEntity> findByMovieOrderByDate(MovieEntity movieEntity);
     SeanceEntity findByMovieIdMovie(Integer idMovie);
 
 }

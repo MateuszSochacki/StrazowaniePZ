@@ -244,7 +244,7 @@ public class ChooseSeanceController implements BootInitializable {
         movieEntityList = movieRepository.findAll();
         newMovieList = new ArrayList<>();
         for (MovieEntity movie : movieEntityList) {
-            List<SeanceEntity> seanceList = seanceRepository.findByMovie(movie);
+            List<SeanceEntity> seanceList = seanceRepository.findByMovieOrderByDate(movie);
             if (!seanceList.isEmpty()) {
                 List<String> colorsList = new ImageAnalizer().getColors(movie);
                 Node card = createMovieCardView(movie, seanceList, colorsList);
@@ -447,7 +447,7 @@ public class ChooseSeanceController implements BootInitializable {
         mainTilePane.getChildren().clear();
         if (!filteredMovieList.isEmpty()) {
             for (MovieEntity movie : filteredMovieList) {
-                List<SeanceEntity> seanceList = seanceRepository.findByMovie(movie);
+                List<SeanceEntity> seanceList = seanceRepository.findByMovieOrderByDate(movie);
                 if (!seanceList.isEmpty()) {
                     List<String> colorsList = new ImageAnalizer().getColors(movie);
                     mainTilePane.getChildren().add(createMovieCardView(movie, seanceList, colorsList));
