@@ -16,6 +16,7 @@ import com.cinema.util.ImageAnalizer;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -94,6 +96,9 @@ public class ChooseSeanceController implements BootInitializable {
 
     @FXML
     private Button addFilter;
+
+    @FXML
+    private TextField searchField;
 
     @FXML
     void addFilterClicked(ActionEvent event) {
@@ -204,6 +209,19 @@ public class ChooseSeanceController implements BootInitializable {
 
     }
 
+    private void searchSeanceByName(String title){
+
+        List<MovieEntity> movies = new ArrayList<>();
+        for (MovieEntity movie : movieEntityList){
+            if(movie.getTitle().toLowerCase().contains(title.toLowerCase())){
+                movies.add(movie);
+            }
+        }
+
+        filterMovieCards(movies);
+
+    }
+
     @Override
     public Node initView() {
         return null;
@@ -219,6 +237,14 @@ public class ChooseSeanceController implements BootInitializable {
                 mainTilePane.getChildren().add(createMovieCardView(movie, seanceList, colorsList));
             }
         }
+
+        searchField.textProperty().addListener((ObservableValue<? extends String> values, String oldValue, String newValue) -> {
+            if(newValue != null){
+                searchSeanceByName(newValue);
+            } else {
+
+            }
+        });
 
     }
 
