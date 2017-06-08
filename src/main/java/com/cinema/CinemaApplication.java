@@ -7,6 +7,7 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -83,7 +84,7 @@ public class CinemaApplication extends Application {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/scene/header.fxml"));
             try {
-                AnchorPane header = fxmlLoader.load();
+                Node header = fxmlLoader.load();
                 root.setTop(header);
             } catch (IOException e1) {
                 e1.printStackTrace();

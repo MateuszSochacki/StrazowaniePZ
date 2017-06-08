@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
@@ -19,11 +20,15 @@
             <children>
             <HBox alignment="CENTER_RIGHT" prefWidth="1080.0">
                <children>
-                  <TextField fx:id="searchField" alignment="CENTER_RIGHT" HBox.hgrow="SOMETIMES">
+                  <HBox HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
-                  </TextField>
+                     <children>
+                        <TextField fx:id="searchField" focusTraversable="false" maxHeight="60.0" promptText="wpisz nazwę filmu" />
+                     </children>
+                  </HBox>
+                  <Region />
                                         <Label text="Filtry:">
                                             <font>
                                                 <Font name="System Bold" size="20.0" />

@@ -30,7 +30,7 @@ public class DateConverter {
             return "Dzisiaj, godz: " + simpleDateTime.format(seanceDateCalendar.getTime());
         }
         else if(currentDateCalendar.get(Calendar.DAY_OF_YEAR)+1 == seanceDateCalendar.get(Calendar.DAY_OF_YEAR)){
-            return "Futro, godz: " + simpleDateTime.format(seanceDateCalendar.getTime());
+            return "Jutro, godz: " + simpleDateTime.format(seanceDateCalendar.getTime());
         }
         else if(timestamp.before(currentDate)){
             return "Zakończono- " + simpleDate.format(seanceDateCalendar.getTime());

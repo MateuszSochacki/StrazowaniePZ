@@ -6,14 +6,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.TextFlow?>
 
-<VBox alignment="CENTER" spacing="4.0" style="-fx-border-color: #cdcdcd; -fx-background-color: #e2e2e2;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" spacing="4.0" style="-fx-background-color: FFF9E9;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <effect>
       <DropShadow height="5.0" radius="2.0" width="5.0" />
    </effect>
    <padding>
-      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+      <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
    </padding>
    <children>
       <GridPane fx:id="mainGridPane" alignment="TOP_RIGHT" hgap="4.0" vgap="4.0">
@@ -25,9 +24,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <TextFlow GridPane.rowIndex="1" />
-         </children>
          <VBox.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </VBox.margin>

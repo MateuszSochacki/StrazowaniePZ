@@ -53,11 +53,11 @@ public class Ticket {
         switch (type) {
             case Student:
                 return value / 2;
-            case Kids:
+            case Uczeń:
                 float newValue = value / (1.7f);
                 newValue = Math.round(newValue);
                 return newValue;
-            case Pensioners:
+            case Emeryt:
                 return Math.round(value / (1.9f));
             default:
                 return value;
@@ -81,6 +81,6 @@ public class Ticket {
     }
 
     public enum Abatement{
-        Normal, Student, Pensioners, Kids
+        Normalny, Student, Uczeń, Emeryt
     }
 }

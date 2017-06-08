@@ -34,6 +34,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
@@ -50,7 +51,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -76,6 +79,7 @@ public class ChooseSeanceController implements BootInitializable {
     private AgeRatingRepository ageRatingRepository;
 
     private List<MovieEntity> movieEntityList;
+    private List<MovieEntity> newMovieList;
 
     private PageController pageController;
 
@@ -162,6 +166,11 @@ public class ChooseSeanceController implements BootInitializable {
         filters.getMainPanel().setCenter(mainBox);
 
         Button applyButton = new Button("Zatwierdź");
+        applyButton.setTextFill(javafx.scene.paint.Paint.valueOf("#ffff"));
+        applyButton.setFont(Font.font("System", FontWeight.BOLD, 14));
+        applyButton.setStyle("-fx-background-color:  #ea4646");
+        applyButton.setPadding(new Insets(8, 8, 8, 8));
+        applyButton.setPrefSize(150, 36);
         applyButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -169,13 +178,13 @@ public class ChooseSeanceController implements BootInitializable {
                 String filtersText = "";
                 filtersList = getSelectedFilterList(checkBoxes, toggleGroup);
 
-                    for (String filter : filtersList) {
-                        filtersText += filter;
-                        if (!filter.equals("") && !filter.equals(filtersList.get(filtersList.size() - 1)))
-                            filtersText += ", ";
-                    }
-                    selectedFilters.setText(filtersText);
-                    filterMovieCards(getFilteredMovieList(filtersList));
+                for (String filter : filtersList) {
+                    filtersText += filter;
+                    if (!filter.equals("") && !filter.equals(filtersList.get(filtersList.size() - 1)))
+                        filtersText += ", ";
+                }
+                selectedFilters.setText(filtersText);
+                filterMovieCards(getFilteredMovieList(filtersList));
 
                 filters.closePopupWindow();
             }
@@ -209,17 +218,18 @@ public class ChooseSeanceController implements BootInitializable {
 
     }
 
-    private void searchSeanceByName(String title){
+    private void searchSeanceByName(String title) {
 
         List<MovieEntity> movies = new ArrayList<>();
-        for (MovieEntity movie : movieEntityList){
-            if(movie.getTitle().toLowerCase().contains(title.toLowerCase())){
-                movies.add(movie);
+        if(!newMovieList.isEmpty()) {
+            for (MovieEntity movie : newMovieList) {
+                if (movie.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                    movies.add(movie);
+                }
             }
+            selectedFilters.setText(searchField.getText());
+            filterMovieCards(movies);
         }
-
-        filterMovieCards(movies);
-
     }
 
     @Override
@@ -230,16 +240,21 @@ public class ChooseSeanceController implements BootInitializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         movieEntityList = movieRepository.findAll();
+        newMovieList = new ArrayList<>();
         for (MovieEntity movie : movieEntityList) {
             List<SeanceEntity> seanceList = seanceRepository.findByMovie(movie);
             if (!seanceList.isEmpty()) {
                 List<String> colorsList = new ImageAnalizer().getColors(movie);
-                mainTilePane.getChildren().add(createMovieCardView(movie, seanceList, colorsList));
+                Node card = createMovieCardView(movie, seanceList, colorsList);
+                if(card != null){
+                    mainTilePane.getChildren().add(card);
+                    newMovieList.add(movie);
+                }
             }
         }
 
         searchField.textProperty().addListener((ObservableValue<? extends String> values, String oldValue, String newValue) -> {
-            if(newValue != null){
+            if (newValue != null) {
                 searchSeanceByName(newValue);
             } else {
 
@@ -289,45 +304,54 @@ public class ChooseSeanceController implements BootInitializable {
 
         vBox.getChildren().add(title);
 
+        Date date = new Date();
+        int seanceCount = 0;
         //add seance list
         for (int i = 0; i < seanceList.size() && i < 6; i++) {
-            TextFlow textFlow = new TextFlow();
-            textFlow.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-            textFlow.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-            textFlow.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+            if (seanceList.get(i).getDate().getTime() > date.getTime()) {
+                seanceCount++;
+                TextFlow textFlow = new TextFlow();
+                textFlow.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+                textFlow.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+                textFlow.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 
-            if (i % 2 == 0) {
-                textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
-                textFlow.setOnMouseEntered(event1 -> {
-                    textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
-                });
-                textFlow.setOnMouseExited(event1 -> {
+                if (i % 2 == 0) {
                     textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
-                });
-            } else {
-                textFlow.setStyle(" -fx-background-color: " + colors.get(1) + ";");
-                textFlow.setOnMouseEntered(event1 -> {
-                    textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
-                });
-                textFlow.setOnMouseExited(event1 -> {
-                    textFlow.setStyle("-fx-background-color: " + colors.get(1) + ";");
-                });
+                    textFlow.setOnMouseEntered(event1 -> {
+                        textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
+                    });
+                    textFlow.setOnMouseExited(event1 -> {
+                        textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
+                    });
+                } else {
+                    textFlow.setStyle(" -fx-background-color: " + colors.get(1) + ";");
+                    textFlow.setOnMouseEntered(event1 -> {
+                        textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
+                    });
+                    textFlow.setOnMouseExited(event1 -> {
+                        textFlow.setStyle("-fx-background-color: " + colors.get(1) + ";");
+                    });
+                }
+
+                textFlow.setTextAlignment(TextAlignment.CENTER);
+                textFlow.setPadding(new Insets(4, 4, 4, 4));
+                addMouseEvent(textFlow, seanceList.get(i));
+
+                DateConverter conv = new DateConverter();
+
+                Text text = new Text(conv.convertDataToString(seanceList.get(i).getDate()));
+                text.setFont(Font.font("System", FontWeight.BOLD, 14));
+                text.setFill(Color.valueOf(Color.WHITE.toString()));
+                textFlow.getChildren().add(text);
+                vBox.getChildren().add(textFlow);
             }
-
-            textFlow.setTextAlignment(TextAlignment.CENTER);
-            textFlow.setPadding(new Insets(4, 4, 4, 4));
-            addMouseEvent(textFlow, seanceList.get(i));
-
-            DateConverter conv = new DateConverter();
-
-            Text text = new Text(conv.convertDataToString(seanceList.get(i).getDate()));
-            text.setFont(Font.font("System", FontWeight.BOLD, 14));
-            text.setFill(Color.valueOf(Color.WHITE.toString()));
-            textFlow.getChildren().add(text);
-            vBox.getChildren().add(textFlow);
+        }
+        if (seanceCount == 0) {
+            return null;
         }
         card.getChildren().add(vBox);
         card.setCacheHint(CacheHint.SPEED);
+
         return card;
     }
 
@@ -371,7 +395,8 @@ public class ChooseSeanceController implements BootInitializable {
     }
 
     private List<MovieEntity> getFilteredMovieList(List<String> filtersList) {
-        movieEntityList = movieRepository.findAll();
+        List <MovieEntity> filtredMovieList = new ArrayList<>();
+        filtredMovieList = newMovieList;
         if (!filtersList.get(0).equals("")) {
             List<CategoryEntity> categories = new ArrayList<>();
             for (String categoryName : filtersList) {
@@ -379,41 +404,40 @@ public class ChooseSeanceController implements BootInitializable {
                 if (category != null)
                     categories.add(category);
             }
-            if(categories.isEmpty())
-            {
+            if (categories.isEmpty()) {
                 categories = categoryRepository.findAll();
             }
 
             List<MovieEntity> filtredCategoryMovieList = new ArrayList<>();
-            for (MovieEntity movie : movieEntityList) {
-                    int searchProgress = 0;
-                    for (int i = 0; i < movie.getCategoryEntities().size(); i++) {
-                        for (int j = 0; j < categories.size(); j++) {
-                            CategoryEntity currentCategory = movie.getCategoryEntities().get(i);
-                            if (currentCategory.getName().equals(categories.get(j).getName())) {
-                                searchProgress++;
-                                break;
-                            }
+            for (MovieEntity movie : filtredMovieList) {
+                int searchProgress = 0;
+                for (int i = 0; i < movie.getCategoryEntities().size(); i++) {
+                    for (int j = 0; j < categories.size(); j++) {
+                        CategoryEntity currentCategory = movie.getCategoryEntities().get(i);
+                        if (currentCategory.getName().equals(categories.get(j).getName())) {
+                            searchProgress++;
+                            break;
                         }
                     }
+                }
                 if (searchProgress > 0) {
                     filtredCategoryMovieList.add(movie);
                 }
             }
             if (!filtersList.get(filtersList.size() - 1).equals("")) {
                 List<MovieEntity> filtredAgeRatingMovieList = new ArrayList<>();
-                    for (MovieEntity movie : filtredCategoryMovieList) {
-                        int ageReqied = movie.getAgeRatingEntities().getRequiredAge();
-                        int ageSelected = Integer.valueOf(filtersList.get(filtersList.size() - 1).replace("+", "").replace("wiek: ", ""));
-                        if (ageReqied <= ageSelected) {
-                            filtredAgeRatingMovieList.add(movie);
-                        }
+                for (MovieEntity movie : filtredCategoryMovieList) {
+                    int ageReqied = movie.getAgeRatingEntities().getRequiredAge();
+                    int ageSelected = Integer.valueOf(filtersList.get(filtersList.size() - 1).replace("+", "").replace("wiek: ", ""));
+                    if (ageReqied <= ageSelected) {
+                        filtredAgeRatingMovieList.add(movie);
                     }
+                }
                 return filtredAgeRatingMovieList;
             }
             return filtredCategoryMovieList;
         }
-        return movieEntityList;
+        return filtredMovieList;
     }
 
     private void filterMovieCards(List<MovieEntity> filteredMovieList) {

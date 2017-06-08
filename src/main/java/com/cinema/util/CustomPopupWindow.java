@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.effect.GaussianBlur;
@@ -36,6 +37,16 @@ public class CustomPopupWindow {
     private StackPane parent;
     private Node targetBlur;
 
+    public boolean isDoFadeTransition() {
+        return doFadeTransition;
+    }
+
+    public void setDoFadeTransition(boolean doFadeTransition) {
+        this.doFadeTransition = doFadeTransition;
+    }
+
+    private boolean doFadeTransition;
+
     public boolean isAnimate() {
         return animate;
     }
@@ -46,14 +57,15 @@ public class CustomPopupWindow {
 
     private boolean animate = true;
 
-
     public CustomPopupWindow(int width, int height, StackPane parent, Node targetBlur){
+        doFadeTransition = true;
         this.width = width;
         this.height=height;
         this.parent = parent;
         this.targetBlur = targetBlur;
 
         mainPanel = new BorderPane();
+        mainPanel.setCacheHint(CacheHint.SPEED);
         mainPanel.setMaxSize(width, height);
         mainPanel.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         mainPanel.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
@@ -63,6 +75,7 @@ public class CustomPopupWindow {
 
 
         Hyperlink textClose = new Hyperlink("X");
+        textClose.setFocusTraversable(false);
         textClose.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -93,13 +106,18 @@ public class CustomPopupWindow {
         timeline.play();
 
 
-        FadeTransition ft = new FadeTransition();
-        ft.setNode(mainPanel);
-        ft.setDuration(new Duration(500));
-        ft.setFromValue(0.0);
-        ft.setToValue(1.0);
-        parent.getChildren().add(mainPanel);
-        ft.play();
+        if(doFadeTransition) {
+            FadeTransition ft = new FadeTransition();
+            ft.setNode(mainPanel);
+            ft.setDuration(new Duration(500));
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            parent.getChildren().add(mainPanel);
+            ft.play();
+        }else {
+            parent.getChildren().add(mainPanel);
+        }
+
     }
 
     public void closePopupWindow() {
@@ -118,6 +136,7 @@ public class CustomPopupWindow {
         timeline.getKeyFrames().add(kf);
         timeline.play();
 
+        if(doFadeTransition) {
             final DoubleProperty opacity = mainPanel.opacityProperty();
             Timeline fade = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
@@ -129,6 +148,11 @@ public class CustomPopupWindow {
                         }
                     }, new KeyValue(opacity, 0.0)));
             fade.play();
+        }
+        else {
+            parent.getChildren().remove(mainPanel);
+            targetBlur.setDisable(false);
+        }
     }
 
     public BorderPane getMainPanel() {

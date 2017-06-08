@@ -9,6 +9,7 @@ import com.cinema.model.Ticket;
 import com.cinema.services.SeanceRepository;
 import com.cinema.services.SeatRepository;
 import com.cinema.util.CustomPopupWindow;
+import com.cinema.util.DateConverter;
 import com.cinema.util.MapReader;
 import com.cinema.view.TicketView;
 import javafx.beans.value.ChangeListener;
@@ -121,7 +122,8 @@ public class ChooseSeatController implements BootInitializable {
             }
         }
 
-        CustomPopupWindow popupWindow = new CustomPopupWindow(400, 400, mainStackPane, mainVbox);
+        CustomPopupWindow popupWindow = new CustomPopupWindow(100, 100, mainStackPane, mainVbox);
+        popupWindow.setDoFadeTransition(false);
         popupWindow.openPopupWindow();
         setPopUp(seatToSave, popupWindow);
 
@@ -130,14 +132,21 @@ public class ChooseSeatController implements BootInitializable {
     }
 
     private void setPopUp(List<SeatEntity> seats, CustomPopupWindow popupWindow) {
-        HBox hbox = new HBox();
-        hbox.alignmentProperty().setValue(Pos.CENTER_RIGHT);
-        Text text = new Text("Suma wynosi: " + sumPrice);
-        text.setFont(Font.font("System", 14));
-        text.setTextAlignment(TextAlignment.LEFT);
-        Button button = new Button("ZAPLAC");
+
+        VBox mainBox = new VBox();
+        mainBox.setPadding(new Insets(24, 24, 24, 24));
+        mainBox.setSpacing(24);
+
+        Text popupTitle = new Text("Podsumowanie zamówienia");
+        popupTitle.setFont(Font.font("System", FontWeight.BOLD, 22));
+        mainBox.getChildren().add(popupTitle);
+
+        Text sumText = new Text("Do zapłaty: " + sumPrice+"zł");
+        sumText.setFont(Font.font("System", FontWeight.BOLD, 22));
+        sumText.setTextAlignment(TextAlignment.LEFT);
+        Button button = new Button("Zapłać");
         button.setTextFill(Paint.valueOf("#ffff"));
-        button.setFont(Font.font("System", FontWeight.BOLD, 14));
+        button.setFont(Font.font("System", FontWeight.BOLD, 18));
         button.setStyle("-fx-background-color:  #ea4646");
         button.setPadding(new Insets(8, 8, 8, 8));
         button.setPrefSize(150, 36);
@@ -150,11 +159,10 @@ public class ChooseSeatController implements BootInitializable {
                 pageController.setPage(CinemaApplication.pageChooseSeance);
             }
         });
-        hbox.getChildren().add(text);
-        hbox.getChildren().add(button);
-
 
         GridPane grid = new GridPane();
+        grid.setHgap(12);
+        grid.setPadding(new Insets(6,6,6,6));
 
         for (int i = 0; i < 2; i++) {
             ColumnConstraints column = new ColumnConstraints();
@@ -183,8 +191,8 @@ public class ChooseSeatController implements BootInitializable {
         int row = 0;
         int column = 0;
         for (TicketView ticketView : tickets) {
-            Text discount = new Text("Bilety ze zniżką " + ticketView.getTicket().getType() + ": ");
-            text.setFont(Font.font("System", 14));
+            Text discount = new Text("Bilet \"" + ticketView.getTicket().getType() + "\"");
+            discount.setFont(Font.font("System", 18));
             grid.add(discount, column, row);
             column++;
             int count = 0;
@@ -193,14 +201,20 @@ public class ChooseSeatController implements BootInitializable {
                     count++;
                 }
             }
-            Text counter = new Text(String.valueOf(count));
+            Text counter = new Text(String.valueOf(count)+" szt - "+ticketView.getTicket().getValue() * count + "zł");
+            counter.setFont(Font.font("System", 18));
+            counter.setFill(Paint.valueOf("#4a4a4a"));
             grid.add(counter, column, row);
             row++;
             column = 0;
 
         }
-        popupWindow.getMainPanel().setCenter(grid);
-        popupWindow.getMainPanel().setBottom(hbox);
+
+        mainBox.getChildren().add(grid);
+        mainBox.getChildren().add(sumText);
+        popupWindow.getMainPanel().setCenter(mainBox);
+        popupWindow.getMainPanel().setBottom(button);
+        popupWindow.getMainPanel().setAlignment(popupWindow.getMainPanel().getBottom(), Pos.CENTER_RIGHT);
     }
 
     @Autowired
@@ -218,7 +232,7 @@ public class ChooseSeatController implements BootInitializable {
     @Override
     public void initConstruct() {
         sumPrice = 0;
-        price.setText("Suma: " + sumPrice);
+        price.setText("Do zapłaty: " + sumPrice);
 
         ticketsView = new ArrayList<>();
         reservedSeats = new ArrayList<>();
@@ -253,8 +267,10 @@ public class ChooseSeatController implements BootInitializable {
 
             cinemaHallArray[seat.getRow()][seat.getNumber()] = 2;
         }
+        DateConverter dateConverter = new DateConverter();
 
-        textInfo.setText(currentSeance.getMovie().getTitle() + " Scena " + currentSeance.getCinemaHall().getCinemaHallType());
+        String date = dateConverter.convertDataToString(currentSeance.getDate());
+        textInfo.setText(currentSeance.getMovie().getTitle() +"\n"+date+ "\nScena: " + currentSeance.getCinemaHall().getCinemaHallType());
 
         generateEmptyGrid();
 
@@ -401,7 +417,7 @@ public class ChooseSeatController implements BootInitializable {
             removeTicket(pane);
 
         } else {
-            pane.setStyle("-fx-background-color: #c7ffa6");
+            pane.setStyle("-fx-background-color: #ccffa0");
             addTicket(pane);
             pane.isClicked = true;
             reservedSeats.add(pane);
@@ -431,9 +447,11 @@ public class ChooseSeatController implements BootInitializable {
         Label nr = (Label) pane.getChildren().get(0);
         ticket.setRow(pane.getRow());
         ticket.setColumn(Integer.valueOf(nr.getText()));
-        ticket.setName("Bilet: rząd " + pane.getRow() + " miejsce " + nr.getText());
-
-        ticket.setType(Ticket.Abatement.Normal);
+        String id;
+        id = currentSeance.getMovie().getTitle().substring(2,3).toUpperCase()+
+                String.valueOf(new Random().nextInt(99999)+1251)+ currentSeance.getMovie().getTitle().substring(1,2).toUpperCase();
+        ticket.setName("Bilet id: "+id +"\nrząd: " + pane.getRow() + ", miejsce: " + nr.getText());
+        ticket.setType(Ticket.Abatement.Normalny);
         return ticket;
     }
 
@@ -481,7 +499,7 @@ public class ChooseSeatController implements BootInitializable {
         title.prefWidth(Region.USE_COMPUTED_SIZE);
         //layout.getLayout().setPadding(new Insets(4, 4, 4, 4));
         ComboBox<Ticket.Abatement> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(Ticket.Abatement.Normal, Ticket.Abatement.Student, Ticket.Abatement.Kids);
+        comboBox.getItems().addAll(Ticket.Abatement.Normalny, Ticket.Abatement.Student, Ticket.Abatement.Uczeń, Ticket.Abatement.Emeryt);
         comboBox.getSelectionModel().selectFirst();
         comboBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 

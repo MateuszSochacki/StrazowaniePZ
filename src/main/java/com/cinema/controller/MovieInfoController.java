@@ -63,6 +63,8 @@ public class MovieInfoController implements BootInitializable {
     private static boolean viewMode = false;
     private ApplicationContext springContext;
 
+    private DisplayShelf displayShelf;
+
     @FXML
     private BorderPane mainLayout;
 
@@ -76,6 +78,7 @@ public class MovieInfoController implements BootInitializable {
 
     @FXML
     void btnSubmitClicked(MouseEvent event) {
+        displayShelf.showLessInformation();
         pageController.setPage(CinemaApplication.pageChooseSeance);
     }
 
@@ -127,7 +130,7 @@ public class MovieInfoController implements BootInitializable {
 
         setImages(movies);
         // create display shelf
-        DisplayShelf displayShelf = new DisplayShelf(images, movies);
+        displayShelf = new DisplayShelf(images, movies);
         displayShelf.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         displayShelf.setStyle("-fx-background-color: whitesmoke");
         mainLayout.setCenter(displayShelf);
@@ -226,6 +229,7 @@ public class MovieInfoController implements BootInitializable {
         }
 
         private void showMoreInformation(){
+            center.getParent().setDisable(true);
             isClicked = true;
             timeline = new Timeline();
             final ObservableList<KeyFrame> keyFrames = timeline.getKeyFrames();
@@ -250,6 +254,7 @@ public class MovieInfoController implements BootInitializable {
                                 new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
                                 new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
                         timeline2.setOnFinished(event3->{
+                            center.getParent().setDisable(false);
                             List<Node> nodeList = getAllNodes(centerItem.backMovie);
                             WebView webView = (WebView) nodeList.get(17);
                             currentWebView = webView;
@@ -264,6 +269,7 @@ public class MovieInfoController implements BootInitializable {
         }
 
         private void showLessInformation(){
+            center.getParent().setDisable(true);
             timeline = new Timeline();
             final ObservableList<KeyFrame> keyFrames = timeline.getKeyFrames();
 
@@ -289,6 +295,7 @@ public class MovieInfoController implements BootInitializable {
                         new KeyValue(centerItem.scaleYProperty(), 0.7, INTERPOLATOR),
                         new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
                 timeline2.setOnFinished(event3->{
+                    center.getParent().setDisable(false);
                     List<Node> nodeList = getAllNodes(centerItem.backMovie);
                     WebView webView = (WebView) nodeList.get(17);
                     currentWebView = webView;

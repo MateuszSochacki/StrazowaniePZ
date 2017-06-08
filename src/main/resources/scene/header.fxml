@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="80.0" style="-fx-border-color: #454545; -fx-border-width: 0 0 2 0; -fx-background-image: url('images/bokeh_bg_logo_seamless.jpg');" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER_LEFT" maxHeight="80.0" prefHeight="80.0" spacing="48.0" style="-fx-background-image: url('images/bokeh_bg_logo_seamless_white.jpg'); -fx-border-width: 0 0 2; -fx-border-color: #ea4646;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fill="WHITE" layoutX="14.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinemawatch">
+      <Text fill="#ea4646" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinemawatch">
          <font>
-            <Font name="Candara Bold" size="56.0" />
+            <Font name="Arial Black" size="48.0" />
          </font>
       </Text>
-      <Text fill="#ea4646" layoutX="155.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Best cinema for you!">
+      <Text fill="#685757" strokeType="OUTSIDE" strokeWidth="0.0" text="the best cinema for you!">
          <font>
-            <Font name="Candara Bold" size="18.0" />
+            <Font name="Gabriola" size="36.0" />
          </font>
+         <HBox.margin>
+            <Insets top="12.0" />
+         </HBox.margin>
       </Text>
    </children>
-</AnchorPane>
+   <padding>
+      <Insets left="48.0" right="48.0" />
+   </padding>
+</HBox>
