@@ -1,6 +1,7 @@
 package com.cinema.controller;
 
 import com.cinema.config.BootInitializable;
+import com.cinema.util.PageController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -9,7 +10,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,28 +23,12 @@ public class TicketController implements BootInitializable {
     private PageController pageController;
 
     @Override
-    public void initConstruct() {
-
-    }
-
-    @Override
     public void setPageParrent(PageController parentPage) {
     pageController = parentPage;
     }
 
     @Override
-    public void stage(Stage primaryStage) {
-
-    }
-
-    @Override
-    public Node initView() {
-        return null;
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     public void setViews(Text title, Text info, Text price, ComboBox combobox){

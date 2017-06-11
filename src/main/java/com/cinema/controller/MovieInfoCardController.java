@@ -50,20 +50,20 @@ public class MovieInfoCardController implements Initializable {
         cardMovieDirector.setText(movie.getDirector());
         cardMovieTime.setText(movie.getDuration().toString());
         cardMovieDate.setText(movie.getReleaseDate().toString());
-        cardMovieAge.setText("od "+movie.getAgeRatingEntities().getRequiredAge().toString()+" lat");
+        cardMovieAge.setText("od " + movie.getAgeRatingEntities().getRequiredAge().toString() + " lat");
 
-        List <CategoryEntity> list = movie.getCategoryEntities();
-        String categoriesString ="";
-           for (CategoryEntity category: list) {
-                categoriesString += category.getName()+", ";
-           }
-        categoriesString.substring(0, categoriesString.length()-1);
+        List<CategoryEntity> list = movie.getCategoryEntities();
+        String categoriesString = "";
+        for (CategoryEntity category : list) {
+            categoriesString += category.getName() + ", ";
+        }
+        categoriesString.substring(0, categoriesString.length() - 1);
 
         cardMovieCategories.setText(categoriesString);
         cardMovieDescription.setText(movie.getDescription());
 
         //set styles
-        cardMovieTitle.getParent().setStyle("-fx-background-color: "+colors.get(0)+";");
+        cardMovieTitle.getParent().setStyle("-fx-background-color: " + colors.get(0) + ";");
         cardMovieTrailer.setStyle("-fx-background-color: #000000;");
     }
 

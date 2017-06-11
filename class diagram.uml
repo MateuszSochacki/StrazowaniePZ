@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="5656.4888413242" y="262.5">com.cinema.services.CategoryRepository</node>
+    <node x="812.7322284735783" y="2084.0">com.cinema.controller.ChooseSeatController</node>
+    <node x="2447.3566250815375" y="1819.0">com.cinema.util.MapReader</node>
+    <node x="0.0" y="1109.0">com.cinema.model.Ticket</node>
+    <node x="815.8566250815375" y="1778.5">com.cinema.model.SeatEntity</node>
+    <node x="924.375" y="153.0">com.cinema.util.CustomPopupWindow</node>
+    <node x="1213.3566250815375" y="1028.5">com.cinema.CinemaApplication</node>
+    <node x="2698.9507379321594" y="0.0">com.cinema.model.AgeRatingEntity</node>
+    <node x="2044.3566250815375" y="1109.0">com.cinema.controller.TicketController</node>
+    <node x="3060.7947284735783" y="2353.5">com.cinema.controller.MovieInfoController.PerspectiveImage</node>
+    <node x="3706.3778212654925" y="235.0">com.cinema.config.BootInitializable</node>
+    <node x="5601.263478473578" y="1109.0">com.cinema.controller.FormCategoryController</node>
+    <node x="5954.763478473578" y="0.0">com.cinema.model.CategoryEntity</node>
+    <node x="2680.912133072404" y="2571.0">com.cinema.util.MapReaderImpl</node>
+    <node x="2712.9507379321594" y="141.0">com.cinema.model.MovieEntity</node>
+    <node x="1784.1250000000002" y="180.5">com.cinema.controller.PageController</node>
+    <node x="667.0" y="3968.0">com.cinema.services.PriceRepository</node>
+    <node x="4099.912133072405" y="974.0">com.cinema.controller.MovieInfoController</node>
+    <node x="139.25" y="1805.5">com.cinema.view.TicketView</node>
+    <node x="1182.732228473578" y="3466.0">com.cinema.controller.ChooseSeatController.TilePaneCustom</node>
+    <node x="230.0" y="3968.0">com.cinema.services.CinemaHallRepository</node>
+    <node x="4988.179541748204" y="289.5">com.cinema.services.AgeRatingRepository</node>
+    <node x="5288.763478473578" y="2300.0">com.cinema.controller.ListCategoryController</node>
+    <node x="5243.533708414871" y="262.5">com.cinema.services.MovieRepository</node>
+    <node x="710.8566250815375" y="1096.5">com.cinema.model.SeanceEntity</node>
+    <node x="0.0" y="3968.0">com.cinema.model.PriceEntity</node>
+    <node x="3019.0340712654925" y="825.5">com.cinema.controller.ChooseSeanceController</node>
+    <node x="3503.4197284735783" y="3182.0">com.cinema.controller.MovieInfoController.DisplayShelf</node>
+    <node x="1695.3566250815375" y="1095.5">com.cinema.controller.SummaryControler</node>
+    <node x="4690.263478473578" y="785.0">com.cinema.controller.ChooseMovieController</node>
+    <node x="552.0" y="276.0">com.cinema.util.DateConverter</node>
+    <node x="284.0" y="235.5">com.cinema.model.CinemaHallEntity</node>
+    <node x="3139.7840712654925" y="249.0">com.cinema.services.SeanceRepository</node>
+    <node x="93.0" y="235.5">com.cinema.model.Ticket.Abatement</node>
+    <node x="3234.5340712654925" y="1738.0">com.cinema.util.ImageAnalizer</node>
+    <node x="2523.1691250815375" y="1027.5">com.cinema.controller.MovieInfoCardController</node>
+    <node x="3834.2316250815375" y="1805.5">com.cinema.services.SeatRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.cinema.controller.MovieInfoController.DisplayShelf" target="com.cinema.controller.MovieInfoController">
+      <point x="317.08333333333303" y="-370.5" />
+      <point x="4201.003061806911" y="3162.0" />
+      <point x="4406.919728473578" y="3162.0" />
+      <point x="4406.919728473578" y="1718.0" />
+      <point x="4583.787133072405" y="1718.0" />
+      <point x="207.375" y="262.5" />
+    </edge>
+    <edge source="com.cinema.model.SeatEntity" target="com.cinema.model.SeanceEntity">
+      <point x="0.0" y="-72.5" />
+      <point x="929.3566250815375" y="1718.0" />
+      <point x="945.6066250815375" y="1718.0" />
+      <point x="78.25" y="140.0" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController" target="com.cinema.model.MovieEntity">
+      <point x="-69.125" y="-262.5" />
+      <point x="4307.287133072405" y="565.0" />
+      <point x="2999.4507379321594" y="565.0" />
+      <point x="95.5" y="167.0" />
+    </edge>
+    <edge source="com.cinema.controller.TicketController" target="com.cinema.controller.PageController">
+      <point x="-95.5" y="-127.5" />
+      <point x="2139.8566250815375" y="655.0" />
+      <point x="1953.1250000000002" y="655.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.TicketController" target="com.cinema.config.BootInitializable">
+      <point x="95.5" y="-127.5" />
+      <point x="2330.8566250815375" y="695.0" />
+      <point x="3757.1903212654925" y="695.0" />
+      <point x="-84.6875" y="73.0" />
+    </edge>
+    <edge source="com.cinema.CinemaApplication" target="com.cinema.controller.PageController">
+      <point x="0.0" y="-208.0" />
+      <point x="1444.3566250815375" y="645.0" />
+      <point x="1856.5535714285718" y="645.0" />
+      <point x="-96.57142857142844" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.controller.PageController">
+      <point x="-194.0" y="-411.0" />
+      <point x="3261.5340712654925" y="605.0" />
+      <point x="2001.4107142857144" y="605.0" />
+      <point x="48.28571428571422" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseMovieController" target="com.cinema.model.MovieEntity">
+      <point x="-222.5" y="-451.5" />
+      <point x="4912.763478473578" y="515.0" />
+      <point x="3063.117404598826" y="515.0" />
+      <point x="159.16666666666652" y="167.0" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoCardController" target="com.cinema.model.MovieEntity">
+      <point x="0.0" y="-209.0" />
+      <point x="2757.1691250815375" y="665.0" />
+      <point x="2808.4507379321594" y="665.0" />
+      <point x="-95.5" y="167.0" />
+    </edge>
+    <edge source="com.cinema.model.MovieEntity" target="com.cinema.model.CategoryEntity">
+      <point x="95.5" y="-167.0" />
+      <point x="2999.4507379321594" y="116.0" />
+      <point x="5982.263478473578" y="116.0" />
+      <point x="-55.0" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ListCategoryController" target="com.cinema.services.CategoryRepository">
+      <point x="172.57142857142844" y="-303.0" />
+      <point x="5763.334907045007" y="2054.0" />
+      <point x="6100.763478473578" y="2054.0" />
+      <point x="6100.763478473578" y="755.0" />
+      <point x="5920.7388413242" y="755.0" />
+      <point x="113.25" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ListCategoryController" target="com.cinema.services.MovieRepository">
+      <point x="0.0" y="-303.0" />
+      <point x="5590.763478473578" y="745.0" />
+      <point x="5491.158708414871" y="745.0" />
+      <point x="106.125" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.util.ImageAnalizer">
+      <point x="218.25" y="411.0" />
+      <point x="3673.7840712654925" y="1718.0" />
+      <point x="3566.0340712654925" y="1718.0" />
+      <point x="110.5" y="-113.0" />
+    </edge>
+    <edge source="com.cinema.controller.ListCategoryController" target="com.cinema.model.CategoryEntity">
+      <point x="258.8571428571431" y="-303.0" />
+      <point x="5849.620621330721" y="2064.0" />
+      <point x="6135.888478473578" y="2064.0" />
+      <point x="6135.888478473578" y="116.0" />
+      <point x="6092.263478473578" y="116.0" />
+      <point x="55.0" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.model.SeatEntity">
+      <point x="-66.39999999999986" y="-519.0" />
+      <point x="1244.3322284735784" y="2004.0" />
+      <point x="929.3566250815375" y="2004.0" />
+      <point x="0.0" y="72.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.model.CinemaHallEntity">
+      <point x="-265.5999999999999" y="-519.0" />
+      <point x="1045.1322284735784" y="2034.0" />
+      <point x="358.125" y="2034.0" />
+      <point x="358.125" y="765.0" />
+      <point x="346.0" y="765.0" />
+      <point x="-62.0" y="72.5" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController.PerspectiveImage" target="com.cinema.util.ImageAnalizer">
+      <point x="71.625" y="-249.5" />
+      <point x="3418.9197284735783" y="2054.0" />
+      <point x="3455.5340712654925" y="2054.0" />
+      <point x="0.0" y="113.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.services.SeanceRepository">
+      <point x="132.80000000000018" y="-519.0" />
+      <point x="1443.5322284735785" y="2014.0" />
+      <point x="2033.8566250815375" y="2014.0" />
+      <point x="2033.8566250815375" y="675.0" />
+      <point x="3191.2840712654925" y="675.0" />
+      <point x="-103.0" y="59.0" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController.PerspectiveImage" target="com.cinema.controller.MovieInfoCardController">
+      <point x="-214.875" y="-249.5" />
+      <point x="3132.4197284735783" y="2044.0" />
+      <point x="2757.1691250815375" y="2044.0" />
+      <point x="0.0" y="209.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.services.SeatRepository">
+      <point x="464.8000000000002" y="-519.0" />
+      <point x="1775.5322284735785" y="2064.0" />
+      <point x="3901.9816250815375" y="2064.0" />
+      <point x="-67.75" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.model.Ticket">
+      <point x="-464.7999999999997" y="-519.0" />
+      <point x="845.9322284735786" y="2064.0" />
+      <point x="128.75" y="2064.0" />
+      <point x="128.75" y="1718.0" />
+      <point x="73.75" y="1718.0" />
+      <point x="-73.75" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController.TilePaneCustom" target="com.cinema.controller.ChooseSeatController">
+      <point x="-85.33333333333326" y="-86.5" />
+      <point x="1225.3988951402448" y="3162.0" />
+      <point x="978.7322284735783" y="3162.0" />
+      <point x="-332.0" y="519.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.model.MovieEntity">
+      <point x="-97.0" y="-411.0" />
+      <point x="3358.5340712654925" y="595.0" />
+      <point x="2935.784071265493" y="595.0" />
+      <point x="31.833333333333485" y="167.0" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController" target="com.cinema.controller.PageController">
+      <point x="-207.375" y="-262.5" />
+      <point x="4169.037133072405" y="575.0" />
+      <point x="2049.6964285714284" y="575.0" />
+      <point x="96.57142857142844" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.util.CustomPopupWindow">
+      <point x="-291.0" y="-411.0" />
+      <point x="3164.5340712654925" y="615.0" />
+      <point x="1166.625" y="615.0" />
+      <point x="80.75" y="155.0" />
+    </edge>
+    <edge source="com.cinema.controller.SummaryControler" target="com.cinema.controller.PageController">
+      <point x="-82.0" y="-141.0" />
+      <point x="1777.3566250815375" y="655.0" />
+      <point x="1904.839285714286" y="655.0" />
+      <point x="-48.28571428571422" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.controller.ChooseSeatController.TilePaneCustom">
+      <point x="332.0" y="519.0" />
+      <point x="1642.7322284735783" y="3162.0" />
+      <point x="1396.0655618069115" y="3162.0" />
+      <point x="85.33333333333348" y="-86.5" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController.PerspectiveImage" target="com.cinema.controller.MovieInfoController">
+      <point x="214.875" y="-249.5" />
+      <point x="3562.1697284735783" y="2054.0" />
+      <point x="3823.7316250815375" y="2054.0" />
+      <point x="3823.7316250815375" y="1718.0" />
+      <point x="4169.037133072405" y="1718.0" />
+      <point x="-207.375" y="262.5" />
+    </edge>
+    <edge source="com.cinema.controller.FormCategoryController" target="com.cinema.model.CategoryEntity">
+      <point x="163.0" y="-127.5" />
+      <point x="6008.763478473578" y="765.0" />
+      <point x="6059.263478473578" y="765.0" />
+      <point x="6059.263478473578" y="116.0" />
+      <point x="6037.263478473578" y="116.0" />
+      <point x="0.0" y="45.5" />
+    </edge>
+    <edge source="com.cinema.model.SeanceEntity" target="com.cinema.model.CinemaHallEntity">
+      <point x="-78.25" y="-140.0" />
+      <point x="789.1066250815375" y="755.0" />
+      <point x="470.0" y="755.0" />
+      <point x="62.0" y="72.5" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController" target="com.cinema.config.BootInitializable">
+      <point x="69.125" y="-262.5" />
+      <point x="4445.537133072405" y="555.0" />
+      <point x="3858.8153212654925" y="555.0" />
+      <point x="16.9375" y="73.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.view.TicketView">
+      <point x="-331.9999999999998" y="-519.0" />
+      <point x="978.7322284735783" y="2044.0" />
+      <point x="262.25" y="2044.0" />
+      <point x="41.0" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController.PerspectiveImage" target="com.cinema.model.MovieEntity">
+      <point x="-71.625" y="-249.5" />
+      <point x="3275.6697284735783" y="2034.0" />
+      <point x="3001.6691250815375" y="2034.0" />
+      <point x="3001.6691250815375" y="665.0" />
+      <point x="2872.117404598826" y="665.0" />
+      <point x="-31.833333333333485" y="167.0" />
+    </edge>
+    <edge source="com.cinema.controller.SummaryControler" target="com.cinema.config.BootInitializable">
+      <point x="82.0" y="-141.0" />
+      <point x="1941.3566250815375" y="685.0" />
+      <point x="3723.3153212654925" y="685.0" />
+      <point x="-118.5625" y="73.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.util.DateConverter">
+      <point x="-199.19999999999982" y="-519.0" />
+      <point x="1111.5322284735785" y="2024.0" />
+      <point x="510.25" y="2024.0" />
+      <point x="510.25" y="765.0" />
+      <point x="639.25" y="765.0" />
+      <point x="-87.25" y="32.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseMovieController" target="com.cinema.services.MovieRepository">
+      <point x="222.5" y="-451.5" />
+      <point x="5357.763478473578" y="745.0" />
+      <point x="5420.408708414871" y="745.0" />
+      <point x="35.375" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseMovieController" target="com.cinema.config.BootInitializable">
+      <point x="-74.16666666666697" y="-451.5" />
+      <point x="5061.096811806911" y="505.0" />
+      <point x="3926.5653212654925" y="505.0" />
+      <point x="84.6875" y="73.0" />
+    </edge>
+    <edge source="com.cinema.model.MovieEntity" target="com.cinema.model.AgeRatingEntity">
+      <point x="-95.5" y="-167.0" />
+      <point x="0.0" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.controller.TicketController">
+      <point x="265.5999999999999" y="-519.0" />
+      <point x="1576.3322284735782" y="2034.0" />
+      <point x="2240.8566250815375" y="2034.0" />
+      <point x="2240.8566250815375" y="1718.0" />
+      <point x="2330.8566250815375" y="1718.0" />
+      <point x="95.5" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.services.AgeRatingRepository">
+      <point x="194.0" y="-411.0" />
+      <point x="3649.5340712654925" y="725.0" />
+      <point x="5039.179541748204" y="725.0" />
+      <point x="-51.0" y="18.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.config.BootInitializable">
+      <point x="332.0" y="-519.0" />
+      <point x="1642.7322284735783" y="2044.0" />
+      <point x="2436.8566250815375" y="2044.0" />
+      <point x="2436.8566250815375" y="705.0" />
+      <point x="3791.0653212654925" y="705.0" />
+      <point x="-50.8125" y="73.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseMovieController" target="com.cinema.services.CategoryRepository">
+      <point x="370.83333333333303" y="-451.5" />
+      <point x="5506.096811806911" y="765.0" />
+      <point x="5769.7388413242" y="765.0" />
+      <point x="-37.75" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.util.DateConverter">
+      <point x="-388.0" y="-411.0" />
+      <point x="3067.5340712654925" y="625.0" />
+      <point x="813.75" y="625.0" />
+      <point x="87.25" y="32.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.services.SeanceRepository">
+      <point x="0.0" y="-411.0" />
+      <point x="3455.5340712654925" y="585.0" />
+      <point x="3294.2840712654925" y="585.0" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="com.cinema.controller.FormCategoryController" target="com.cinema.services.CategoryRepository">
+      <point x="0.0" y="-127.5" />
+      <point x="37.75" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ListCategoryController" target="com.cinema.controller.FormCategoryController">
+      <point x="86.28571428571468" y="-303.0" />
+      <point x="5677.049192759293" y="2044.0" />
+      <point x="5845.763478473578" y="2044.0" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ListCategoryController" target="com.cinema.config.BootInitializable">
+      <point x="-86.28571428571468" y="-303.0" />
+      <point x="5504.477764187864" y="2044.0" />
+      <point x="4679.763478473578" y="2044.0" />
+      <point x="4679.763478473578" y="535.0" />
+      <point x="3892.6903212654925" y="535.0" />
+      <point x="50.8125" y="73.0" />
+    </edge>
+    <edge source="com.cinema.controller.ListCategoryController" target="com.cinema.services.SeatRepository">
+      <point x="-258.8571428571431" y="-303.0" />
+      <point x="5331.906335616435" y="2064.0" />
+      <point x="4037.4816250815375" y="2064.0" />
+      <point x="67.75" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.util.CustomPopupWindow">
+      <point x="0.0" y="-519.0" />
+      <point x="1310.7322284735783" y="1994.0" />
+      <point x="1191.8566250815375" y="1994.0" />
+      <point x="1191.8566250815375" y="655.0" />
+      <point x="1005.125" y="655.0" />
+      <point x="-80.75" y="155.0" />
+    </edge>
+    <edge source="com.cinema.controller.ListCategoryController" target="com.cinema.services.SeanceRepository">
+      <point x="-172.57142857142844" y="-303.0" />
+      <point x="5418.19204990215" y="2054.0" />
+      <point x="4663.412133072405" y="2054.0" />
+      <point x="4663.412133072405" y="545.0" />
+      <point x="3397.2840712654925" y="545.0" />
+      <point x="103.0" y="59.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.services.MovieRepository">
+      <point x="291.0" y="-411.0" />
+      <point x="3746.5340712654925" y="735.0" />
+      <point x="5278.908708414871" y="735.0" />
+      <point x="-106.125" y="45.5" />
+    </edge>
+    <edge source="com.cinema.util.ImageAnalizer" target="com.cinema.controller.ChooseSeanceController">
+      <point x="-110.5" y="-113.0" />
+      <point x="3345.0340712654925" y="1718.0" />
+      <point x="3237.2840712654925" y="1718.0" />
+      <point x="-218.25" y="411.0" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController.DisplayShelf" target="com.cinema.controller.MovieInfoController.PerspectiveImage">
+      <point x="-63.41666666666697" y="-370.5" />
+      <point x="3820.5030618069113" y="3142.0" />
+      <point x="3538.2947284735783" y="3142.0" />
+      <point x="191.0" y="249.5" />
+    </edge>
+    <edge source="com.cinema.model.SeanceEntity" target="com.cinema.model.MovieEntity">
+      <point x="78.25" y="-140.0" />
+      <point x="945.6066250815375" y="665.0" />
+      <point x="2744.784071265493" y="665.0" />
+      <point x="-159.16666666666652" y="167.0" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController" target="com.cinema.controller.MovieInfoController.DisplayShelf">
+      <point x="-69.125" y="262.5" />
+      <point x="4307.287133072405" y="1718.0" />
+      <point x="4384.919728473578" y="1718.0" />
+      <point x="4384.919728473578" y="3142.0" />
+      <point x="3947.3363951402453" y="3142.0" />
+      <point x="63.41666666666697" y="-370.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.controller.PageController">
+      <point x="66.40000000000009" y="-519.0" />
+      <point x="1377.1322284735784" y="1984.0" />
+      <point x="1202.8566250815375" y="1984.0" />
+      <point x="1202.8566250815375" y="635.0" />
+      <point x="1808.2678571428576" y="635.0" />
+      <point x="-144.85714285714266" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.config.BootInitializable">
+      <point x="97.0" y="-411.0" />
+      <point x="3552.5340712654925" y="715.0" />
+      <point x="3824.9403212654925" y="715.0" />
+      <point x="-16.9375" y="73.0" />
+    </edge>
+    <edge source="com.cinema.model.Ticket.Abatement" target="com.cinema.model.Ticket">
+      <point x="42.75" y="72.5" />
+      <point x="73.75" y="-127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseMovieController" target="com.cinema.controller.PageController">
+      <point x="-370.83333333333303" y="-451.5" />
+      <point x="4764.430145140245" y="525.0" />
+      <point x="2097.982142857143" y="525.0" />
+      <point x="144.85714285714312" y="127.5" />
+    </edge>
+    <edge source="com.cinema.util.MapReaderImpl" target="com.cinema.util.MapReader">
+      <point x="0.0" y="-32.0" />
+      <point x="2795.912133072404" y="2054.0" />
+      <point x="2619.8566250815375" y="2054.0" />
+      <point x="57.5" y="32.0" />
+    </edge>
+    <edge source="com.cinema.model.Ticket" target="com.cinema.model.Ticket.Abatement">
+      <point x="-73.75" y="-127.5" />
+      <point x="73.75" y="765.0" />
+      <point x="135.75" y="765.0" />
+      <point x="-42.75" y="72.5" />
+    </edge>
+    <edge source="com.cinema.controller.MovieInfoController" target="com.cinema.services.MovieRepository">
+      <point x="207.375" y="-262.5" />
+      <point x="4583.787133072405" y="745.0" />
+      <point x="5349.658708414871" y="745.0" />
+      <point x="-35.375" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.FormCategoryController" target="com.cinema.config.BootInitializable">
+      <point x="-163.0" y="-127.5" />
+      <point x="5682.763478473578" y="495.0" />
+      <point x="3960.4403212654925" y="495.0" />
+      <point x="118.5625" y="73.0" />
+    </edge>
+    <edge source="com.cinema.view.TicketView" target="com.cinema.model.Ticket">
+      <point x="0.0" y="-45.5" />
+      <point x="73.75" y="127.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeanceController" target="com.cinema.services.CategoryRepository">
+      <point x="388.0" y="-411.0" />
+      <point x="3843.5340712654925" y="755.0" />
+      <point x="5694.2388413242" y="755.0" />
+      <point x="-113.25" y="45.5" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.model.SeanceEntity">
+      <point x="-132.79999999999973" y="-519.0" />
+      <point x="1177.9322284735786" y="2014.0" />
+      <point x="805.3566250815375" y="2014.0" />
+      <point x="805.3566250815375" y="1718.0" />
+      <point x="789.1066250815375" y="1718.0" />
+      <point x="-78.25" y="140.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseSeatController" target="com.cinema.util.MapReader">
+      <point x="398.4000000000001" y="-519.0" />
+      <point x="1709.1322284735784" y="2054.0" />
+      <point x="2504.8566250815375" y="2054.0" />
+      <point x="-57.5" y="32.0" />
+    </edge>
+    <edge source="com.cinema.controller.ChooseMovieController" target="com.cinema.services.AgeRatingRepository">
+      <point x="74.16666666666697" y="-451.5" />
+      <point x="5209.430145140245" y="725.0" />
+      <point x="5141.179541748204" y="725.0" />
+      <point x="51.0" y="18.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.1" x="501.66666666666697" y="3412.3333333333335" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

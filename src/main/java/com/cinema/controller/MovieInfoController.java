@@ -2,12 +2,10 @@ package com.cinema.controller;
 
 import com.cinema.CinemaApplication;
 import com.cinema.config.BootInitializable;
-import com.cinema.model.AgeRatingEntity;
-import com.cinema.model.CategoryEntity;
 import com.cinema.model.MovieEntity;
 import com.cinema.services.MovieRepository;
-import com.cinema.util.CustomPopupWindow;
 import com.cinema.util.ImageAnalizer;
+import com.cinema.util.PageController;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -16,15 +14,13 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
@@ -32,8 +28,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -57,13 +51,15 @@ import java.util.ResourceBundle;
 @Component
 public class MovieInfoController implements BootInitializable {
 
-    //private static final double WIDTH = 1200, HEIGHT = 800;
+    @Autowired
+    private MovieRepository movieRepository;
 
     private PageController pageController;
     private static boolean viewMode = false;
     private ApplicationContext springContext;
-
     private DisplayShelf displayShelf;
+    private List<MovieEntity> movies;
+    private Image[] images;
 
     @FXML
     private BorderPane mainLayout;
@@ -73,12 +69,11 @@ public class MovieInfoController implements BootInitializable {
 
     @FXML
     void btnBackClicked(MouseEvent event) {
-
     }
 
     @FXML
     void btnSubmitClicked(MouseEvent event) {
-        if(displayShelf.isClicked){
+        if (displayShelf.isClicked) {
             viewMode = false;
             displayShelf.isClicked = false;
             displayShelf.showLessInformation();
@@ -86,44 +81,23 @@ public class MovieInfoController implements BootInitializable {
         pageController.setPage(CinemaApplication.pageChooseSeance);
     }
 
-    @Autowired
-    private MovieRepository movieRepository;
-
-    private List<MovieEntity> movies;
-
-    private Image[] images;
-
-    @Override
-    public void initConstruct() {
-
-    }
-
     @Override
     public void setPageParrent(PageController parentPage) {
         pageController = parentPage;
     }
 
-    private void setImages(List<MovieEntity> movies){
+    private void setImages(List<MovieEntity> movies) {
         try {
-        for(int i = 0 ; i < movies.size() ; i++) {
-            ByteArrayInputStream is = new ByteArrayInputStream(movies.get(i).getCover());
-            BufferedImage read = ImageIO.read(is);
-            images[i] = SwingFXUtils.toFXImage(read, null);
-        }
-        } catch (Exception e){
+            for (int i = 0; i < movies.size(); i++) {
+                ByteArrayInputStream is = new ByteArrayInputStream(movies.get(i).getCover());
+                BufferedImage read = ImageIO.read(is);
+                images[i] = SwingFXUtils.toFXImage(read, null);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void stage(Stage primaryStage) {
-
-    }
-
-    @Override
-    public Node initView() {
-        return null;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -145,15 +119,11 @@ public class MovieInfoController implements BootInitializable {
         springContext = applicationContext;
     }
 
-    public double getSampleWidth() { return 495; }
-
-    public double getSampleHeight() { return 300; }
-
-    public class DisplayShelf extends Region{
+    public class DisplayShelf extends Region {
 
         private WebView currentWebView;
-        private  final Duration DURATION = Duration.millis(350);
-        private  final Interpolator INTERPOLATOR = Interpolator.EASE_BOTH;
+        private final Duration DURATION = Duration.millis(350);
+        private final Interpolator INTERPOLATOR = Interpolator.EASE_BOTH;
         private static final double SPACING = 200;
         private static final double LEFT_OFFSET = -100;
         private static final double RIGHT_OFFSET = 100;
@@ -192,7 +162,7 @@ public class MovieInfoController implements BootInitializable {
 
             // create items
             items = new PerspectiveImage[images.length];
-            for (int i=0; i<images.length; i++) {
+            for (int i = 0; i < images.length; i++) {
                 MovieEntity movie = movies.get(i);
                 final PerspectiveImage item = items[i] = new PerspectiveImage(images[i], movie);
                 item.setMovieEntity(movie);
@@ -201,8 +171,8 @@ public class MovieInfoController implements BootInitializable {
                 final double index = i;
                 item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent event) {
-                        if(item == currentItem){
-                            if(!isClicked && !MovieInfoController.viewMode){
+                        if (item == currentItem) {
+                            if (!isClicked && !MovieInfoController.viewMode) {
                                 showMoreInformation();
                                 viewMode = true;
                             } else {
@@ -212,7 +182,7 @@ public class MovieInfoController implements BootInitializable {
                             }
                             System.out.println("Klik w ten sam!");
                         } else {
-                            if(viewMode){
+                            if (viewMode) {
                                 showLessInformation();
                                 viewMode = false;
                                 isClicked = false;
@@ -224,15 +194,13 @@ public class MovieInfoController implements BootInitializable {
                     }
                 });
             }
-
             // create content
             centered.getChildren().addAll(left, right, center);
             getChildren().addAll(centered);
-
             update();
         }
 
-        private void showMoreInformation(){
+        private void showMoreInformation() {
             center.getParent().setDisable(true);
             isClicked = true;
             timeline = new Timeline();
@@ -244,73 +212,74 @@ public class MovieInfoController implements BootInitializable {
                     new KeyValue(centerItem.scaleXProperty(), 0.85, INTERPOLATOR),
                     new KeyValue(centerItem.scaleYProperty(), 0.85, INTERPOLATOR),
                     new KeyValue(centerItem.angle, 180, INTERPOLATOR)));
-                    timeline.setOnFinished(event->{
+            timeline.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
 
-                        centerItem.backMovie.setVisible(true);
-                        centerItem.frontMovie.setVisible(false);
-                        Timeline timeline2 = new Timeline();
-                        final ObservableList<KeyFrame> keyFrames2 = timeline2.getKeyFrames();
-                        centerItem.setAngle(0);
-                        keyFrames2.add(new KeyFrame(DURATION,
-                                //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
-                                new KeyValue(centerItem.translateYProperty(), 80, INTERPOLATOR),
-                                new KeyValue(centerItem.scaleXProperty(), 1.0, INTERPOLATOR),
-                                new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
-                                new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
-                        timeline2.setOnFinished(event3->{
-                            center.getParent().setDisable(false);
-                            List<Node> nodeList = getAllNodes(centerItem.backMovie);
-                            WebView webView = (WebView) nodeList.get(17);
-                            currentWebView = webView;
-                            currentWebView.getEngine().load(
-                                    currentItem.getMovieEntity().getTrailer()
-                            );
-                        });
-                        timeline2.play();
-                        });
+                    centerItem.backMovie.setVisible(true);
+                    centerItem.frontMovie.setVisible(false);
+                    Timeline timeline2 = new Timeline();
+                    final ObservableList<KeyFrame> keyFrames2 = timeline2.getKeyFrames();
+                    centerItem.setAngle(0);
+                    keyFrames2.add(new KeyFrame(DURATION,
+                            //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
+                            new KeyValue(centerItem.translateYProperty(), 80, INTERPOLATOR),
+                            new KeyValue(centerItem.scaleXProperty(), 1.0, INTERPOLATOR),
+                            new KeyValue(centerItem.scaleYProperty(), 1.0, INTERPOLATOR),
+                            new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
+                    timeline2.setOnFinished((ActionEvent event3) -> {
+                        center.getParent().setDisable(false);
+                        List<Node> nodeList = DisplayShelf.this.getAllNodes(centerItem.backMovie);
+                        WebView webView = (WebView) nodeList.get(17);
+                        currentWebView = webView;
+                        currentWebView.getEngine().load(
+                                currentItem.getMovieEntity().getTrailer()
+                        );
+                    });
+                    timeline2.play();
+                }
+            });
             timeline.play();
 
         }
 
-        private void showLessInformation(){
+        private void showLessInformation() {
             center.getParent().setDisable(true);
             timeline = new Timeline();
             final ObservableList<KeyFrame> keyFrames = timeline.getKeyFrames();
 
             final PerspectiveImage centerItem = items[centerIndex];
             keyFrames.add(new KeyFrame(DURATION,
-                    //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
-//                    new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
                     new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
                     new KeyValue(centerItem.scaleXProperty(), 0.85, INTERPOLATOR),
                     new KeyValue(centerItem.scaleYProperty(), 0.85, INTERPOLATOR),
                     new KeyValue(centerItem.angle, 180, INTERPOLATOR)));
-            timeline.setOnFinished(event->{
-                centerItem.backMovie.setVisible(false);
-                centerItem.frontMovie.setVisible(true);
-                Timeline timeline2 = new Timeline();
-                final ObservableList<KeyFrame> keyFrames2 = timeline2.getKeyFrames();
-                centerItem.setAngle(0);
-                keyFrames2.add(new KeyFrame(DURATION,
-                        //    new KeyValue(centerItem.translateXProperty(), 0, INTERPOLATOR),
-//                        new KeyValue(centerItem.translateXProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
-                        new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
-                        new KeyValue(centerItem.scaleXProperty(), 0.7, INTERPOLATOR),
-                        new KeyValue(centerItem.scaleYProperty(), 0.7, INTERPOLATOR),
-                        new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
-                timeline2.setOnFinished(event3->{
-                    center.getParent().setDisable(false);
-                    List<Node> nodeList = getAllNodes(centerItem.backMovie);
-                    WebView webView = (WebView) nodeList.get(17);
-                    currentWebView = webView;
-                    currentWebView.getEngine().load(
-                            ""
-                    );
-                });
-                timeline2.play();
+            timeline.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    centerItem.backMovie.setVisible(false);
+                    centerItem.frontMovie.setVisible(true);
+                    Timeline timeline2 = new Timeline();
+                    final ObservableList<KeyFrame> keyFrames2 = timeline2.getKeyFrames();
+                    centerItem.setAngle(0);
+                    keyFrames2.add(new KeyFrame(DURATION,
+                            new KeyValue(centerItem.translateYProperty(), USE_COMPUTED_SIZE, INTERPOLATOR),
+                            new KeyValue(centerItem.scaleXProperty(), 0.7, INTERPOLATOR),
+                            new KeyValue(centerItem.scaleYProperty(), 0.7, INTERPOLATOR),
+                            new KeyValue(centerItem.angle, 90, INTERPOLATOR)));
+                    timeline2.setOnFinished((ActionEvent event3) -> {
+                        center.getParent().setDisable(false);
+                        List<Node> nodeList = DisplayShelf.this.getAllNodes(centerItem.backMovie);
+                        WebView webView = (WebView) nodeList.get(17);
+                        currentWebView = webView;
+                        currentWebView.getEngine().load(
+                                ""
+                        );
+                    });
+                    timeline2.play();
+                }
             });
             timeline.play();
-
         }
 
         public ArrayList<Node> getAllNodes(Parent root) {
@@ -323,7 +292,7 @@ public class MovieInfoController implements BootInitializable {
             for (Node node : parent.getChildrenUnmodifiable()) {
                 nodes.add(node);
                 if (node instanceof Parent)
-                    addAllDescendents((Parent)node, nodes);
+                    addAllDescendents((Parent) node, nodes);
             }
         }
 
@@ -344,7 +313,7 @@ public class MovieInfoController implements BootInitializable {
             }
 
             // stop old timeline if there is one running
-            if (timeline!=null) timeline.stop();
+            if (timeline != null) timeline.stop();
             // create timeline to animate to new positions
             timeline = new Timeline();
             // add keyframes for left items
@@ -427,7 +396,7 @@ public class MovieInfoController implements BootInitializable {
         private static final double REFLECTION_SIZE = 0.25;
         private static final double WIDTH = 400;
         private static final double HEIGHT = 800;
-        private static final double RADIUS_H = HEIGHT /4;
+        private static final double RADIUS_H = HEIGHT / 4;
         private static final double BACK = HEIGHT / 10;
         private PerspectiveTransform transform = new PerspectiveTransform();
 
@@ -445,10 +414,13 @@ public class MovieInfoController implements BootInitializable {
 
         private ImageView imageView = null;
 
-        /** Angle Property */
+        /**
+         * Angle Property
+         */
 
         private final DoubleProperty angle = new SimpleDoubleProperty(45.0) {
-            @Override protected void invalidated() {
+            @Override
+            protected void invalidated() {
                 // when angle changes calculate new transform
                 double lx = (RADIUS_H - Math.sin(Math.toRadians(angle.get())) * RADIUS_H - 1);
                 double rx = (RADIUS_H + Math.sin(Math.toRadians(angle.get())) * RADIUS_H + 1);
@@ -464,9 +436,18 @@ public class MovieInfoController implements BootInitializable {
                 transform.setLly(HEIGHT + ury);
             }
         };
-        public final double getAngle() { return angle.getValue(); }
-        public final void setAngle(double value) { angle.setValue(value); }
-        public final DoubleProperty angleModel() { return angle; }
+
+        public final double getAngle() {
+            return angle.getValue();
+        }
+
+        public final void setAngle(double value) {
+            angle.setValue(value);
+        }
+
+        public final DoubleProperty angleModel() {
+            return angle;
+        }
 
         public PerspectiveImage(Image image, MovieEntity movie) {
             frontMovie = new VBox();
@@ -474,7 +455,7 @@ public class MovieInfoController implements BootInitializable {
             setImageView(image, movie);
         }
 
-        public void setImageView(Image image, MovieEntity movie){
+        public void setImageView(Image image, MovieEntity movie) {
             //getChildren().clear();
             imageView = new ImageView(image);
             imageView.fitWidthProperty().bind(frontMovie.widthProperty());
@@ -485,18 +466,17 @@ public class MovieInfoController implements BootInitializable {
             frontMovie.setEffect(reflection);
             //frontMovie.setPadding(new Insets(12,12,12,12));
             frontMovie.getChildren().addAll(imageView);
-            frontMovie.setMinSize(WIDTH,HEIGHT);
+            frontMovie.setMinSize(WIDTH, HEIGHT);
             frontMovie.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 
-            backMovie = createBackMovie(movie,image);
+            backMovie = createBackMovie(movie, image);
             backMovie.setEffect(reflection);
             setEffect(transform);
-            getChildren().addAll(frontMovie, backMovie );
+            getChildren().addAll(frontMovie, backMovie);
         }
 
 
-        public VBox createBackMovie(MovieEntity movie,Image image)
-        {
+        public VBox createBackMovie(MovieEntity movie, Image image) {
             VBox root = new VBox();
 
             //get colors
@@ -511,7 +491,7 @@ public class MovieInfoController implements BootInitializable {
             fxmlLoader.setController(controller);
             try {
                 root = fxmlLoader.load();
-                root.setStyle("-fx-border-width: 0 2 2 2; -fx-background-color: white; -fx-border-color: "+colors.get(1)+";");
+                root.setStyle("-fx-border-width: 0 2 2 2; -fx-background-color: white; -fx-border-color: " + colors.get(1) + ";");
                 root.setVisible(false);
                 WebView web = controller.getCardMovieTrailer();
                 web.setId(root.toString());
@@ -522,94 +502,6 @@ public class MovieInfoController implements BootInitializable {
             }
             return root;
         }
-
-
-//
-//            Text title = new Text(movie.getTitle());
-//            title.setStyle("-fx-text-fill: "+colors.get(0)+";"+
-//                    "-fx-font-size: 24px;");
-//
-//            TextFlow textFlow = new TextFlow();
-//            textFlow.getChildren().add(title);
-//
-//            HBox hbox = new HBox();
-//            hbox.setPadding(new Insets(6,6,6,6));
-//            hbox.setAlignment(Pos.CENTER);
-//
-//            ImageView imageView = new ImageView(image);
-//            imageView.setFitWidth(100);
-//            imageView.preserveRatioProperty().setValue(true);
-//            hbox.getChildren().add(imageView);
-//
-//            GridPane gridPane = new GridPane();
-//            ColumnConstraints columm = new ColumnConstraints();
-//            columm.setPercentWidth(50);
-//
-//            gridPane.setHgap(12);
-//            gridPane.setVgap(6);
-//            gridPane.setPadding(new Insets(6, 6,6,6));
-//
-//            RowConstraints row = new RowConstraints();
-//
-//            gridPane.getColumnConstraints().addAll(columm, columm);
-//            gridPane.getRowConstraints().addAll(row,row,row,row,row);
-//
-//            List <String> movieDetailsList = new ArrayList<>();
-//
-//            movieDetailsList.add("Reżyser:");
-//            movieDetailsList.add(movie.getDirector());
-//
-//            movieDetailsList.add("Czas Trwania:");
-//            movieDetailsList.add(movie.getDuration().toString()+"min");
-//
-//            List <CategoryEntity> list = movie.getCategoryEntities();
-//            String categoriesString ="";
-//            for (CategoryEntity category: list) {
-//                categoriesString += category.getName()+", ";
-//            }
-//            categoriesString.substring(0, categoriesString.length()-1);
-//
-//            movieDetailsList.add("Kategorie:");
-//            movieDetailsList.add(categoriesString);
-//
-//            movieDetailsList.add("Data Premiery:");
-//            movieDetailsList.add(movie.getReleaseDate().toString());
-//
-//            movieDetailsList.add("Ograniczenie wiekowe:");
-//            movieDetailsList.add(movie.getAgeRatingEntities().getRequiredAge().toString() +"+");
-//
-//            int licznik =0;
-//            for (int rows=0; rows<((movieDetailsList.size())/2); rows++)
-//            {
-//                for (int col=0; col<2; col++) {
-//                    TextFlow movieDetailsListTextFlow = new TextFlow();
-//                    Text movieDetailsListText = new Text(movieDetailsList.get(licznik));
-//                    movieDetailsListText.setStyle("-fx-text-fill: "+colors.get(0)+";"+
-//                            "-fx-font-size: 14px;");
-//                    licznik++;
-//                    movieDetailsListTextFlow.getChildren().add(movieDetailsListText);
-//                    gridPane.add(movieDetailsListTextFlow, col, rows);
-//                }
-//            }
-//            hbox.getChildren().add(gridPane);
-//
-//            Text description = new Text(movie.getDescription());
-//            TextFlow descriptonTextFlow = new TextFlow();
-//            description.setStyle("-fx-text-fill: "+colors.get(0)+";"+
-//                    "-fx-font-size: 14px;");
-//
-//            descriptonTextFlow.getChildren().add(description);
-//
-//
-//
-//            root.setVisible(false);
-//            root.setMinSize(400, 600);
-//            root.setMaxSize(400, 600);
-//
-//            root.getChildren().addAll(textFlow, hbox , descriptonTextFlow);
-//            root.setPadding(new Insets(8,8,8,8));
-//            root.setStyle("-fx-background-color: white;"+"-fx-border-color: "+colors.get(1)+";");
-//
 
         public int getIdMovie() {
             return idMovie;

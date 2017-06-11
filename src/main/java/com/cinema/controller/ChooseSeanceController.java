@@ -13,9 +13,8 @@ import com.cinema.services.SeanceRepository;
 import com.cinema.util.CustomPopupWindow;
 import com.cinema.util.DateConverter;
 import com.cinema.util.ImageAnalizer;
-import javafx.animation.*;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import com.cinema.util.PageController;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -29,34 +28,27 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * Created by Damrod on 12.05.2017.
@@ -64,23 +56,18 @@ import java.util.stream.Collectors;
 @Component
 public class ChooseSeanceController implements BootInitializable {
 
-    private ApplicationContext springContext;
-
     @Autowired
     private MovieRepository movieRepository;
-
     @Autowired
     private SeanceRepository seanceRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private AgeRatingRepository ageRatingRepository;
 
+    private ApplicationContext springContext;
     private List<MovieEntity> movieEntityList;
     private List<MovieEntity> newMovieList;
-
     private PageController pageController;
 
     @FXML
@@ -163,9 +150,7 @@ public class ChooseSeanceController implements BootInitializable {
         }
         hBox.getChildren().add(vBox2);
         mainBox.getChildren().add(hBox);
-
         filters.getMainPanel().setCenter(mainBox);
-
         Button applyButton = new Button("Zatwierdź");
         applyButton.setTextFill(javafx.scene.paint.Paint.valueOf("#ffff"));
         applyButton.setFont(Font.font("System", FontWeight.BOLD, 14));
@@ -187,7 +172,6 @@ public class ChooseSeanceController implements BootInitializable {
                 }
                 selectedFilters.setText(filtersText);
                 filterMovieCards(getFilteredMovieList(filtersList));
-
                 filters.closePopupWindow();
             }
         });
@@ -198,7 +182,6 @@ public class ChooseSeanceController implements BootInitializable {
     @FXML
     void btnBackClicked(MouseEvent event) {
         pageController.setPage(CinemaApplication.pageMovieInfo);
-
     }
 
     @FXML
@@ -206,24 +189,14 @@ public class ChooseSeanceController implements BootInitializable {
     }
 
     @Override
-    public void initConstruct() {
-
-    }
-
-    @Override
     public void setPageParrent(PageController parentPage) {
         pageController = parentPage;
-    }
-
-    @Override
-    public void stage(Stage primaryStage) {
-
     }
 
     private void searchSeanceByName(String title) {
 
         List<MovieEntity> movies = new ArrayList<>();
-        if(!newMovieList.isEmpty()) {
+        if (!newMovieList.isEmpty()) {
             for (MovieEntity movie : newMovieList) {
                 if (movie.getTitle().toLowerCase().contains(title.toLowerCase())) {
                     movies.add(movie);
@@ -234,10 +207,6 @@ public class ChooseSeanceController implements BootInitializable {
         }
     }
 
-    @Override
-    public Node initView() {
-        return null;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -248,21 +217,21 @@ public class ChooseSeanceController implements BootInitializable {
             if (!seanceList.isEmpty()) {
                 List<String> colorsList = new ImageAnalizer().getColors(movie);
                 Node card = createMovieCardView(movie, seanceList, colorsList);
-                if(card != null){
+                if (card != null) {
                     mainTilePane.getChildren().add(card);
                     newMovieList.add(movie);
                 }
             }
         }
 
-        searchField.textProperty().addListener((ObservableValue<? extends String> values, String oldValue, String newValue) -> {
-            if (newValue != null) {
-                searchSeanceByName(newValue);
-            } else {
-
+        searchField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> values, String oldValue, String newValue) {
+                if (newValue != null) {
+                    ChooseSeanceController.this.searchSeanceByName(newValue);
+                }
             }
         });
-
     }
 
     @Override
@@ -270,9 +239,7 @@ public class ChooseSeanceController implements BootInitializable {
         this.springContext = applicationContext;
     }
 
-
     public HBox createMovieCardView(MovieEntity movie, List<SeanceEntity> seanceList, List<String> colors) {
-
         HBox card = new HBox();
         card.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         card.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
@@ -320,19 +287,31 @@ public class ChooseSeanceController implements BootInitializable {
 
                 if (i % 2 == 0) {
                     textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
-                    textFlow.setOnMouseEntered(event1 -> {
-                        textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
+                    textFlow.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event1) {
+                            textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
+                        }
                     });
-                    textFlow.setOnMouseExited(event1 -> {
-                        textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
+                    textFlow.setOnMouseExited(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event1) {
+                            textFlow.setStyle("-fx-background-color: " + colors.get(0) + ";");
+                        }
                     });
                 } else {
                     textFlow.setStyle(" -fx-background-color: " + colors.get(1) + ";");
-                    textFlow.setOnMouseEntered(event1 -> {
-                        textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
+                    textFlow.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event1) {
+                            textFlow.setStyle("-fx-background-color: " + colors.get(2) + ";");
+                        }
                     });
-                    textFlow.setOnMouseExited(event1 -> {
-                        textFlow.setStyle("-fx-background-color: " + colors.get(1) + ";");
+                    textFlow.setOnMouseExited(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event1) {
+                            textFlow.setStyle("-fx-background-color: " + colors.get(1) + ";");
+                        }
                     });
                 }
 
@@ -370,11 +349,14 @@ public class ChooseSeanceController implements BootInitializable {
     }
 
     private void addMouseEvent(Node node, SeanceEntity seance) {
-        node.setOnMouseClicked(event -> {
-            ChooseSeatController chooseSeatController = springContext.getBean(ChooseSeatController.class);
-            chooseSeatController.setCurrentSeance(seance);
-            pageController.loadPageWithContorller(CinemaApplication.pageChooseSeat, CinemaApplication.pageChooseSeatFile, chooseSeatController);
-            pageController.setPage(CinemaApplication.pageChooseSeat);
+        node.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ChooseSeatController chooseSeatController = springContext.getBean(ChooseSeatController.class);
+                chooseSeatController.setCurrentSeance(seance);
+                pageController.loadPageWithContorller(CinemaApplication.pageChooseSeat, CinemaApplication.pageChooseSeatFile, chooseSeatController);
+                pageController.setPage(CinemaApplication.pageChooseSeat);
+            }
         });
     }
 
@@ -398,7 +380,7 @@ public class ChooseSeanceController implements BootInitializable {
     }
 
     private List<MovieEntity> getFilteredMovieList(List<String> filtersList) {
-        List <MovieEntity> filtredMovieList = new ArrayList<>();
+        List<MovieEntity> filtredMovieList = new ArrayList<>();
         filtredMovieList = newMovieList;
         if (!filtersList.get(0).equals("")) {
             List<CategoryEntity> categories = new ArrayList<>();
@@ -455,6 +437,4 @@ public class ChooseSeanceController implements BootInitializable {
             }
         }
     }
-
-
 }
