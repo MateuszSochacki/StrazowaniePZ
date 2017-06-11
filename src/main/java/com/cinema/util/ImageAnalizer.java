@@ -87,7 +87,7 @@ public class ImageAnalizer {
         String hex = String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
         return hex;
     }
-    
+
     /**
      * inner method used to create secondary color
      */
