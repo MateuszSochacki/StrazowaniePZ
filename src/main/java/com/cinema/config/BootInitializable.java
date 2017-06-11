@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  * Created by Dominik on 14.04.2017.
+ * This interface allows to use both JavaFx and Spring in controllers.
  */
 public interface BootInitializable extends Initializable, ApplicationContextAware {
     /**
