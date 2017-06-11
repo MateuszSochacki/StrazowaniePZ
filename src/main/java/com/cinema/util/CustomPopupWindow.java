@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by Damrod on 15.05.2017.
+ * This class allows to create custom "popup window" in selected container and blur the background of "targetBlur".
  */
 
 public class CustomPopupWindow {
@@ -57,6 +58,12 @@ public class CustomPopupWindow {
 
     private boolean animate = true;
 
+    /**Constructor.
+     * @param width - an integer value in pixels of min width for popup window.
+     * @param height - an integer value in pixels of min width for popup window.
+     * @param parent - an StackPane nude where popup will be displayed.
+     * @param targetBlur - Node element which will have Blur effect applied on.
+     */
     public CustomPopupWindow(int width, int height, StackPane parent, Node targetBlur){
         doFadeTransition = true;
         this.width = width;
@@ -73,7 +80,6 @@ public class CustomPopupWindow {
                 "-fx-border-color: #333333;"+
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);");
 
-
         Hyperlink textClose = new Hyperlink("X");
         textClose.setFocusTraversable(false);
         textClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -87,7 +93,9 @@ public class CustomPopupWindow {
         mainPanel.setPadding(new Insets(12, 12, 12, 12));
 
     }
-
+    /**
+     * this method opens custom popup.
+     */
     public void openPopupWindow() {
         targetBlur.setDisable(true);
 
@@ -120,6 +128,9 @@ public class CustomPopupWindow {
 
     }
 
+    /**
+     * this method closes custom popup.
+     */
     public void closePopupWindow() {
 
         GaussianBlur blur = new GaussianBlur(30);
