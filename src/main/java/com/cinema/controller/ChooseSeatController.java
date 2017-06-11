@@ -48,6 +48,7 @@ import java.util.*;
 
 /**
  * Created by Dominik on 05.05.2017.
+ * ChooseSeatController is a class that is binded to ChooseSeat.fxml and allows user to pick certain seat
  */
 @Component
 public class ChooseSeatController implements BootInitializable {
@@ -89,18 +90,21 @@ public class ChooseSeatController implements BootInitializable {
 
     @FXML
     private VBox mainVbox;
+    /**
+     * btnBackClicked it's a method that allows user to go to previous view
+     * @param event is a mouse click event
 
+     */
     @FXML
     void btnBackClicked(MouseEvent event) {
         pageController.setPage(CinemaApplication.pageChooseSeance);
     }
 
     /**
-     * Metoda wywoływana w momencie kliknięcia przycisku "Dalej"
+     * btnSubmitClicked is a method if user click "Dalej" in this view
      *
-     * @param event to jakiś parametr który trzeba dodać, bo nie działa bez parametru
+     * @param event is a mouse click event
      */
-
     @FXML
     void btnSubmitClicked(MouseEvent event) {
         if (!reservedSeats.isEmpty()) {
@@ -134,7 +138,12 @@ public class ChooseSeatController implements BootInitializable {
 
         //pageController.setPage(CinemaApplication.pageSummary);
     }
-
+    /**
+     * setPopUp is a method that shows user how many seats he wanna book and how much he have to pay for it
+     *
+     * @param seats is a list of all avaible seats
+     * @param popupWindow its a class that allow us to add pop up window with all effects
+     */
     private void setPopUp(List<SeatEntity> seats, CustomPopupWindow popupWindow) {
 
         VBox mainBox = new VBox();
@@ -228,7 +237,8 @@ public class ChooseSeatController implements BootInitializable {
     }
 
     /**
-     * Na podstawie pobranych danych wypełnia siatkę tworząc dla każdego miejsca obiekt typu TilePaneCustom z odpowiednimi parametrami
+     * fillGridWithData is a method that fills grid with objects TilePaneCustom with appropriate params
+     *
      */
     private void fillGridWithData() {
 
@@ -297,8 +307,7 @@ public class ChooseSeatController implements BootInitializable {
     }
 
     /**
-     * Generuje pustą siatkę typu GridPane. Domyślnie ustawiona na maksymalną wartość, czyli 15x16. Ostatnia kolumna odpowiada
-     * oznaczeniu, który to numer rzędu.
+     * generateEmptyGrid is a method that generate GridPane by default set on max value(15x16) last column is a number of row
      */
     private void generateEmptyGrid() {
 
@@ -328,10 +337,10 @@ public class ChooseSeatController implements BootInitializable {
     }
 
     /**
-     * Metoda wywoływana w momencie kliknięcia na obiekt typu TilePaneCustom, który nie jest zablokowany, czyli tylko i wyłącznie
-     * miejsca wolne. Obiekt tego typu dodatkowo posiada pole isClicked, które informuje o jego stanie:
-     * clicked = true oznacza, że jest to miejce zarezerwowane
-     * W momencie kliknięcia, w zależnosci od pola isClicked, siedzenie jest dodawana bądź usuwane z listy siedzeń + zostaje zmieniony kolor
+     * reservSeats is a method called whenever user click on TilePaneCustom object which is not disabled(free seats are enabled)
+     * this object in addition have a isClicked variable which inform of his state
+     * clicked=true means this seat is reserved
+     * whenever it is clicked depends on variable isClicked seat is added or removed from list of reserved seats + change his color
      */
     private void reservSeats(MouseEvent event) {
         String id = event.getPickResult().getIntersectedNode().getId();
@@ -353,7 +362,10 @@ public class ChooseSeatController implements BootInitializable {
             reservedSeats.add(pane);
         }
     }
-
+    /**
+     * addTicket is a method that adds/remove ticket whenever seat was clicked
+     * @param pane is a specified tilepane which was clicked
+     */
     private void addTicket(TilePaneCustom pane) {
         Ticket ticket = setTicket(pane);
         TicketView view = new TicketView();
@@ -364,7 +376,11 @@ public class ChooseSeatController implements BootInitializable {
         summaryLayout.getChildren().add(view.getLayout());
         changeSum();
     }
-
+    /**
+     * setTickets is a method that shows ticket for all seats booked in this session
+     * @param pane is a specified tilepane which was clicked
+     * @return returns model of all tickets booked
+     */
     private Ticket setTicket(TilePaneCustom pane) {
         Ticket ticket = new Ticket();
         Label nr = (Label) pane.getChildren().get(0);
@@ -377,7 +393,11 @@ public class ChooseSeatController implements BootInitializable {
         ticket.setType(Ticket.Abatement.Normalny);
         return ticket;
     }
-
+    /**
+     * removeTicket is a method that allows user to remove booked seats that he dosnt want to book
+     * @param pane is a specified tilepane which was clicked
+     *
+     */
     private void removeTicket(TilePaneCustom pane) {
         int index = 0;
 
@@ -395,15 +415,17 @@ public class ChooseSeatController implements BootInitializable {
     }
 
     private TicketController ticketController;
-
+    /**
+     * generateTicketsView is a method that shows all tickets booked by user with their kind and price
+     * @param view is a pop up with dynamically added tickets and their prices
+     *
+     */
     private void generateTicketsView(TicketView view) {
         TicketController ticketController = new TicketController();
         FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getClass().getResource("/scene/Ticket.fxml"));
         fxmlLoader1.setController(ticketController);
         try {
             view.setLayout(fxmlLoader1.load());
-
-
             view.getLayout().setMargin(view.getLayout(), new Insets(0, 0, 10, 0));
             setTicketView(view, view.getTicket(), ticketController);
         } catch (IOException s) {
@@ -412,7 +434,10 @@ public class ChooseSeatController implements BootInitializable {
 
     }
 
-
+    /**
+     * setTicketView is a method that sets all tickets to be able to be viewed by user
+     *
+     */
     private void setTicketView(TicketView layout, Ticket ticket, TicketController ticketController) {
         Text title = new Text(ticket.getName());
         Text price = new Text(Float.toString(ticket.getValue()) + " zł");
@@ -439,7 +464,10 @@ public class ChooseSeatController implements BootInitializable {
         ticketController.setViews(title, new Text(""), price, comboBox);
     }
 
-
+    /**
+     * changeSum is a method that adds or subtract price
+     *
+     */
     private void changeSum() {
         sumPrice = 0;
 
@@ -448,7 +476,10 @@ public class ChooseSeatController implements BootInitializable {
         }
         this.price.setText("Suma: " + sumPrice + " zł");
     }
-
+    /**
+     * setPrice is a methid that set specified price to specified kind of ticket
+     *
+     */
     private float setPrice(Ticket.Abatement abatement, Ticket ticket) {
         ticket.setType(abatement);
         return ticket.getValue();

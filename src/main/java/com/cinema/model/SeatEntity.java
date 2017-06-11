@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * Created by msoch_000 on 02-05-2017.
+ * Stores information about seats - taken, free etc.
  */
 @Entity
 public class SeatEntity {

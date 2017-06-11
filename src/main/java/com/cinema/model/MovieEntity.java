@@ -7,6 +7,7 @@ import java.util.Set;
 
 /**
  * Created by msoch_000 on 02-05-2017.
+ * A class that stores all the information about the movies in the database.
  */
 @Entity
 public class MovieEntity {

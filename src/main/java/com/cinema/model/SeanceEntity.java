@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 /**
  * Created by msoch_000 on 02-05-2017.
+ * Stores information about available and finished seances.
  */
 @Entity
 public class SeanceEntity {

@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * Created by msoch_000 on 02-05-2017.
+ * A class responsible for movie genre filter like "thriller", "sci-fi" etc.
  */
 @Entity
 public class CategoryEntity {

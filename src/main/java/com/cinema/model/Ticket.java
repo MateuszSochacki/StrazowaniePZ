@@ -2,6 +2,7 @@ package com.cinema.model;
 
 /**
  * Created by Dominik on 04.06.2017.
+ * Stores prices for certain people like students, normal adults, retiree etc.
  */
 public class Ticket {
 

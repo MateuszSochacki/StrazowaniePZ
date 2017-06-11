@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 /**
  * Created by msoch_000 on 02-05-2017.
+ * Class never used, deleting it would force us to rearrange the database,
+ * so it will remain here till the end of the world
  */
 @Entity
 public class PriceEntity {

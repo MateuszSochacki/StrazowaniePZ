@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * Created by msoch_000 on 02-05-2017.
+ * A class responsible for movie age filter
  */
 @Entity
 public class AgeRatingEntity {
