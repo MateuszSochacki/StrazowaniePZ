@@ -91,6 +91,11 @@ public class ChooseSeanceController implements BootInitializable {
     @FXML
     private TextField searchField;
 
+    /**
+     * addFilterClicked it's a method that allows to add new filters for movie list and show movies that contain this filters
+     *
+     *
+     */
     @FXML
     void addFilterClicked(ActionEvent event) {
         CustomPopupWindow filters = new CustomPopupWindow(400, 300, stackPane, vBox);
@@ -106,8 +111,6 @@ public class ChooseSeanceController implements BootInitializable {
 
 
         HBox hBox = new HBox();
-
-        //kategorie
         Text categoryText = new Text("Kategorie:");
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(24, 24, 24, 24));
