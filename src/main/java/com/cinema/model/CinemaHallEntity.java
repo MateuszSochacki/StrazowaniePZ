@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Created by msoch_000 on 02-05-2017.
+ * Stores the name of the file where the hall appearance is stored.
  */
 @Entity
 public class CinemaHallEntity {
