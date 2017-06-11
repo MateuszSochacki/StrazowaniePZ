@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 /**
  * Created by Damrod on 09.05.2017.
+ * this class manages all pages in one container. It manages lifetime of each page.
  */
 public class PageController extends StackPane {
 
@@ -41,6 +42,12 @@ public class PageController extends StackPane {
         return pages.get(name);
     }
 
+    /**
+     * loads a page to memory in order to use it later or show to the user.
+     * @param name a value of String constant value declared in CinemaApplication as name of page.
+     * @param res a value of String constant value declared in CinemaApplication as path to fxml file.
+     * @return returns true if page was loaded succesfully to memory.
+     */
     public boolean loadPage(String name, String res){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(res));
@@ -55,6 +62,13 @@ public class PageController extends StackPane {
         }
     }
 
+    /**
+     * loads a page to pages(hashMap) memory in order to use it later or show to the user, loads controller aswell.
+     * @param name value of String constant value declared in CinemaApplication as name of page.
+     * @param res value of String constant value declared in CinemaApplication as path to fxml file.
+     * @param controller value of Bootinitializable (controller) to appropriate fxml file (res).
+     * @return returns true if page was loaded succesfully to memory.
+     */
     public boolean loadPageWithContorller(String name, String res, BootInitializable controller){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(res));
@@ -70,6 +84,11 @@ public class PageController extends StackPane {
         }
     }
 
+    /**
+     * sets a page visible to a user in mainContainer for the pages declared in CinemaApplication
+     * @param name value of String constant value declared in CinemaApplication as name of page.
+     * @return returns true if page was set successfully and it's visible to the user.
+     */
     public boolean setPage(final String name){
         if(pages.get(name) != null){
             final DoubleProperty opacity = opacityProperty();
@@ -103,6 +122,11 @@ public class PageController extends StackPane {
         }
     }
 
+    /**
+     * unloads a page from pages container (hashMap).
+     * @param name value of String constant value declared in CinemaApplication as name of page.
+     * @return returns true if page was unloaded successfully and it's not visible to the user.
+     */
     public boolean unloadScreen(String name){
         if(pages.remove(name)==null) {
             System.out.println("Page didn't exist");
