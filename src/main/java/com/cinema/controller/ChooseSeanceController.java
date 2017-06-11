@@ -52,6 +52,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Damrod on 12.05.2017.
+ * ChooseSeanceController is a class that is binded with ChooseSeance.fxml and shows current movies with their seance and time
  */
 @Component
 public class ChooseSeanceController implements BootInitializable {
@@ -94,7 +95,7 @@ public class ChooseSeanceController implements BootInitializable {
     /**
      * addFilterClicked it's a method that allows to add new filters for movie list and show movies that contain this filters
      *
-     *
+     * @param event is a mouse click Event
      */
     @FXML
     void addFilterClicked(ActionEvent event) {
@@ -181,12 +182,20 @@ public class ChooseSeanceController implements BootInitializable {
         filters.getMainPanel().setBottom(applyButton);
         filters.getMainPanel().setAlignment(filters.getMainPanel().getBottom(), Pos.CENTER_RIGHT);
     }
-
+    /**
+     * btnBackClicked it's a method that allows user to go to previous controller and his view
+     *
+     * @param event is a mouse click Event
+     */
     @FXML
     void btnBackClicked(MouseEvent event) {
         pageController.setPage(CinemaApplication.pageMovieInfo);
     }
-
+    /**
+     * btnSubmitClicked it's a secret button I would say Easter egg
+     *
+     * @param event is a mouse click Event
+     */
     @FXML
     void btnSubmitClicked(MouseEvent event) {
     }
@@ -196,6 +205,12 @@ public class ChooseSeanceController implements BootInitializable {
         pageController = parentPage;
     }
 
+
+    /**
+     * seatchSeanseByName it's a method that allows user to look for movies that contain certain String
+     *
+     * @param title is a String which can be modified by user
+     */
     private void searchSeanceByName(String title) {
 
         List<MovieEntity> movies = new ArrayList<>();
@@ -242,6 +257,13 @@ public class ChooseSeanceController implements BootInitializable {
         this.springContext = applicationContext;
     }
 
+    /**
+     * createMovieCardView it's a method that creates movie cards depending on their params
+     * @param movie is a specified movie
+     * @param seanceList is a list with all movies we downloaded from database
+     * @param colors is a color that is dynamically created depending on cover colors
+     * @return returns cover, seances and theirs time which is displayed on view
+     */
     public HBox createMovieCardView(MovieEntity movie, List<SeanceEntity> seanceList, List<String> colors) {
         HBox card = new HBox();
         card.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -339,7 +361,11 @@ public class ChooseSeanceController implements BootInitializable {
 
         return card;
     }
-
+    /**
+     * getBufferedImage it's a method tries to change byteArray to actual image
+     * @param byteArray is a string that contains image
+     * @return returns actual image
+     */
     public BufferedImage getBufferedImage(byte[] byteArray) {
         ByteArrayInputStream in = new ByteArrayInputStream(byteArray);
         BufferedImage read = null;
@@ -350,7 +376,12 @@ public class ChooseSeanceController implements BootInitializable {
         }
         return read;
     }
-
+    /**
+     * addMouseEvent it's a method to allow users go to certain seance
+     * @param node is a node that user actually click
+     * @param seance is a seance connected with node
+     *
+     */
     private void addMouseEvent(Node node, SeanceEntity seance) {
         node.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -362,7 +393,12 @@ public class ChooseSeanceController implements BootInitializable {
             }
         });
     }
-
+    /**
+     * getSelectedFilterList it's a method that
+     * @param checkboxes is a list of all checkboxes that are connected to all categories
+     * @param toggleGroup is a group where all radio buttons are in
+     * @return returns list with all selected filters by user
+     */
     private List<String> getSelectedFilterList(List<CheckBox> checkboxes, ToggleGroup toggleGroup) {
         List<String> filtersList = new ArrayList<>();
         if (!checkboxes.isEmpty()) {
@@ -381,7 +417,11 @@ public class ChooseSeanceController implements BootInitializable {
         }
         return filtersList;
     }
-
+    /**
+     * getSelectedFilterList it's a method that shows all movies with compatible filters
+     * @param filtersList is a list of all filters that user checked
+     * @return returns list with all movies that are compatible with filters
+     */
     private List<MovieEntity> getFilteredMovieList(List<String> filtersList) {
         List<MovieEntity> filtredMovieList = new ArrayList<>();
         filtredMovieList = newMovieList;
@@ -427,7 +467,12 @@ public class ChooseSeanceController implements BootInitializable {
         }
         return filtredMovieList;
     }
-
+    /**
+     * getSelectedFilterList it's a method that clears main view to shows movies that are currently in demand by user
+     * @param filteredMovieList is a list of all movies that are compatible with filters
+     *
+     *
+     */
     private void filterMovieCards(List<MovieEntity> filteredMovieList) {
         mainTilePane.getChildren().clear();
         if (!filteredMovieList.isEmpty()) {
