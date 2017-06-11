@@ -7,10 +7,16 @@ import java.io.FileReader;
 
 /**
  * Created by Dominik on 05.06.2017.
+ * This class allows to read map of the cinema hall for file.
  */
 @Component
 public class MapReaderImpl  implements MapReader{
 
+    /**
+     * This method reads map from file
+     * @param idHall id of cimenahall is needed to get filenam
+     * @return returns an int[][] value, that is tablerepresentation of cinemahall map.
+     */
     @Override
     public int[][] mapReader(int idHall) {
         int [][] mapArray = new int[16][16];
