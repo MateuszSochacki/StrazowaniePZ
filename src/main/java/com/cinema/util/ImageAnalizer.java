@@ -11,10 +11,18 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+/**
+ * Created by Damrod on 15.05.2017.
+ * This class is responsible for returning getting colors from image.
+ */
 
 public class ImageAnalizer {
 
-
+    /**
+     * This class allows to create custom "popup window" in selected container and blur the background of "targetBlur".
+     * @param movie param of MovieEntity needed to get colors from cover of a movie.
+     * @return List<String> list returns a list of 3 colors: 0 = primaryColor, 1 = secondaryColor, 2 = HighlightColor
+     */
     public List<String> getColors(MovieEntity movie) {
 
         ChooseSeanceController controller = new ChooseSeanceController();
@@ -51,6 +59,9 @@ public class ImageAnalizer {
         return colors;
     }
 
+    /**
+     * inner method used to create highlight color
+     */
     private String createAccentColor(String colourHex) {
         String[] list = new String[3];
         list = colourHex.split(" ");
@@ -76,7 +87,10 @@ public class ImageAnalizer {
         String hex = String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
         return hex;
     }
-
+    
+    /**
+     * inner method used to create secondary color
+     */
     private String createPrimaryDarkColor(String colourHex) {
         String[] list = new String[3];
         list = colourHex.split(" ");
@@ -86,8 +100,6 @@ public class ImageAnalizer {
                 list[i] = "0"+list[i];
             }
         }
-
-
 
         int r = Integer.parseInt(list[0],16);
         int g = Integer.parseInt(list[1],16);
@@ -112,7 +124,9 @@ public class ImageAnalizer {
         return hex;
     }
 
-
+    /**
+     * inner method used to create primary color
+     */
     private String createPrimaryColor(String colourHex) {
         String[] list = new String[3];
         String hexValue ="#";
@@ -125,7 +139,10 @@ public class ImageAnalizer {
         return hexValue;
     }
 
-
+    /**
+     * this method gets most common colour from map
+     * @param map represents image converted to map
+     */
     public static String getMostCommonColour(Map map) {
         List list = new LinkedList(map.entrySet());
         Collections.sort(list, new Comparator() {
@@ -139,14 +156,20 @@ public class ImageAnalizer {
         return Integer.toHexString(rgb[0])+" "+Integer.toHexString(rgb[1])+" "+Integer.toHexString(rgb[2]);
     }
 
+    /**
+     * inner method used to convert pixel to RGB
+     */
     public static int[] getRGBArr(int pixel) {
         int alpha = (pixel >> 24) & 0xff;
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
         int blue = (pixel) & 0xff;
         return new int[]{red,green,blue};
-
     }
+
+    /**
+     * method used to filter out black, whites and grays.
+     */
     public static boolean isGray(int[] rgbArr) {
         int rgDiff = rgbArr[0] - rgbArr[1];
         int rbDiff = rgbArr[0] - rgbArr[2];
