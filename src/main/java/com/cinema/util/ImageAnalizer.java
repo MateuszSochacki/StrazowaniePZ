@@ -21,7 +21,7 @@ public class ImageAnalizer {
     /**
      * This class allows to create custom "popup window" in selected container and blur the background of "targetBlur".
      * @param movie param of MovieEntity needed to get colors from cover of a movie.
-     * @return List<String> list returns a list of 3 colors: 0 = primaryColor, 1 = secondaryColor, 2 = HighlightColor
+     * @return List of Strings list returns a list of 3 colors: 0 = primaryColor, 1 = secondaryColor, 2 = HighlightColor
      */
     public List<String> getColors(MovieEntity movie) {
 
