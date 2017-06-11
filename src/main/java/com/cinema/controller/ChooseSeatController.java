@@ -230,7 +230,6 @@ public class ChooseSeatController implements BootInitializable {
     /**
      * Na podstawie pobranych danych wypełnia siatkę tworząc dla każdego miejsca obiekt typu TilePaneCustom z odpowiednimi parametrami
      */
-
     private void fillGridWithData() {
 
         for (int i = 0; i <= 15; i++) {
@@ -422,7 +421,7 @@ public class ChooseSeatController implements BootInitializable {
         title.prefHeight(Region.USE_COMPUTED_SIZE);
         title.prefWidth(Region.USE_COMPUTED_SIZE);
         ComboBox<Ticket.Abatement> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(Ticket.Abatement.Normalny, Ticket.Abatement.Student, Ticket.Abatement.Uczeń, Ticket.Abatement.Emeryt);
+        comboBox.getItems().addAll(Ticket.Abatement.Normalny, Ticket.Abatement.Student, Ticket.Abatement.Uczen, Ticket.Abatement.Emeryt);
         comboBox.getSelectionModel().selectFirst();
         comboBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         comboBox.getSelectionModel()
