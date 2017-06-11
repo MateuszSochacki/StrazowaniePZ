@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Dominik on 05.06.2017.
+ * this class creates a ticket and makes it visible to user by adding views to mainGridPane.
  */
 public class TicketController implements BootInitializable {
 

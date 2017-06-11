@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Damrod on 02.06.2017.
+ * this class creates back of a card for MovieInfo. It shows movie info, description, category, trailer ect.
  */
 public class MovieInfoCardController implements Initializable {
 
@@ -35,6 +36,11 @@ public class MovieInfoCardController implements Initializable {
     private Image image;
     private List<String> colors;
 
+    /**
+     * @param movie object of MovieEntity needed to get data for card.
+     * @param image image used as background of the card
+     * @param colors collor pallete used to paint movie card.
+     */
     public MovieInfoCardController(MovieEntity movie, Image image, List<String> colors) {
         this.movie = movie;
         this.image = image;
