@@ -5,6 +5,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * Created by Dominik on 04.06.2017.
+ * Simple class require to connect Ticket object with view.
  */
 public class TicketView {
 

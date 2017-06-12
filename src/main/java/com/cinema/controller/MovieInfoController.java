@@ -47,6 +47,8 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Dominik on 15.05.2017.
+ *MovieInfoController is a class that is binded to MovieInfoController.fxml and allows user to pick film from display shelf to
+ * get more information about it.
  */
 @Component
 public class MovieInfoController implements BootInitializable {
@@ -71,6 +73,10 @@ public class MovieInfoController implements BootInitializable {
     void btnBackClicked(MouseEvent event) {
     }
 
+    /**
+     * Method call when user clicked button choose seance. Then card will be automatically covered.
+     * @param event
+     */
     @FXML
     void btnSubmitClicked(MouseEvent event) {
         if (displayShelf.isClicked) {
@@ -86,6 +92,10 @@ public class MovieInfoController implements BootInitializable {
         pageController = parentPage;
     }
 
+    /**
+     * Method set images of movies.
+     * @param movies
+     */
     private void setImages(List<MovieEntity> movies) {
         try {
             for (int i = 0; i < movies.size(); i++) {
@@ -119,6 +129,9 @@ public class MovieInfoController implements BootInitializable {
         springContext = applicationContext;
     }
 
+    /**
+     * Class represented display shelf component. It's using for display movie cards.
+     */
     public class DisplayShelf extends Region {
 
         private WebView currentWebView;
@@ -153,6 +166,11 @@ public class MovieInfoController implements BootInitializable {
         private Timeline timeline;
         private Rectangle clip = new Rectangle();
 
+        /**
+         * Constructor fill component data. Create PerspectiveImage array.
+         * @param images it's a array of images to display
+         * @param movies it's a list of films which will be display
+         */
         public DisplayShelf(Image[] images, List<MovieEntity> movies) {
 
             // set clip
@@ -200,6 +218,10 @@ public class MovieInfoController implements BootInitializable {
             update();
         }
 
+        /**
+         * Method call when card was clicked to show more information.
+         * This method control animation of rotate card.
+         */
         private void showMoreInformation() {
             center.getParent().setDisable(true);
             isClicked = true;
@@ -243,6 +265,11 @@ public class MovieInfoController implements BootInitializable {
 
         }
 
+
+        /**
+         * Method call when card was clicked to hide more information.
+         * This method control animation of rotate card.
+         */
         private void showLessInformation() {
             center.getParent().setDisable(true);
             timeline = new Timeline();
@@ -282,6 +309,11 @@ public class MovieInfoController implements BootInitializable {
             timeline.play();
         }
 
+        /**
+         * Get all nodes
+         * @param root
+         * @return
+         */
         public ArrayList<Node> getAllNodes(Parent root) {
             ArrayList<Node> nodes = new ArrayList<Node>();
             addAllDescendents(root, nodes);
@@ -296,6 +328,9 @@ public class MovieInfoController implements BootInitializable {
             }
         }
 
+        /**
+         * Method which control a list of nodes in display shelf.
+         */
         private void update() {
             // move items to new homes in groups
             left.getChildren().clear();
@@ -350,6 +385,10 @@ public class MovieInfoController implements BootInitializable {
             timeline.play();
         }
 
+        /**
+         * Method will rebuild nodes in center, left and right group
+         * @param item it's center object
+         */
         private void shiftToCenter(PerspectiveImage item) {
             for (int i = 0; i < left.getChildren().size(); i++) {
                 if (left.getChildren().get(i) == item) {
@@ -370,6 +409,10 @@ public class MovieInfoController implements BootInitializable {
             }
         }
 
+        /**
+         * Method change centerIndex to different value. Also checking condition (out of range exception)
+         * @param shiftAmount
+         */
         public void shift(int shiftAmount) {
             if (centerIndex <= 0 && shiftAmount > 0) return;
             if (centerIndex >= items.length - 1 && shiftAmount < 0) return;
@@ -380,6 +423,9 @@ public class MovieInfoController implements BootInitializable {
     }
 
 
+    /**
+     * Class represent single card in display shelf.
+     */
     public static class PerspectiveImage extends Parent {
 
         public MovieEntity getMovieEntity() {
@@ -449,12 +495,23 @@ public class MovieInfoController implements BootInitializable {
             return angle;
         }
 
+        /**
+         * Constructor initialize component and fill with data
+         * @param image - film cover
+         * @param movie
+         */
         public PerspectiveImage(Image image, MovieEntity movie) {
             frontMovie = new VBox();
             backMovie = new VBox();
             setImageView(image, movie);
         }
 
+        /**
+         * Method set all property of card like a width, height, reflection effect. Also fil back and fron movie
+         * node.
+         * @param image
+         * @param movie
+         */
         public void setImageView(Image image, MovieEntity movie) {
             //getChildren().clear();
             imageView = new ImageView(image);
@@ -476,6 +533,12 @@ public class MovieInfoController implements BootInitializable {
         }
 
 
+        /**
+         * Method create view which have information about films.
+         * @param movie
+         * @param image
+         * @return node represented rotate card view
+         */
         public VBox createBackMovie(MovieEntity movie, Image image) {
             VBox root = new VBox();
 
